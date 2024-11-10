@@ -7,30 +7,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Star Admin2 </title>
     <!-- plugins:css -->
-    <link rel="stylesheet" href="assets/vendors/feather/feather.css">
-    <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" href="assets/vendors/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/vendors/typicons/typicons.css">
-    <link rel="stylesheet" href="assets/vendors/simple-line-icons/css/simple-line-icons.css">
-    <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="./content/assets/vendors/feather/feather.css">
+    <link rel="stylesheet" href="./content/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="./content/assets/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="./content/assets/vendors/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./content/assets/vendors/typicons/typicons.css">
+    <link rel="stylesheet" href="./content/assets/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="./content/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="./content/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- endinject -->
     <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="assets/js/select.dataTables.min.css">
+    <link rel="stylesheet" href="./content/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="./content/assets/js/select.dataTables.min.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="./content/assets/css/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="./content/assets/images/favicon.png" />
 </head>
+<body>
+    
 <div class="with-welcome-text">
     <div class="container-scroller">
-        <div class="row p-0 m-0 proBanner" id="proBanner">
-
-        </div>
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
@@ -42,10 +41,10 @@
                 </div>
                 <div>
                     <a class="navbar-brand brand-logo" href="index.html">
-                        <img src="assets/images/logo.svg" alt="logo" />
+                        <img src="./content/assets/images/logo.svg" alt="logo" />
                     </a>
                     <a class="navbar-brand brand-logo-mini" href="index.html">
-                        <img src="assets/images/logo-mini.svg" alt="logo" />
+                        <img src="./content/assets/images/logo-mini.svg" alt="logo" />
                     </a>
                 </div>
             </div>
@@ -125,7 +124,7 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="assets/images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
+                                    <img src="./content/assets/images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
                                 </div>
                                 <div class="preview-item-content flex-grow py-2">
                                     <p class="preview-subject ellipsis fw-medium text-dark">Marian Garner </p>
@@ -134,7 +133,7 @@
                             </a>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="assets/images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
+                                    <img src="./content/assets/images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
                                 </div>
                                 <div class="preview-item-content flex-grow py-2">
                                     <p class="preview-subject ellipsis fw-medium text-dark">David Grey </p>
@@ -143,7 +142,7 @@
                             </a>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="assets/images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
+                                    <img src="./content/assets/images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
                                 </div>
                                 <div class="preview-item-content flex-grow py-2">
                                     <p class="preview-subject ellipsis fw-medium text-dark">Travis Jenkins </p>
@@ -154,11 +153,11 @@
                     </li>
                     <li class="nav-item dropdown d-none d-lg-block user-dropdown">
                         <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="img-xs rounded-circle" src="assets/images/faces/face8.jpg" alt="Profile image">
+                            <img class="img-xs rounded-circle" src="./content/assets/images/faces/face8.jpg" alt="Profile image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                             <div class="dropdown-header text-center">
-                                <img class="img-md rounded-circle" src="assets/images/faces/face8.jpg"
+                                <img class="img-md rounded-circle" src="./content/assets/images/faces/face8.jpg"
                                     alt="Profile image">
                                 <p class="mb-1 mt-3 fw-semibold">Allen Moreno</p>
                                 <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
@@ -187,9 +186,9 @@
             </div>
         </nav>
         <!-- partial -->
-        <div class="container-fluid page-body-wrapper">
+        <div class="container-fluid page-body-wrapper ">
             <!-- partial:partials/_sidebar.html -->
-            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <nav class="sidebar sidebar-offcanvas"  id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">
@@ -247,4 +246,7 @@
                     </li>
                 </ul>
             </nav>
-         
+
+            <div class="main-panel" >
+    <div class="content-wrapper" >
+            

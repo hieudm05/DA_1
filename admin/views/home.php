@@ -1,11 +1,7 @@
-   <!-- partial -->
-   <div class="main-panel">
-    <div class="content-wrapper">
-        <div class="row">
-            <div class="container mt-1">
+
 
                 <!-- Phần hiển thị của mỗi trang đây nhé -->
-
+                <div class="container mt-1">
                 <div class="row text-center mb-4">
                     <div class="col-md-3">
                         <div class="border p-3 bg-light d-flex justify-content-between">
@@ -110,8 +106,5 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+                    </div>
