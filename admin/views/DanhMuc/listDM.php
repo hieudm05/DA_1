@@ -10,14 +10,25 @@
               <tr>
                 <th>Mã loại</th>
                 <th>Tên loại</th>
-                <th class="text-right">Hành động</th>
+                <th class = "text-end">Thao tác</th>
               </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>1</td>
                     <td>2</td>
-                    <td>3</td>
+                    <td class = "text-end">
+                        <button class=" btn btn-danger">Xoá</button>
+                        <button class="btn btn-warning">Sửa</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td class = "text-end">
+                        <button class=" btn btn-danger">Xoá</button>
+                        <button class="btn btn-warning">Sửa</button>
+                    </td>
                 </tr>
             </tbody>
           </table>
