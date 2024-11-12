@@ -1,5 +1,5 @@
 
-        </div>
+</div>
     </div>
 <script src="./content/assets/vendors/js/vendor.bundle.base.js"></script>
 <script src="./content/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>

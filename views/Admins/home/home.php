@@ -1,5 +1,4 @@
 
-
                 <!-- Phần hiển thị của mỗi trang đây nhé -->
                 <div class="container mt-1">
                 <div class="row text-center mb-4">
@@ -78,7 +77,7 @@
                     <!-- Revenue Chart -->
                     <div class="col-md-7 mb-4">
                         <div class="card">
-                            <?php include 'views/bieudotuan.php' ?>
+                            <?php include 'bieudotuan.php' ?>
                         </div>
                     </div>
 
