@@ -198,21 +198,21 @@
                     </li>
                     <li class="nav-item nav-category">UI Elements</li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                        <a class="nav-link" href="?act=addDm" aria-expanded="false"
                             aria-controls="ui-basic">
                             <i class="menu-icon mdi mdi-floor-plan"></i>
                             <span class="menu-title">Danh mục</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false"
+                        <a class="nav-link" href="?act=addDm" aria-expanded="false"
                             aria-controls="form-elements">
                             <i class="menu-icon mdi mdi-account-circle-outline"></i>
                             <span class="menu-title">Quản lí tài khoản</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#charts" aria-expanded="false"
+                        <a class="nav-link" href="#charts" aria-expanded="false"
                             aria-controls="charts">
                             <i class="menu-icon mdi mdi-chart-line"></i>
                             <span class="menu-title">Quản lí đơn hàng</span>
@@ -224,21 +224,21 @@
               </div> -->
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false"
+                        <a class="nav-link" href="#tables" aria-expanded="false"
                             aria-controls="tables">
                             <i class="menu-icon mdi mdi-table"></i>
                             <span class="menu-title">Quản lí sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false"
+                        <a class="nav-link" href="#icons" aria-expanded="false"
                             aria-controls="icons">
                             <i class="menu-icon mdi mdi-layers-outline"></i>
                             <span class="menu-title">Quản lí khuyến mại</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false"
+                        <a class="nav-link" href="#auth" aria-expanded="false"
                             aria-controls="auth">
                             <i class="menu-icon mdi mdi-card-text-outline"></i>
                             <span class="menu-title">Quản lí bình luận</span>

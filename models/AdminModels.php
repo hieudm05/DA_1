@@ -1,6 +1,6 @@
 <?php 
 
-class Student 
+class AdminModels 
 {
     public $conn;
 

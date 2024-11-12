@@ -1,10 +1,10 @@
 <?php 
 class HomeController
 {
-    public $modelStudent;
+    public $modelAdmin;
 
     public function __construct() {
-        $this->modelStudent = new Student();
+        $this->modelAdmin = new AdminModels();
     }
 
     public function home() {

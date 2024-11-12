@@ -1,16 +1,29 @@
 <?php 
-class HomeControllerClient
+
+class ClientModels 
 {
-    public $modelStudent;
+    public $conn;
 
-    public function __construct() {
-        $this->modelStudent = new Student();
+    public function __construct() { // Hàm khởi tạo kết nối đối tượng
+        $this->conn = connectDB();
     }
 
-    public function home() {
-        // $listStudent = $this->modelStudent->getAll();
+    // Lấy toàn bộ dữ liệu
+    public function getAll() {
+        try {
+            $sql = 'SELECT * FROM tbl_sinhvien ORDER BY id DESC';
+    
+            $stmt = $this->conn->prepare($sql);
+        
+            $stmt->execute();
 
-        require_once '../views/Clients/home.php';
+            return $stmt->fetchAll();
+        } catch(Exception $e) {
+            echo $e->getMessage();
+        }
     }
-
+    
+    public function __destruct() {  // Hàm hủy kết nối đối tượng
+        $this->conn = null;
+    }
 }
