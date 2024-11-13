@@ -8,10 +8,10 @@ class AdminModels
         $this->conn = connectDB();
     }
 
-    // Lấy toàn bộ dữ liệu
-    public function getAll() {
+    // Danh mục
+    public function getAllDanhMuc() {
         try {
-            $sql = 'SELECT * FROM tbl_sinhvien ORDER BY id DESC';
+            $sql = 'SELECT * FROM categories ORDER BY id DESC';
     
             $stmt = $this->conn->prepare($sql);
         
@@ -20,6 +20,51 @@ class AdminModels
             return $stmt->fetchAll();
         } catch(Exception $e) {
             echo $e->getMessage();
+        }
+    }
+    public function postDm($name) {
+        try {
+            $sql = 'INSERT INTO categories(name) VALUES(:name)';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['name'=>$name]);
+            return true;
+        } catch(Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function getDmById( $id){
+        try {
+            $sql = 'SELECT * FROM categories WHERE id = '.$id;
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetch();
+
+        }catch(Exception $e){
+            echo 'err'.$e->getMessage();
+        }
+    }
+
+    public function deleteDm($id){
+        try {
+            $sql = 'DELETE FROM categories WHERE id = :id ';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            return true;
+
+        }catch(Exception $e){
+            echo 'err'.$e->getMessage();
+        }
+    }
+    public function updateDm($id, $name) {
+        try {
+            $sql = "UPDATE categories SET name = :name WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['name'=>$name, 'id'=>$id]);
+            return true;
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
         }
     }
     

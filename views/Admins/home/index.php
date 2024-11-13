@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Star Admin2 </title>
     <!-- plugins:css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="./content/assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="./content/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="./content/assets/vendors/ti-icons/css/themify-icons.css">

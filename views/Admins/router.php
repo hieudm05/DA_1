@@ -1,4 +1,5 @@
 <?php 
+ob_start();
 include './home/index.php';
 // Require file Common
 require_once('../../commons/env.php');
@@ -19,6 +20,12 @@ $act = $_GET['act'] ?? '/';
 match ($act) {
     // Trang chủ
     '/' => (new HomeController())->home(),
-    'addDm' => (new HomeController()) -> addDm()
+    'addDm' => (new HomeController()) -> formAddDm(),
+    'listDm' => (new HomeController()) -> listDm(),
+    'postDm' => (new HomeController()) -> postDm(),
+    'xoadm' => (new HomeController()) -> deleteDm(),
+    'formSuaDm' => (new HomeController())->formSuaDm(),
+    'postSuaDm' => (new HomeController())->updateDm(),
 };
 include './home/footer.php';
+ob_end_flush();
