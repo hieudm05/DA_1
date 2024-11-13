@@ -9,7 +9,7 @@
                 <form action="router.php?act=postDm" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="tenloai">Tên loại</label>
-                        <input id="tenloai" class="form-control" type="text" name="name">
+                        <input id="tenloai" class="form-control" type="text" name="name" required>
                     </div>
                     <input type="submit" class="btn btn-primary" name="themmoi" value="Thêm">
                     <input type="reset" class="btn btn-outline-secondary" value="Nhập lại">
