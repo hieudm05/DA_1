@@ -61,6 +61,56 @@ class HomeController
             
         }
     }
-    
-
+    ///SanPham
+    public function formAddSP() {
+        $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
+        require_once '../../views/Admins/SanPham/formAddSP.php';
+        
+    }
+    public function listSP() {
+        $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
+        $listProducts = $this->modelAdmin->getAllSP();
+        require_once '../../views/Admins/SanPham/listSP.php';
+    }
+    public function postSP() {  
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {  
+            $namesp = isset($_POST['namesp']) ? $_POST['namesp'] : null;  
+            $price = isset($_POST['price']) ? $_POST['price'] : null;  
+            $mota = isset($_POST['mota']) ? $_POST['mota'] : null;    
+            $idDm = isset($_POST['idDm']) ? $_POST['idDm'] : null;  
+        
+            // Check variable values  
+            var_dump($namesp, $price, $mota, $idDm);  
+            
+            // Check for file upload  
+            if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {  
+                $uploadDir = 'uploads/';  
+                // Ensure the uploads directory exists  
+                if (!is_dir($uploadDir)) {  
+                    mkdir($uploadDir, 0777, true);  
+                }  
+        
+                $uploadFile = $uploadDir . basename($_FILES['img']['name']);  
+                
+                if (move_uploaded_file($_FILES['img']['tmp_name'], $uploadFile)) {  
+                    $img = $uploadFile;  
+                    if ($namesp && $price && $mota && $idDm) {  
+                        if ($this->modelAdmin->postSP($namesp, $price, $img, $mota, $idDm)) {  
+                            header('Location: router.php?act=listSP');  
+                            exit;  
+                        } else {  
+                            // Show the error when inserting  
+                            echo "Có lỗi khi thêm sản phẩm.";  
+                        }  
+                    } else {  
+                        echo "Vui lòng điền đầy đủ thông tin sản phẩm.";  
+                    }  
+                } else {  
+                    echo "Có lỗi khi upload file.";  
+                }  
+            } else {  
+                echo "Vui lòng chọn một hình ảnh.";  
+            }  
+        }
+    }
 }
