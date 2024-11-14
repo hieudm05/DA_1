@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="./content/assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="./content/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="./content/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
@@ -225,7 +226,7 @@
               </div> -->
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tables" aria-expanded="false"
+                        <a class="nav-link" href="?act=addSP" aria-expanded="false"
                             aria-controls="tables">
                             <i class="menu-icon mdi mdi-table"></i>
                             <span class="menu-title">Quản lí sản phẩm</span>

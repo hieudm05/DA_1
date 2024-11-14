@@ -27,10 +27,15 @@ match ($act) {
     'xoadm' => (new HomeController()) -> deleteDm(),
     'formSuaDm' => (new HomeController())->formSuaDm(),
     'postSuaDm' => (new HomeController())->updateDm(),
+    // Sản phẩm  
+    'addSP' => (new HomeController())->formAddSP(),  
+    'listSP' => (new HomeController())->listSP(),  
+    'postSP' => (new HomeController())->postSP(),
 
     // Tài khoản
     'listTaiKhoan' => (new HomeController()) ->listTaiKhoan(),
     'update_account_status' => (new HomeController()) -> accoutAtive(),
 };
+
 include './home/footer.php';
 ob_end_flush();

@@ -111,9 +111,42 @@ class AdminModels
             return false;
         }
     }
+    // Sản phẩm
+    public function getAllSP() {
+        try {
+            $sql = 'SELECT * FROM products ORDER BY id DESC';
+    
+            $stmt = $this->conn->prepare($sql);
+        
+            $stmt->execute();
 
+            return $stmt->fetchAll();
+        } catch(Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+    public function postSP($namesp, $price, $img, $mota, $iddm) {  
+        try {  
+            $sql = 'INSERT INTO products (namesp, price, img, mota, iddm) VALUES (:namesp, :price, :img, :mota, :iddm)';  
+            $stmt = $this->conn->prepare($sql);  
+            $stmt->execute([  
+                'namesp' => $namesp,   
+                'price' => $price,  
+                'img' => $img,   
+                'mota' => $mota,   
+                'iddm' => $iddm
+            ]);  
+            return true;  
+        } catch(Exception $e) {  
+            // Display error message  
+            echo "Database error: " . $e->getMessage();  
+            return false;  
+        }  
+    }
     
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;
     }
+    //sản phẩm
+    
 }

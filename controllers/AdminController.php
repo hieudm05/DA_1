@@ -79,4 +79,47 @@ class HomeController
         }
     }
 
+    ///SanPham
+    public function formAddSP() {
+        $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
+        require_once '../../views/Admins/SanPham/formAddSP.php';
+        
+    }
+    public function listSP() {
+        $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
+        $listProducts = $this->modelAdmin->getAllSP();
+        require_once '../../views/Admins/SanPham/listSP.php';
+    }
+   public function postSP() {  
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $namesp = $_POST['namesp'];
+        $price = $_POST['price'];
+        $mota = $_POST['mota'];
+        $iddm = $_POST['iddm'];
+        
+        // Kiểm tra nếu tệp ảnh tồn tại và không có lỗi khi tải lên
+        if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
+            // Gọi hàm uploadFile để lưu tệp vào thư mục uploads
+            $file_save = uploadFile($_FILES['img'], '../uploads');
+            
+            if ($file_save) {  // Kiểm tra xem tệp đã được lưu thành công
+                if ($this->modelAdmin->postSP($namesp, $price, $file_save, $mota, $iddm)) {
+                    header('Location: router.php?act=listSP');
+                    exit(); // Dừng script sau khi chuyển hướng
+                } else {
+                    echo "Lỗi khi thêm sản phẩm vào cơ sở dữ liệu.";
+                }
+            } else {
+                echo "Lỗi khi lưu tệp ảnh.";
+            }
+        } else {
+            echo "Lỗi khi tải lên tệp ảnh.";
+        }
+    } else {
+        header('Location: /router.php?act=listSP');
+        exit();
+    }
 }
+
+}
+
