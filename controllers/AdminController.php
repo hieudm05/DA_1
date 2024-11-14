@@ -69,9 +69,20 @@ class HomeController
     public function accoutAtive() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id'];
-            $ative = $_POST['active'];
+            $active = $_POST['active'];
 
-           if( $this->modelAdmin->updateAccoutAtive($id,$ative)){
+           if( $this->modelAdmin->updateAccoutAtive($id,$active)){
+                header('Location: router.php?act=listTaiKhoan');
+                exit;
+           }
+        }
+    }
+    public function accoutRole() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $role = $_POST['role'];
+
+           if( $this->modelAdmin->updateAccoutRole($id, $role)){
                 header('Location: router.php?act=listTaiKhoan');
                 exit;
            }

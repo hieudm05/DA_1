@@ -35,6 +35,7 @@ match ($act) {
     // Tài khoản
     'listTaiKhoan' => (new HomeController()) ->listTaiKhoan(),
     'update_account_status' => (new HomeController()) -> accoutAtive(),
+    'update_account_role' => (new HomeController()) -> accoutRole()
 };
 
 include './home/footer.php';

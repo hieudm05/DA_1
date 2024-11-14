@@ -101,7 +101,7 @@
                                     <p class="fw-light small-text mb-0"> Private message </p>
                                 </div>
                             </a>
-                            <a class="dropdown-item preview-item py-3">
+                            <a class="dropdown-item  preview-item py-3">
                                 <div class="preview-thumbnail">
                                     <i class="mdi mdi-airballoon m-auto text-primary"></i>
                                 </div>
