@@ -61,6 +61,22 @@ class HomeController
             
         }
     }
-    
+    // Tài khoản
+     public function listTaiKhoan() {
+        $listTaiKhoan = $this->modelAdmin->getAllAcounts();
+        require_once '../../views/Admins/TaiKhoan/listTaiKhoan.php';
+    }
+    public function accoutAtive() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $ative = $_POST['active'];
+
+           if( $this->modelAdmin->updateAccoutAtive($id,$ative)){
+                header('Location: router.php?act=listTaiKhoan');
+                exit;
+           }
+            
+        }
+    }
 
 }

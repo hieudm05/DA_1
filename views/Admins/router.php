@@ -20,12 +20,17 @@ $act = $_GET['act'] ?? '/';
 match ($act) {
     // Trang chủ
     '/' => (new HomeController())->home(),
+    // Danh Mục
     'addDm' => (new HomeController()) -> formAddDm(),
     'listDm' => (new HomeController()) -> listDm(),
     'postDm' => (new HomeController()) -> postDm(),
     'xoadm' => (new HomeController()) -> deleteDm(),
     'formSuaDm' => (new HomeController())->formSuaDm(),
     'postSuaDm' => (new HomeController())->updateDm(),
+
+    // Tài khoản
+    'listTaiKhoan' => (new HomeController()) ->listTaiKhoan(),
+    'update_account_status' => (new HomeController()) -> accoutAtive(),
 };
 include './home/footer.php';
 ob_end_flush();

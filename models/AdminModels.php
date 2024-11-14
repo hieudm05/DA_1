@@ -67,6 +67,51 @@ class AdminModels
             return false;
         }
     }
+
+    // Tài khoản
+    public function getAllAcounts(){
+        try {
+            $sql = 'SELECT * FROM accounts ORDER BY id DESC';
+    
+            $stmt = $this->conn->prepare($sql);
+        
+            $stmt->execute();
+
+            return $stmt->fetchAll();
+            
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function getAccountById($id){
+        try {
+            $sql = 'SELECT * FROM accounts WHERE id ='.$id;
+    
+            $stmt = $this->conn->prepare($sql);
+        
+            $stmt->execute();
+
+            return $stmt->fetch();
+            
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    public function updateAccoutAtive($id,$ative){
+        try {
+            $sql = "UPDATE accounts SET active = :active WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['active'=>$ative, 'id'=>$id]);
+            return true;
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+
     
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;

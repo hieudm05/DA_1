@@ -206,7 +206,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="?act=addDm" aria-expanded="false"
+                        <a class="nav-link" href="?act=listTaiKhoan" aria-expanded="false"
                             aria-controls="form-elements">
                             <i class="menu-icon mdi mdi-account-circle-outline"></i>
                             <span class="menu-title">Quản lí tài khoản</span>
@@ -248,6 +248,6 @@
                 </ul>
             </nav>
 
-            <div class="main-panel" >
+            <div class="main-panel">
     <div class="content-wrapper" >
             
