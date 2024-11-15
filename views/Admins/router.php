@@ -33,10 +33,13 @@ match ($act) {
     'updateSP' => (new HomeController())->updateSP(),  
 
     // Accounts (Tài Khoản)  
-    'listTaiKhoan' => (new HomeController())->listTaiKhoan(),  
-    'update_account_status' => (new HomeController())->accoutAtive(),  
-    };
+    // Tài khoản
+    'listTaiKhoan' => (new HomeController()) ->listTaiKhoan(),
+    'update_account_status' => (new HomeController()) -> accoutAtive(),
+    'update_account_role' => (new HomeController()) -> accoutRole()
+};
 
+    
 
 include './home/footer.php';
 ob_end_flush();
