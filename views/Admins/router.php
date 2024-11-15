@@ -1,41 +1,42 @@
 <?php 
 ob_start();
 include './home/index.php';
-// Require file Common
-require_once('../../commons/env.php');
- // Khai báo biến môi trường
-require_once '../../commons/function.php'; // Hàm hỗ trợ
 
-// Require toàn bộ file Controllers
+// Require necessary files
+require_once('../../commons/env.php'); // Environmental variables
+require_once '../../commons/function.php'; // Utility functions
 require_once '../../controllers/AdminController.php';
-
-// Require toàn bộ file Models
 require_once '../../models/AdminModels.php';
 
-// Route
-$act = $_GET['act'] ?? '/';
+// Route  
+$act = $_GET['act'];  
 
-// Để bảo bảo tính chất chỉ gọi 1 hàm Controller để xử lý request thì mình sử dụng match
+// Match to route the request to the corresponding controller action  
+match ($act) {  
+    '/' => (new HomeController())->home(),  
 
-match ($act) {
-    // Trang chủ
-    '/' => (new HomeController())->home(),
-    // Danh Mục
-    'addDm' => (new HomeController()) -> formAddDm(),
-    'listDm' => (new HomeController()) -> listDm(),
-    'postDm' => (new HomeController()) -> postDm(),
-    'xoadm' => (new HomeController()) -> deleteDm(),
-    'formSuaDm' => (new HomeController())->formSuaDm(),
-    'postSuaDm' => (new HomeController())->updateDm(),
-    // Sản phẩm  
+    // Categories (Danh Mục)  
+    'addDm' => (new HomeController())->formAddDm(),  
+    'listDm' => (new HomeController())->listDm(),  
+    'postDm' => (new HomeController())->postDm(),  
+    'xoadm' => (new HomeController())->deleteDm(),  
+    'formSuaDm' => (new HomeController())->formSuaDm(),  
+    'postSuaDm' => (new HomeController())->updateDm(),  
+
+    // Products (Sản Phẩm)  
     'addSP' => (new HomeController())->formAddSP(),  
     'listSP' => (new HomeController())->listSP(),  
-    'postSP' => (new HomeController())->postSP(),
+    'postSP' => (new HomeController())->postSP(),  
+    'xoasp' => (new HomeController())->deleteSP(),  
+    'formSuaSP' => (new HomeController())->formSuaSP(), // <- Fix here
+    'suasp' => (new HomeController())->formSuaSP(),     // Add this line to handle 'suasp'
+    'updateSP' => (new HomeController())->updateSP(),  
 
-    // Tài khoản
-    'listTaiKhoan' => (new HomeController()) ->listTaiKhoan(),
-    'update_account_status' => (new HomeController()) -> accoutAtive(),
-};
+    // Accounts (Tài Khoản)  
+    'listTaiKhoan' => (new HomeController())->listTaiKhoan(),  
+    'update_account_status' => (new HomeController())->accoutAtive(),  
+    };
+
 
 include './home/footer.php';
 ob_end_flush();

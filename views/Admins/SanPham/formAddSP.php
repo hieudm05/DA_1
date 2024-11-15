@@ -12,7 +12,7 @@
                         <select name="iddm" id="danhmuc" class="form-control">  
                             <option value="">Chọn danh mục</option>  
                             <?php if (!empty($listDanhMuc)): ?>  
-                                <?php foreach ($listDanhMuc as $danhMuc): ?> <!-- Removed the semicolon here -->  
+                                <?php foreach ($listDanhMuc as $danhMuc): ?>
                                     <option value="<?= $danhMuc['id'] ?>"><?= $danhMuc['name'] ?></option>  
                                 <?php endforeach; ?>  
                             <?php else: ?>  

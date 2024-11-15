@@ -143,6 +143,60 @@ class AdminModels
             return false;  
         }  
     }
+    public function getSPById($id) {  
+        try {  
+            $sql = 'SELECT * FROM products WHERE id = :id';  
+            $stmt = $this->conn->prepare($sql);  
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT); // Bind the ID as an integer to prevent SQL injection  
+            $stmt->execute();  
+            
+            $product = $stmt->fetch();
+            
+            // Check if a product was found
+            if ($product) {
+                return $product;
+            } else {
+                echo "Product not found.";
+                return false;
+            }
+        } catch(Exception $e) {  
+            echo 'Error: ' . $e->getMessage();  
+            return false;  
+        }  
+    }
+    
+
+    public function deleteSP($id) {  
+        try {  
+            $sql = 'DELETE FROM products WHERE id = :id';  
+            $stmt = $this->conn->prepare($sql);  
+            $stmt->execute(['id' => $id]);  
+            return true;  
+        } catch(Exception $e) {  
+            echo 'Error: ' . $e->getMessage();  
+            return false;  
+        }  
+    }  
+
+    public function updateSP($id, $namesp, $price, $img, $mota, $iddm) {  
+        try {  
+            $sql = "UPDATE products SET namesp = :namesp, price = :price, img = :img, mota = :mota, iddm = :iddm WHERE id = :id";  
+            $stmt = $this->conn->prepare($sql);  
+            $stmt->execute([  
+                'namesp' => $namesp,  
+                'price' => $price,  
+                'img' => $img,  
+                'mota' => $mota,  
+                'iddm' => $iddm,  
+                'id' => $id  
+            ]);  
+            return true;  
+        } catch (Exception $e) {  
+            echo 'Error: ' . $e->getMessage();  
+            return false;  
+        }  
+    }  
+  
     
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;
