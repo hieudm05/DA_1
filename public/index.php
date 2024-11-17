@@ -1,5 +1,5 @@
 <?php 
-
+include '../views/Clients/header.php';
 // Require file Common
 require_once '../commons/env.php'; // Khai báo biến môi trường
 require_once '../commons/function.php'; // Hàm hỗ trợ
@@ -27,3 +27,4 @@ match ($act) {
     // Xử lí tài khoản
     'postAddAcount' => (new ClientController()) -> addAccount(),
 };
+include '../views/Clients/footer.php';

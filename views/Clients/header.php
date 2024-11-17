@@ -11,42 +11,83 @@
 <body>
 
 <!-- Top Bar -->
-<div class="bg-danger text-white py-2">
-    <div class="container d-flex justify-content-between align-items-center">
-        <div>
-            <span><i class="bi bi-telephone"></i> 19004953</span>
-            <span class="ms-3">📍 P. Trịnh Văn Bô, Xuân Phương, Nam Từ Liêm, Hà Nội</span>
-        </div>
-        <div>
-            <a href="#" class="text-white ms-2">Facebook</a>
-            <a href="#" class="text-white ms-2">Instagram</a>
-            <a href="#" class="text-white ms-2">YouTube</a>
+<!-- Top Header -->
+<div style="background-color: #C62E2E;" class=" text-white py-2">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Contact Info -->
+            <div class="col-12 col-md d-flex flex-wrap justify-content-center justify-content-md-start text-center text-md-start mb-2 mb-md-0">
+                <span><i class="bi bi-telephone"></i> 19004953</span>
+                <span class="ms-3">📍 P. Trịnh Văn Bô, Xuân Phương, Nam Từ Liêm, Hà Nội</span>
+            </div>
+            <!-- Social Links -->
+            <div class="col-12 col-md-auto d-flex justify-content-center justify-content-md-end">
+                <a href="#" class="text-white ms-2"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-white ms-2"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="text-white ms-2"><i class="bi bi-youtube"></i></a>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Header Main -->
-<div class="bg-warning text-dark py-3">
-    <div class="container d-flex justify-content-between align-items-center">
-        <!-- Logo -->
-        <div class="h4 m-0">
-            <a href="#" class="text-decoration-none text-dark">BARNES & NOBLE</a>
-        </div>
-        <!-- Search Bar -->
-        <form class="d-flex">
-            <input type="search" class="form-control" placeholder="Tìm kiếm sản phẩm...">
-            <button class="btn btn-dark ms-1" type="submit">Tìm kiếm</button>
-        </form>
-        <!-- Contact Information -->
-        <div>
-            <span>📞 Tư vấn bán hàng: 19004953</span>
-        </div>
-        <!-- Cart Icon -->
-        <div>
-            <a href="#" class="text-dark fs-4">🛒</a>
+<!-- Main Header -->
+<div style="background-color: #F2E8C6;" class="text-dark py-2">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Logo -->
+            <div class="col-12 col-md-4 text-center text-md-start">
+                <div class="h5 m-0">
+                    <a href="#" class="text-decoration-none text-dark">BARNES & NOBLE</a>
+                </div>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="col-12 col-md-4">
+                <form class="d-flex justify-content-center">
+                    <input type="search" 
+                           class="form-control form-control-sm" 
+                           placeholder="Tìm kiếm sản phẩm..." 
+                           style="height: 30px; padding: 0.25rem 0.5rem;">
+                    <input class="btn btn-dark btn-sm ms-1" 
+                           type="submit" 
+                           style="height: 30px; padding: 0 10px; background-color:#C62E2E;" 
+                           value="Tìm kiếm">
+                </form>
+            </div>
+            
+            <!-- Contact Info -->
+            <div class="col-12 col-md-4 d-flex justify-content-end ">
+                <ul class="nav nav d-flex justify-content-between ">
+                    <!-- Tư vấn bán hàng -->
+                    <li class="nav-item ">
+                        <span class="d-flex flex-column text-md-end text-center">
+                            <div class="small">Tư vấn bán hàng</div>
+                            <div class="fw-bold">19004953</div>
+                        </span>
+                    </li>
+                    <li><a class="nav-link" href="#"><i class="bi bi-cart"></i></a></li>
+                    <!-- Dropdown Menu -->
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                            <i class="bi bi-person-circle"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                   
+                </ul>
+            </div>
         </div>
     </div>
 </div>
+
+
+
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -90,54 +131,46 @@
 
 
 
+
 <div class="container my-4">
     <div class="row">
         <!-- Sidebar Menu -->
-        <div class="col-md-3 bg-light border-end">
+        <div class="col-md-3 bg-light border-end d-none d-md-block">
             <h5 class="text-uppercase py-3 ps-3">Danh mục</h5>
             <ul class="list-unstyled ps-3">
                 <li class="d-flex justify-content-between align-items-center py-2">
                     <span>Sách Kinh Tế</span>
-                    <i class="bi bi-chevron-right"></i>
                 </li>
                 <li class="d-flex justify-content-between align-items-center py-2">
                     <span>Sách Văn Học Trong Nước</span>
-                    <i class="bi bi-chevron-right"></i>
                 </li>
                 <li class="d-flex justify-content-between align-items-center py-2">
                     <span>Sách Văn Học Nước Ngoài</span>
-                    <i class="bi bi-chevron-right"></i>
                 </li>
                 <li class="d-flex justify-content-between align-items-center py-2">
                     <span>Sách Thường Thức Đời Sống</span>
-                    <i class="bi bi-chevron-right"></i>
                 </li>
                 <li class="d-flex justify-content-between align-items-center py-2">
                     <span>Sách Thiếu Nhi</span>
-                    <i class="bi bi-chevron-right"></i>
                 </li>
                 <li class="d-flex justify-content-between align-items-center py-2">
                     <span>Sách Phát Triển Bản Thân</span>
-                    <i class="bi bi-chevron-right"></i>
                 </li>
                 <li class="d-flex justify-content-between align-items-center py-2">
                     <span>Sách Tiếng Học Ngoại Ngữ</span>
-                    <i class="bi bi-chevron-right"></i>
                 </li>
                 <li class="d-flex justify-content-between align-items-center py-2">
                     <span>Sách Chuyên Ngành</span>
-                    <i class="bi bi-chevron-right"></i>
                 </li>
                 <li class="d-flex justify-content-between align-items-center py-2">
                     <span>Sách Giáo Khoa - Giáo Trình</span>
-                    <i class="bi bi-chevron-right"></i>
                 </li>
                 <li class="d-flex justify-content-between align-items-center py-2">
                     <span>Sách Mới Phát Hành</span>
-                    <i class="bi bi-chevron-right"></i>
                 </li>
             </ul>
         </div>
+
 
         <!-- Banner Section  -->
         <div class="col-md-9">
