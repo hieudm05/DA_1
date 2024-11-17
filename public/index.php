@@ -20,4 +20,10 @@ $act = $_GET['act'] ?? '/';
 match ($act) {
     // Trang chủ
     '/' => (new ClientController())->home(),
+    // Tài khoản
+    'updateAcount' => (new ClientController()) -> updateAcount(),
+    'login' => (new ClientController()) -> login(),
+    'signup' => (new ClientController()) -> signUp(),
+    // Xử lí tài khoản
+    'postAddAcount' => (new ClientController()) -> addAccount(),
 };
