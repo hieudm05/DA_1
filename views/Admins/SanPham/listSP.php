@@ -29,7 +29,7 @@
                             $suasp = "router.php?act=suasp&id=" . $sp['id'];  
                             $xoasp = "router.php?act=xoasp&id=" . $sp['id'];  
                             $imgPath = '../../../uploads/'.$sp['img'];  
-                            $hinh = (is_file($imgPath) && !empty($sp['img'])) ? '<img src="'.$imgPath.'" style=" height: 100px; background-size:cover;  border-radius: 0;">' : 'No photo';  
+                            $hinh = (is_file($imgPath) && !empty($sp['img'])) ? '<img src="'.$imgPath.'" style="  background-size:cover;  ">' : 'No photo';  
                         ?>  
                         <tr>  
                             <td><?= $hinh ?></td>  

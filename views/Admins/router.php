@@ -9,7 +9,7 @@ require_once '../../controllers/AdminController.php';
 require_once '../../models/AdminModels.php';
 
 // Route  
-$act = $_GET['act'];  
+$act = $_GET['act'] ?? '/';  
 
 // Match to route the request to the corresponding controller action  
 match ($act) {  

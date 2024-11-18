@@ -22,6 +22,30 @@ class ClientModels
             echo $e->getMessage();
         }
     }
+    // Đăng kí tài khoản
+    public function addAccount($username, $email, $password, $sdt){
+        $sql = 'INSERT INTO accounts (username, email, password, sdt) VALUES (:username, :email, :password, :sdt)';
+        $stmt = $this->conn->prepare($sql);
+        $stmt -> execute(['username' => $username, 'email' => $email, 'password' => $password, 'sdt' => $sdt]);
+        return true;
+    }
+
+    // Cập nhật tài khoản
+    public function getAccountById($id){
+        try {
+            $sql = 'SELECT * FROM accounts WHERE id ='.$id;
+    
+            $stmt = $this->conn->prepare($sql);
+        
+            $stmt->execute();
+
+            return $stmt->fetch();
+            
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
     
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;

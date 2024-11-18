@@ -1,5 +1,5 @@
 <?php 
-
+include '../views/Clients/header.php';
 // Require file Common
 require_once '../commons/env.php'; // Khai báo biến môi trường
 require_once '../commons/function.php'; // Hàm hỗ trợ
@@ -20,4 +20,11 @@ $act = $_GET['act'] ?? '/';
 match ($act) {
     // Trang chủ
     '/' => (new ClientController())->home(),
+    // Tài khoản
+    'updateAcount' => (new ClientController()) -> updateAcount(),
+    'login' => (new ClientController()) -> login(),
+    'signup' => (new ClientController()) -> signUp(),
+    // Xử lí tài khoản
+    'postAddAcount' => (new ClientController()) -> addAccount(),
 };
+include '../views/Clients/footer.php';
