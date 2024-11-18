@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đăng nhập</title>
-  <!-- Link Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light d-flex justify-content-center align-items-center" style="height: 100vh;">
+<div class="bg-light d-flex justify-content-center align-items-center" >
   <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
     <h3 class="text-center text-danger mb-4">Đăng nhập</h3>
     <form>
@@ -37,8 +28,4 @@
       Bạn chưa có tài khoản? <a href="?act=signup" class="text-decoration-none text-danger">Đăng ký</a>
     </p>
   </div>
-
-  <!-- Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
