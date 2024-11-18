@@ -171,7 +171,7 @@ public function updateSP() {
 
         if (isset($_FILES['img']) && $_FILES['img']['error'] == 0) {  
             // Handle image upload  
-            $file_save = uploadFile($_FILES['img'], '../uploads');  
+            $file_save = uploadFile($_FILES['img'], '../uploads/');  
             if ($file_save) {  
                 $img = $file_save; // Set img to the new file path  
             } else {  
@@ -191,7 +191,14 @@ public function updateSP() {
         header('Location: router.php?act=listSP');  
         exit();  
     }  
+} //đơn hàng
+
+public function listBills() {
+    $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
+    $listOrders = $this->modelAdmin->getAllBill(); // Lấy danh sách đơn hàng
+    require_once '../../views/Admins/donHang/listDonHang.php'; // Đường dẫn file view danh sách đơn hàng
 }
+
 
 }
 

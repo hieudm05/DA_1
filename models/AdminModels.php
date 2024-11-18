@@ -212,6 +212,19 @@ class AdminModels
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;
     }
-    //sản phẩm
+    //đơn hàng
     
+    public function getAllBill() {
+        try {
+            $sql = 'SELECT * FROM bills ORDER BY id DESC';
+    
+            $stmt = $this->conn->prepare($sql);
+        
+            $stmt->execute();
+
+            return $stmt->fetchAll();
+        } catch(Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 }

@@ -28,15 +28,18 @@ match ($act) {
     'listSP' => (new HomeController())->listSP(),  
     'postSP' => (new HomeController())->postSP(),  
     'xoasp' => (new HomeController())->deleteSP(),  
-    'formSuaSP' => (new HomeController())->formSuaSP(), // <- Fix here
-    'suasp' => (new HomeController())->formSuaSP(),     // Add this line to handle 'suasp'
+    'formSuaSP' => (new HomeController())->formSuaSP(),
+    'suasp' => (new HomeController())->formSuaSP(),    
     'updateSP' => (new HomeController())->updateSP(),  
 
     // Accounts (Tài Khoản)  
     // Tài khoản
     'listTaiKhoan' => (new HomeController()) ->listTaiKhoan(),
     'update_account_status' => (new HomeController()) -> accoutAtive(),
-    'update_account_role' => (new HomeController()) -> accoutRole()
+    'update_account_role' => (new HomeController()) -> accoutRole(),
+
+    //đơn hàng 
+    'listDonHang' => (new HomeController())->listBills(),
 };
 
     

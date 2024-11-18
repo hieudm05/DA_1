@@ -214,7 +214,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#charts" aria-expanded="false"
+                        <a class="nav-link" href="?act=listDonHang" aria-expanded="false"
                             aria-controls="charts">
                             <i class="menu-icon mdi mdi-chart-line"></i>
                             <span class="menu-title">Quản lí đơn hàng</span>
