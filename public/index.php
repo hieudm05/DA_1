@@ -1,4 +1,6 @@
 <?php 
+session_start();
+ob_start();
 include '../views/Clients/header.php';
 // Require file Common
 require_once '../commons/env.php'; // Khai báo biến môi trường
@@ -23,8 +25,11 @@ match ($act) {
     // Tài khoản
     'updateAcount' => (new ClientController()) -> updateAcount(),
     'login' => (new ClientController()) -> login(),
+    'postLogin' => (new ClientController()) -> postLogin(),
     'signup' => (new ClientController()) -> signUp(),
+    'logout' => (new ClientController()) -> logOut(),
     // Xử lí tài khoản
     'postAddAcount' => (new ClientController()) -> addAccount(),
 };
 include '../views/Clients/footer.php';
+ob_end_flush();

@@ -246,6 +246,13 @@
                             <span class="menu-title">Quản lí bình luận</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost/base_test_DA1/public/" aria-expanded="false"
+                            aria-controls="auth">
+                            <i class="menu-icon mdi mdi-card-text-outline"></i>
+                            <span class="menu-title">Đăng xuất</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
 

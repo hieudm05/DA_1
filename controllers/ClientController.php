@@ -15,14 +15,45 @@ class ClientController
     }
     // Cập nhật tài khoản
     public function updateAcount() {
-        $id = $_GET['id'];
-        $listAccountById = $this->modelClinets->getAccountById($id);
+        if(isset($_SESSION['user']) && is_array($_SESSION['user'])){
+             extract($_SESSION['user']);
+        }
         require_once '../views/Clients/UpdateTaiKhoan/updateTk.php';
     }
     public function login() {
         require_once '../views/Clients/accounts/login.php';
     }
+    public function postLogin() {
+        $thongbao = "";
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userOrEmail = $_POST['username']; 
+            $pass = $_POST['password'];
+            $check = $this->modelClinets->checkAcc($userOrEmail, $pass);
+            if (is_array($check)) {
+                if($check['active'] === 1){
+                    $thongbao ="Tài khoản đã bị khoá";
+                    header('Location: http://localhost/base_test_DA1/public/?act=login');
+                }else{
+                    $_SESSION['user'] = $check;
+                    header('Location: http://localhost/base_test_DA1/public/');
+                    exit;
+                }
+            } else {
+                $thongbao = 'Tài khoản hoặc mật khẩu không đúng';
+            }
+        } else {
+            echo 'Lỗi';
+        }
+        require_once '../views/Clients/accounts/login.php';
+    }
+
+    public function logOut(){
+        session_unset();
+        session_destroy();
+        header('Location: http://localhost/base_test_DA1/public/');
+    }
     public function signUp() {
+        
         require_once '../views/Clients/accounts/signUp.php';
     }
     // Đăng kí tài khoản
@@ -38,7 +69,5 @@ class ClientController
             }
         }
     }
-
-    
 
 }

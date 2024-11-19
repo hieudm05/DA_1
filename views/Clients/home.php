@@ -97,7 +97,7 @@
 <div class="container mt-3">
 <h5 class="text-danger">Sách khuyến mại</h5>
 <div class="d-flex flex-wrap">
-    <div class="col-sm-3 mt-2">
+    <div class="col-6 col-md-4 col-lg-3 mt-2">
         <div class="card" style="width: 12rem;">
             <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
             <div class="card-body" style="font-size: 0.85rem;">
@@ -107,7 +107,7 @@
         </div>
     </div>
 
-    <div class="col-sm-3 mt-2">
+    <div class="col-6 col-md-4 col-lg-3 mt-2">
         <div class="card" style="width: 12rem;">
             <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
             <div class="card-body" style="font-size: 0.85rem;">
@@ -117,7 +117,7 @@
         </div>
     </div>
 
-    <div class="col-sm-3 mt-2">
+    <div class="col-6 col-md-4 col-lg-3 mt-2">
         <div class="card" style="width: 12rem;">
             <img src="https://product.hstatic.net/200000845405/product/8934974185086_1_01db5450a212484da9b6cf4139c4a867_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height:180px; object-fit: cover;">
             <div class="card-body" style="font-size: 0.85rem;">
@@ -127,7 +127,7 @@
         </div>
     </div>
 
-    <div class="col-sm-3 mt-2">
+    <div class="col-6 col-md-4 col-lg-3 mt-2">
         <div class="card" style="width: 12rem;">
             <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
             <div class="card-body" style="font-size: 0.85rem;">
@@ -137,7 +137,7 @@
         </div>
     </div>
 
-    <div class="col-sm-3 mt-2">
+    <div class="col-6 col-md-4 col-lg-3 mt-2">
         <div class="card" style="width: 12rem;">
             <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
             <div class="card-body" style="font-size: 0.85rem;">
@@ -147,7 +147,7 @@
         </div>
     </div>
 
-    <div class="col-sm-3 mt-2">
+    <div class="col-6 col-md-4 col-lg-3 mt-2">
         <div class="card" style="width: 12rem;">
             <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
             <div class="card-body" style="font-size: 0.85rem;">
@@ -157,7 +157,7 @@
         </div>
     </div>
 
-    <div class="col-sm-3 mt-2">
+    <div class="col-6 col-md-4 col-lg-3 mt-2">
         <div class="card" style="width: 12rem;">
             <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
             <div class="card-body" style="font-size: 0.85rem;">
@@ -167,7 +167,7 @@
         </div>
     </div>
 
-    <div class="col-sm-3 mt-2">
+    <div class="col-6 col-md-4 col-lg-3 mt-2">
         <div class="card" style="width: 12rem;">
             <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
             <div class="card-body" style="font-size: 0.85rem;">
@@ -202,7 +202,7 @@
                 display: none; /* Ẩn thanh cuộn trên Chrome, Safari và Opera */
             }
         </style>
-        <div class="col-sm-3 mt-2">
+        <div class="col-6 col-md-4 col-lg-3 mt-2">
             <div class="card" style="width: 12rem;">
                 <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
                 <div class="card-body" style="font-size: 0.85rem;">
@@ -212,7 +212,7 @@
             </div>
         </div>
         <!-- Thêm các sản phẩm khác -->
-        <div class="col-sm-3 mt-2">
+        <div class="col-6 col-md-4 col-lg-3 mt-2">
             <div class="card" style="width: 12rem;">
                 <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
                 <div class="card-body" style="font-size: 0.85rem;">
@@ -222,7 +222,7 @@
             </div>
         </div>
 
-        <div class="col-sm-3 mt-2">
+        <div class="col-6 col-md-4 col-lg-3 mt-2">
             <div class="card" style="width: 12rem;">
                 <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
                 <div class="card-body" style="font-size: 0.85rem;">
@@ -232,7 +232,7 @@
             </div>
         </div>
 
-        <div class="col-sm-3 mt-2">
+        <div class="col-6 col-md-4 col-lg-3 mt-2">
             <div class="card" style="width: 12rem;">
                 <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
                 <div class="card-body" style="font-size: 0.85rem;">
@@ -242,7 +242,7 @@
             </div>
         </div>
 
-        <div class="col-sm-3 mt-2">
+        <div class="col-6 col-md-4 col-lg-3 mt-2">
             <div class="card" style="width: 12rem;">
                 <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
                 <div class="card-body" style="font-size: 0.85rem;">
@@ -252,7 +252,7 @@
             </div>
         </div>
 
-        <div class="col-sm-3 mt-2">
+        <div class="col-6 col-md-4 col-lg-3 mt-2">
             <div class="card" style="width: 12rem;">
                 <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
                 <div class="card-body" style="font-size: 0.85rem;">

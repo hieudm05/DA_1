@@ -13,18 +13,16 @@
 <!-- Top Bar -->
 <!-- Top Header -->
 <!-- Header -->
-<header class="sticky-top">
-    <!-- Contact Info Bar -->
-    <div style="background-color: #C62E2E;" class="text-white py-2">
+<div style="background-color: #C62E2E;" class="text-white py-2">
         <div class="container">
             <div class="row align-items-center">
                 <!-- Contact Info -->
                 <div class="col-12 col-md d-flex flex-wrap justify-content-center justify-content-md-start text-center text-md-start mb-2 mb-md-0">
                     <span><i class="bi bi-telephone"></i> 19004953</span>
-                    <span class="ms-3">📍 P. Trịnh Văn Bô, Xuân Phương, Nam Từ Liêm, Hà Nội</span>
+                    <span class="ms-3 text-sm text-md text-lg">📍 P. Trịnh Văn Bô, Xuân Phương, Nam Từ Liêm, Hà Nội</span>
                 </div>
                 <!-- Social Links -->
-                <div class="col-12 col-md-auto d-flex justify-content-center justify-content-md-end">
+                <div class="col-12 col-md-auto d-flex justify-content-center justify-content-md-end d-none d-md-block">
                     <a href="#" class="text-white ms-2"><i class="bi bi-facebook"></i></a>
                     <a href="#" class="text-white ms-2"><i class="bi bi-instagram"></i></a>
                     <a href="#" class="text-white ms-2"><i class="bi bi-youtube"></i></a>
@@ -32,9 +30,12 @@
             </div>
         </div>
     </div>
+<header class="sticky-top">
+    <!-- Contact Info Bar -->
+    
 
     <!-- Main Header -->
-    <div style="background-color: #F2E8C6;" class="text-dark py-2">
+    <div style="background-color: #F2E8C6;" class="text-dark py-2 ">
         <div class="container">
             <div class="row align-items-center">
                 <!-- Logo -->
@@ -44,7 +45,7 @@
                     </div>
                 </div>
                 <!-- Search Bar -->
-                <div class="col-12 col-md-4">
+                <div class="col-8 col-md-4">
                     <form class="d-flex justify-content-center">
                         <input type="search" 
                                class="form-control form-control-sm" 
@@ -57,16 +58,32 @@
                     </form>
                 </div>
                 <!-- Contact Info -->
-                <div class="col-12 col-md-4 d-flex justify-content-end">
+                <div class="col-4 col-md-4 d-flex justify-content-end">
                     <ul class="nav nav d-flex justify-content-between">
                         <li class="nav-item">
-                            <span class="d-flex flex-column">
+                            <span class="d-flex flex-column d-none d-md-block">
                                 <div class="small">Tư vấn bán hàng</div>
                                 <div class="fw-bold">19004953</div>
                             </span>
                         </li>
                         <li><a class="nav-link text-dark" style="font-size: 18px;" href="#"><i class="bi bi-cart3"></i></a></li>
+                        <?php if(isset($_SESSION['user'])){  extract($_SESSION['user']) ?>
                         <li class="nav-item dropdown d-flex align-items-center">
+                            <a class="dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button" style="font-size: 18px;" aria-expanded="false"><img src="<?= $avatar ?>" height="24"  style="border-radius: 50% ;" alt=""></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="?act=updateAcount&id=<?=$_SESSION['user']['id'] ?>">Cập nhật tài khoản</a></li>
+                                <?php if($role === 1 ) { ?>
+                                    <li><a class="dropdown-item" href="http://localhost/base_test_DA1/views/Admins/router.php">Đăng nhập admin</a></li>
+                                <?php }else{ ?>
+                                    <li><a class="dropdown-item" href="?act=signup">Lấy lại pass</a></li>
+                                <?php } ?>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="?act=logout">Đăng xuất</a></li> 
+                            </ul>
+                        </li>
+                        <?php }else{?>
+                            <li class="nav-item dropdown d-flex align-items-center">
                             <a class="dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button" style="font-size: 18px;" aria-expanded="false"><i class="bi bi-person-circle"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="?act=login">Đăng nhập</a></li>
@@ -76,6 +93,7 @@
                                 <li><a class="dropdown-item" href="#">Separated link</a></li> -->
                             </ul>
                         </li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>

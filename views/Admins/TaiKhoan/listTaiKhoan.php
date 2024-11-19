@@ -36,8 +36,8 @@
                         <form action="router.php?act=update_account_status" method="POST">
                             <input type="hidden" name="id" value="<?= $acount['id'] ?>">
                             <input type="hidden" name="active" value="<?= $acount['active'] == 1 ? 0 : 1 ?>">
-                            <button type="submit" class="btn <?= $acount['active'] == 1 ? 'btn-danger' : 'btn-success' ?> btn-sm">
-                                <?= $acount['active'] == 1 ? 'Ẩn' : 'Hiện' ?>
+                            <button type="submit" class="btn <?= $acount['active'] == 1 ? ' btn-success' : 'btn-danger' ?> btn-sm">
+                                <?= $acount['active'] == 1 ? 'Hiện' : 'Ẩn' ?>
                             </button>
                         </form>
                     </td>

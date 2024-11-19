@@ -46,6 +46,19 @@ class ClientModels
             return false;
         }
     }
+
+    // Login
+    public function checkAcc($userOrEmail, $pass) {
+        $sql = 'SELECT * FROM accounts WHERE (username = :userOrEmail OR email = :userOrEmail) AND password = :pass';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':userOrEmail' => $userOrEmail,
+            ':pass' => $pass
+        ]);
+        return $stmt->fetch();
+    }
+   
+    
     
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;
