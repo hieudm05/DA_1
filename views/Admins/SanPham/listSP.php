@@ -28,8 +28,15 @@
                         <?php   
                             $suasp = "router.php?act=suasp&id=" . $sp['id'];  
                             $xoasp = "router.php?act=xoasp&id=" . $sp['id'];  
-                            $imgPath = '../../../uploads/'.$sp['img'];  
-                            $hinh = (is_file($imgPath) && !empty($sp['img'])) ? '<img src="'.$imgPath.'" style="  background-size:cover;  ">' : 'No photo';  
+                            
+
+$imgPath = $sp['img']; // Sử dụng đường dẫn từ cơ sở dữ liệu trực tiếp
+if (!empty($imgPath) && file_exists($imgPath)) {
+    $hinh = '<img src="' . $imgPath . '" style="width:100px; height:100px; object-fit:cover;">';
+} else {
+    $hinh = 'No photo';
+}
+
                         ?>  
                         <tr>  
                             <td><?= $hinh ?></td>  
@@ -37,7 +44,7 @@
                             <td><?= htmlspecialchars($sp['price']) ?></td>  
                             <td><?= htmlspecialchars($sp['mota']) ?></td>  
                             <td><?= htmlspecialchars($sp['luotxem']) ?></td>  
-                            <td>  
+                            <td class="text-end">  
                                 <a href="<?= $suasp ?>" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>  
                                 <a href="<?= $xoasp ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xác nhận xóa sản phẩm')"><i class="bi bi-trash-fill"></i></a>  
                             </td>  

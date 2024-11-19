@@ -12,3 +12,6 @@ define('DB_PASSWORD', '');
 define('DB_NAME'    , 'duan1');  // Tên database
 
 define('PATH_ROOT'    , __DIR__ . '/../');
+
+
+

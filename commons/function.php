@@ -21,18 +21,26 @@ function connectDB() {
         echo ("Connection failed: " . $e->getMessage());
     }
 }
-function uploadFile($file, $folderSave){
+function uploadFile($file, $folderSave) {
     $file_upload = $file;
-    $pathStorage = $folderSave . rand(10000, 99999) . $file_upload['name'];
+    $filename = uniqid() . '-' . basename($file_upload['name']); // Tạo tên file duy nhất
+    $pathStorage = rtrim($folderSave, '/') . '/' . $filename; // Đường dẫn tương đối từ thư mục gốc
+    $pathSave = PATH_ROOT . $pathStorage; // Kết hợp với PATH_ROOT để tạo đường dẫn tuyệt đối
 
-    $tmp_file = $file_upload['tmp_name'];
-    $pathSave = PATH_ROOT . $pathStorage; 
+    // Tạo thư mục nếu chưa tồn tại
+    if (!file_exists(dirname($pathSave))) {
+        mkdir(dirname($pathSave), 0777, true);
+    }
 
-    if (move_uploaded_file($tmp_file, $pathSave)) {
-        return $pathStorage;
+    // Di chuyển file
+    if (move_uploaded_file($file_upload['tmp_name'], $pathSave)) {
+        return $pathStorage; // Trả về đường dẫn tương đối để lưu vào DB
     }
     return null;
 }
+
+
+
 
 function deleteFile($file){
     $pathDelete = PATH_ROOT . $file;

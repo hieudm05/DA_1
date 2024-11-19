@@ -110,27 +110,26 @@ class HomeController
     
             // Kiểm tra file ảnh
             if (isset($_FILES['img']) && $_FILES['img']['error'] == UPLOAD_ERR_OK) {
-                $file_save = uploadFile($_FILES['img'], '../uploads');
-                
+                $file_save = uploadFile($_FILES['img'], 'uploads');
                 if ($file_save) { 
-                    // Nếu lưu ảnh thành công
+                    // Chỉ lưu tên tệp ảnh vào database
                     if ($this->modelAdmin->postSP($namesp, $price, $file_save, $mota, $iddm)) {
                         header('Location: router.php?act=listSP');
-                        exit(); 
+                        exit();
                     } else {
                         echo "Lỗi khi thêm sản phẩm vào cơ sở dữ liệu.";
                     }
                 } else {
                     echo "Lỗi khi lưu tệp ảnh.";
                 }
-            } else {
-                echo "Lỗi: Vui lòng chọn ảnh hợp lệ.";
             }
+            
         } else {
             header('Location: /router.php?act=listSP');
             exit();
         }
     }
+    
 public function deleteSP() {  
     $id = $_GET['id'];  
 
@@ -167,22 +166,23 @@ public function updateSP() {
         $price = $_POST['price'];  
         $mota = $_POST['mota'];  
         $iddm = $_POST['iddm'];  
-        $img = ''; // Handle image separately  
+        $img = ''; // Xử lý ảnh mới  
 
         if (isset($_FILES['img']) && $_FILES['img']['error'] == 0) {  
-            // Handle image upload  
-            $file_save = uploadFile($_FILES['img'], '../uploads/');  
+            // Xử lý upload ảnh mới  
+            $file_save = uploadFile($_FILES['img'], 'uploads');  
             if ($file_save) {  
-                $img = $file_save; // Set img to the new file path  
+                $img = $file_save; // Gán đường dẫn ảnh mới  
             } else {  
                 echo "Lỗi khi lưu tệp ảnh.";  
                 return;  
             }  
         }  
 
-        // Update using model; if no new image, fetch current image  
-        if ($this->modelAdmin->updateSP($id, $namesp, $price, $img ?: $_POST['current_img'], $mota, $iddm)) {  
-            header('Location: router.php?act=listSP'); // Redirect after update  
+        // Cập nhật sản phẩm
+        $current_img = $_POST['current_img'];
+        if ($this->modelAdmin->updateSP($id, $namesp, $price, $img ?: $current_img, $mota, $iddm)) {  
+            header('Location: router.php?act=listSP');  
             exit;  
         } else {  
             echo "Lỗi khi cập nhật sản phẩm.";  
@@ -191,7 +191,8 @@ public function updateSP() {
         header('Location: router.php?act=listSP');  
         exit();  
     }  
-} //đơn hàng
+}
+ //đơn hàng
 
 public function listBills() {
     $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
