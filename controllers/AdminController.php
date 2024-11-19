@@ -140,7 +140,7 @@ public function deleteSP() {
             header('Location: router.php?act=listSP');  
             exit;  
         } else {  
-                        echo "Không thể xóa sản phẩm.";  
+             echo "Không thể xóa sản phẩm.";  
         }  
     } else {  
         echo "Sản phẩm không tồn tại.";  

@@ -4,6 +4,16 @@
             <h3 class="mb-0">Cập nhật sản phẩm</h3>  
             <a href="router.php?act=listSP" class="btn btn-primary btn-sm">Danh sách sản phẩm</a>  
         </div>  
+        <?php 
+            $hinh = 'No photo'; // Giá trị mặc định nếu không có hình
+            if (!empty($product['img'])) {
+                $imgPath = '../../' . $product['img'];
+                if (file_exists($imgPath)) {
+                    $hinh = '<img src="' . htmlspecialchars($imgPath) . '" style="width:100px; height:100px; object-fit:cover;">';
+                }
+            }
+            ?>
+
         <div class="card-body">  
             <div class="col-sm-8">  
                 <form action="router.php?act=updateSP" method="POST" enctype="multipart/form-data">  
@@ -30,7 +40,7 @@
 
                     <div class="form-group">  
                         <label for="current_img">Hình ảnh hiện tại</label><br>  
-                        <img src="<?php echo htmlspecialchars($product['img']); ?>" alt="Current Image" style="max-width: 200px;"/>  
+                        <?= $hinh ?>
                         <input type="hidden" name="current_img" value="<?php echo htmlspecialchars($product['img']); ?>" />  
                     </div>  
 

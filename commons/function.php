@@ -39,9 +39,6 @@ function uploadFile($file, $folderSave) {
     return null;
 }
 
-
-
-
 function deleteFile($file){
     $pathDelete = PATH_ROOT . $file;
     if (file_exists($pathDelete)) {

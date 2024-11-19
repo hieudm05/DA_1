@@ -30,12 +30,13 @@
                             $xoasp = "router.php?act=xoasp&id=" . $sp['id'];  
                             
 
-$imgPath = $sp['img']; // Sử dụng đường dẫn từ cơ sở dữ liệu trực tiếp
-if (!empty($imgPath) && file_exists($imgPath)) {
-    $hinh = '<img src="' . $imgPath . '" style="width:100px; height:100px; object-fit:cover;">';
-} else {
-    $hinh = 'No photo';
-}
+                $imgPath = '../../'.$sp['img'];
+                $hinh ="";
+                if (!empty($imgPath) && file_exists($imgPath)) {
+                    $hinh = '<img src="' . $imgPath . '" style="width:100px; height:100px; object-fit:cover;">';
+                } else {
+                    $hinh = 'No photo';
+                }
 
                         ?>  
                         <tr>  
