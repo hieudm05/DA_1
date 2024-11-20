@@ -30,6 +30,7 @@ match ($act) {
     'logout' => (new ClientController()) -> logOut(),
     // Xử lí tài khoản
     'postAddAcount' => (new ClientController()) -> addAccount(),
+
 };
 include '../views/Clients/footer.php';
 ob_end_flush();

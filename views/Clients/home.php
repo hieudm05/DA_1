@@ -1,67 +1,85 @@
+<style>
+.no {
+    transition: all 0.5s linear; 
+}
+.no:hover{
+    transform: translateY(-10px); 
+    opacity: 0.9; 
+}
+    /* Ẩn các nút khi không hover */
+.product-actions {
+    display: flex; /* Đảm bảo các nút nằm ngang nhau */
+    justify-content:space-between; 
+    gap: 20px; /* Khoảng cách giữa các nút */
+    position: absolute;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0; 
+    transition: opacity 0.5s ease; /* Chỉ thêm transition cho opacity để các nút xuất hiện từ từ */
+}
+
+
+/* Khi hover vào sản phẩm, nút sẽ từ từ xuất hiện */
+.card:hover .product-actions {
+    opacity: 1; /* Đặt opacity thành 1 khi hover vào sản phẩm */
+}
+
+/* Cải thiện kiểu dáng của nút */
+.product-actions button {
+    padding: 5px 9px;
+    background-color: #C62E2E;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Thêm hiệu ứng thay đổi màu nền khi hover */
+}
+
+/* Hiệu ứng khi hover vào nút */
+.product-actions button:hover {
+    background-color: #F2E8C6; /* Thay đổi màu khi hover vào nút */
+}
+
+
+
+
+</style>
 <div class="container my-4">
     <div class="row">
         <!-- Sidebar Menu -->
         <div class="col-md-3 bg-light border-end d-none d-md-block">
             <h5 class="text-uppercase py-3 ps-3">Danh mục</h5>
+            <?php foreach( $listDanhMuc  as $dm)  :?>
+                <?php 
+                $linkDm = "?act=danhmuc&id=" . $dm["id"];
+                ?>
             <ul class="list-unstyled ps-3">
                 <li class="d-flex justify-content-between align-items-center py-2">
-                    <span>Sách Kinh Tế</span>
-                </li>
-                <li class="d-flex justify-content-between align-items-center py-2">
-                    <span>Sách Văn Học Trong Nước</span>
-                </li>
-                <li class="d-flex justify-content-between align-items-center py-2">
-                    <span>Sách Văn Học Nước Ngoài</span>
-                </li>
-                <li class="d-flex justify-content-between align-items-center py-2">
-                    <span>Sách Thường Thức Đời Sống</span>
-                </li>
-                <li class="d-flex justify-content-between align-items-center py-2">
-                    <span>Sách Thiếu Nhi</span>
-                </li>
-                <li class="d-flex justify-content-between align-items-center py-2">
-                    <span>Sách Phát Triển Bản Thân</span>
-                </li>
-                <li class="d-flex justify-content-between align-items-center py-2">
-                    <span>Sách Tiếng Học Ngoại Ngữ</span>
-                </li>
-                <li class="d-flex justify-content-between align-items-center py-2">
-                    <span>Sách Chuyên Ngành</span>
-                </li>
-                <li class="d-flex justify-content-between align-items-center py-2">
-                    <span>Sách Giáo Khoa - Giáo Trình</span>
-                </li>
-                <li class="d-flex justify-content-between align-items-center py-2">
-                    <span>Sách Mới Phát Hành</span>
+                    <a class="text-dark text-decoration-none" href="<?= $linkDm ?>"><?= $dm['name'] ?></a>
                 </li>
             </ul>
+            <?php endforeach; ?>
             
             <!-- Sản phẩm bán chạy đây nhé -->
             <div class="container mt-3">
                 <h5 class="">Sách mới bán chạy</h5>
                 <div class="d-flex flex-wrap">
+                <?php foreach($top10 as $top) :  $imgPath = '../'.$top['img'];  
+                $linkSp = "?act=sanpham&id=" . $top["id"];?>
                     <div class="col-sm-12 mt-2">
                         <div class="d-flex border p-2 position-relative">
                             <div class="badge bg-danger text-light position-absolute" style="top: -10px; left: 10px; z-index: 1;">20%</div>
-                            <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" alt="Sách Nổi Bật" style="height: 100px; object-fit: cover; width: 120px;">
+                            <img  src="<?=  $imgPath ?>" alt="Sách Nổi Bật" style="height: 100px; object-fit: cover; width: 120px;">
                             <div class="ms-3" style="flex-grow: 1; font-size: 0.85rem;">
-                                <h5 style="font-size: 1rem;">Binh pháp gia truyền</h5>
+                                <a href="<?= $linkSp ?>"><h5 style="font-size: 1rem;"><?= $top['namesp'] ?></h5></a>
                                 <p><span class="text-danger">87,200đ</span> <del>109,000đ</del></p>
                             </div>
                         </div>
+                       
                     </div>
-                        <!-- Lặp lại cấu trúc tương tự cho các sản phẩm khác -->
-                        <div class="col-sm-12 mt-2">
-                            <div class="d-flex border p-2 position-relative">
-                                <div class="badge bg-danger text-light position-absolute" style="top: -10px; left: 10px; z-index: 1;">20%</div>
-                                <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" alt="Sách Nổi Bật" style="height: 100px; object-fit: cover; width: 120px;">
-                                <div class="ms-3" style="flex-grow: 1; font-size: 0.85rem;">
-                                    <h5 style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                                    <p><span class="text-danger">87,200đ</span> <del>109,000đ</del></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
 
 
@@ -99,7 +117,7 @@
 <div class="d-flex flex-wrap">
     <div class="col-6 col-md-4 col-lg-3 mt-2">
         <div class="card" style="width: 12rem;">
-            <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
+            <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top imgHieuUng" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
             <div class="card-body" style="font-size: 0.85rem;">
                 <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
                 <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
@@ -192,84 +210,39 @@
 </div>
 
 
+<!-- Các sản phẩm theo danh mục -->
+<?php
+// Bước 1: Lọc các danh mục duy nhất
+$categories = array_unique(array_column($datas, 'category_name'));
 
-
-<div class="container mt-3">
-    <h5 class="">Sách thiếu nhi</h5>
-    <div class="d-flex flex-nowrap" style="overflow-x: scroll; -ms-overflow-style: none; scrollbar-width: none; gap: 10px;">
-        <style>
-            .d-flex::-webkit-scrollbar {
-                display: none; /* Ẩn thanh cuộn trên Chrome, Safari và Opera */
-            }
-        </style>
-        <div class="col-6 col-md-4 col-lg-3 mt-2">
-            <div class="card" style="width: 12rem;">
-                <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
-                <div class="card-body" style="font-size: 0.85rem;">
-                    <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                    <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-                </div>
-            </div>
-        </div>
-        <!-- Thêm các sản phẩm khác -->
-        <div class="col-6 col-md-4 col-lg-3 mt-2">
-            <div class="card" style="width: 12rem;">
-                <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
-                <div class="card-body" style="font-size: 0.85rem;">
-                    <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                    <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-6 col-md-4 col-lg-3 mt-2">
-            <div class="card" style="width: 12rem;">
-                <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
-                <div class="card-body" style="font-size: 0.85rem;">
-                    <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                    <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-6 col-md-4 col-lg-3 mt-2">
-            <div class="card" style="width: 12rem;">
-                <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
-                <div class="card-body" style="font-size: 0.85rem;">
-                    <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                    <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-6 col-md-4 col-lg-3 mt-2">
-            <div class="card" style="width: 12rem;">
-                <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
-                <div class="card-body" style="font-size: 0.85rem;">
-                    <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                    <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-6 col-md-4 col-lg-3 mt-2">
-            <div class="card" style="width: 12rem;">
-                <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
-                <div class="card-body" style="font-size: 0.85rem;">
-                    <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                    <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-                </div>
-            </div>
-        </div>
-        <!-- Lặp lại các phần tử sách -->
-    </div>
-</div>
-
-
-
-
-
-
+// Bước 2: Hiển thị sản phẩm theo từng danh mục
+ foreach ($categories as $category_name): ?>
+    <div class="container mt-3 ">
+        <h5 class=""><?= $category_name ?></h5>
+        <div class="d-flex flex-nowrap" style="overflow-x: scroll; -ms-overflow-style: none; scrollbar-width: none; gap: 10px;">
+            <?php foreach ($datas as $product):
+                 $linkSp = "?act=sanpham&id=" . $product["id"];
+                $imgPath = '../'.$product['img'];
+                if ($product['category_name'] == $category_name):
+            ?>
+                    <div class="col-6 col-md-4 col-lg-3 mt-2 no">
+                        <div class="card" style="width: 12rem; position: relative;">
+                            <img src="<?= $imgPath ?>" class="imgHieuUng " alt="<?= $product['namesp'] ?>" style="height: 180px; object-fit: cover;">
+                            <div class="card-body" style="font-size: 0.85rem;">
+                                <a href="<?=$linkSp?>" class="text-dark text-decoration-none"><h5 class="card-title" style="font-size: 1rem;"><?= $product['namesp'] ?></h5></a>
+                                <h6><span class="card-text text-danger"><?= $product['price'] ?>đ</span></h6>
+                            </div>
+                            <!-- Nút giỏ hàng và yêu thích -->
+                            <div class="product-actions">
+                                <button class="btn-cart"><i class="bi bi-cart-plus"></i></button>
+                                <button class="btn-wishlist"><i class="bi bi-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+            <?php endif; endforeach; ?>
+        </div>  <!-- End of d-flex -->
+    </div>  <!-- End of container -->
+<?php endforeach; ?>
 
 <div class="container mt-3 overflow-hidden">
 <h5 class="">Nhà phát hành</h5>
@@ -299,12 +272,12 @@
   #scrolling-container {
     animation: scroll-horizontal  15s  linear infinite;
   }
-
   @keyframes scroll-horizontal {
     0% { transform: translateX(0); }
     100% { transform: translateX(-100%); }
   }
 </style>
+
 
 
 

@@ -9,9 +9,12 @@ class ClientController
 
 
     public function home() {
-        // $listStudent = $this->modelStudent->getAll();
-
+        $listDanhMuc = $this->modelClinets->getAllDanhMuc();
+        $datas = $this ->modelClinets->getAllProductsByCategory();
+        $top10 = $this -> modelClinets -> getTop10Sp();
+        // var_dump($datas);
         require_once '../views/Clients/home.php';
+        // require_once '../views/Clients/header.php';
     }
     // Cập nhật tài khoản
     public function updateAcount() {
@@ -53,7 +56,6 @@ class ClientController
         header('Location: http://localhost/base_test_DA1/public/');
     }
     public function signUp() {
-        
         require_once '../views/Clients/accounts/signUp.php';
     }
     // Đăng kí tài khoản
@@ -70,4 +72,11 @@ class ClientController
         }
     }
 
+    // List danh mục
+    // public function listDm() {
+    //     // $listStudent = $this->modelStudent->getAll();
+    //     $listDanhMuc = $this->modelClinets->getAllDanhMuc();
+    //     // var_dump($listDanhMuc);
+    //     require_once '../views/Clients/hde.php';
+    // }
 }

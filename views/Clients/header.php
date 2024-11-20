@@ -7,6 +7,22 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+       /* Áp dụng cho toàn bộ trang */
+* {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hiệu ứng mượt mà cho phần tử khi hover */
+a, button, .card {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+a:hover, button:hover, .card:hover {
+    transform: scale(1.05);  /* Phóng to nhẹ */
+}
+
+    </style>
 </head>
 <body>
 
@@ -118,13 +134,19 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Sản phẩm
                     </a>
+
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Sản phẩm 1</a></li>
-                        <li><a class="dropdown-item" href="#">Sản phẩm 2</a></li>
+                    <?php foreach( $listDanhMuc as $dm)  :?>
+                        <?php 
+                        $linkDm = "?act=sanpham&id=" . $dm["id"];
+                        ?>
+                        <li><a class="dropdown-item" href="<?= $linkDm ?>"> <?= $dm['name'] ?></a></li>
+                       
+                        <?php endforeach;?>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Cửa hàng</a>
+                    <a class="nav-link" href="#">Cửa hàng </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Liên hệ</a>
