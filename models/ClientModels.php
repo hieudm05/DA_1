@@ -32,6 +32,32 @@ class ClientModels
             return false;
         }
     }
+    public function updateAccout($id, $username, $email, $avatar, $address, $sdt){
+        try {
+            $sql = "UPDATE accounts 
+                    SET 
+                        username = :username, 
+                        email = :email, 
+                        avatar = :avatar, 
+                        address = :address, 
+                        sdt = :sdt
+                    WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                'username' => $username, 
+                'email' => $email, 
+                'avatar' => $avatar, 
+                'address' => $address, 
+                'sdt' => $sdt, 
+                'id' => $id
+            ]);
+            return true;
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
 
     // Login
     public function checkAcc($userOrEmail, $pass) {

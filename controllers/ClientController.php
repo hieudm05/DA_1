@@ -12,17 +12,58 @@ class ClientController
         $listDanhMuc = $this->modelClinets->getAllDanhMuc();
         $datas = $this ->modelClinets->getAllProductsByCategory();
         $top10 = $this -> modelClinets -> getTop10Sp();
-        // var_dump($datas);
+        var_dump($listDanhMuc);
         require_once '../views/Clients/home.php';
-        // require_once '../views/Clients/header.php';
+        // require_once '../views/Clients/footer.php';
     }
     // Cập nhật tài khoản
     public function updateAcount() {
-        if(isset($_SESSION['user']) && is_array($_SESSION['user'])){
-             extract($_SESSION['user']);
+        if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
+            extract($_SESSION['user']);
+            $imgPath = './../' . $avatar;
+            $avt = $imgPath ? $imgPath : './img/userNo.jpg';
+    
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $id = $_POST['id'];
+                $username = $_POST['username'];
+                $email = $_POST['email'];
+                $address = $_POST['address'];
+                $sdt = $_POST['sdt'];
+    
+                // Xử lý ảnh đại diện
+                $avatar = $avt;
+                if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] == UPLOAD_ERR_OK) {
+                    $file_save = uploadFile($_FILES['avatar'], 'uploads/users');
+                    if ($file_save) {
+                        $avatar = $file_save; // Gán đường dẫn ảnh mới
+                    } else {
+                        echo "Lỗi khi lưu tệp ảnh.";
+                        return;
+                    }
+                }
+    
+                // Cập nhật thông tin
+                $current_img = $_POST['current_img'];
+                if ($this->modelClinets->updateAccout($id, $username, $email, $avatar ?: $current_img, $address, $sdt)) {
+                    // Cập nhật thành công
+                    // Lấy lại thông tin người dùng mới
+                    $_SESSION['user'] = $this->modelClinets->getAccountById($id);
+                    header('Location: http://localhost/base_test_DA1/public/');
+                    exit;
+                } else {
+                    echo "Lỗi khi cập nhật tài khoản.";
+                }
+            } else {
+                require '../views/Clients/UpdateTaiKhoan/updateTk.php';
+                exit;
+            }
         }
+    
+        // Gọi view cập nhật tài khoản
         require_once '../views/Clients/UpdateTaiKhoan/updateTk.php';
-    }
+    } 
+      
+    
     public function login() {
         require_once '../views/Clients/accounts/login.php';
     }
