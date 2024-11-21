@@ -83,11 +83,11 @@ a:hover, button:hover, .card:hover {
                             </span>
                         </li>
                         <li><a class="nav-link text-dark" style="font-size: 18px;" href="#"><i class="bi bi-cart3"></i></a></li>
-                        <?php if(isset($_SESSION['user'])){  extract($_SESSION['user']) ?>
+                        <?php if(isset($_SESSION['user'])){  extract($_SESSION['user']); $imgPath = './../' . $avatar; $avt = $imgPath ? $imgPath : './img/userNo.jpg';  ?>
                         <li class="nav-item dropdown d-flex align-items-center">
-                            <a class="dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button" style="font-size: 18px;" aria-expanded="false"><img src="<?= $avatar ?>" height="24"  style="border-radius: 50% ;" alt=""></a>
+                            <a class="dropdown-toggle text-dark" data-bs-toggle="dropdown" href="" role="button" style="font-size: 18px;" aria-expanded="false"><img src="<?= $avt ?>" height="24" width="24"  style="border-radius: 50% ;" alt=""></a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="?act=updateAcount&id=<?=$_SESSION['user']['id'] ?>">Cập nhật tài khoản</a></li>
+                                <li><a class="dropdown-item" href="?act=updateAcount&id=<?=$id ?>">Cập nhật tài khoản</a></li>
                                 <?php if($role === 1 ) { ?>
                                     <li><a class="dropdown-item" href="http://localhost/base_test_DA1/views/Admins/router.php">Đăng nhập admin</a></li>
                                 <?php }else{ ?>
@@ -136,13 +136,13 @@ a:hover, button:hover, .card:hover {
                     </a>
 
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <?php foreach( $listDanhMuc as $dm)  :?>
+                    <?php if(is_array($listDanhMuc)):   foreach($listDanhMuc as $dm)  :?>
                         <?php 
                         $linkDm = "?act=sanpham&id=" . $dm["id"];
                         ?>
                         <li><a class="dropdown-item" href="<?= $linkDm ?>"> <?= $dm['name'] ?></a></li>
                        
-                        <?php endforeach;?>
+                        <?php endforeach; endif; ?>
                     </ul>
                 </li>
                 <li class="nav-item">
