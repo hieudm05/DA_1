@@ -15,8 +15,10 @@
             <table class="table table-light" id="productTable">  
                 <thead class="thead-dark">  
                     <tr>    
+                        <th>Danh mục</th> <!-- Thêm cột danh mục -->
                         <th>Hình ảnh</th>  
                         <th>Tên sản phẩm</th>   
+                        <th>Số lượng</th> <!-- Thêm cột số lượng -->  
                         <th>Giá</th>  
                         <th>Mô tả</th>  
                         <th>Lượt xem</th>  
@@ -29,19 +31,21 @@
                             $suasp = "router.php?act=suasp&id=" . $sp['id'];  
                             $xoasp = "router.php?act=xoasp&id=" . $sp['id'];  
                             
+                            $danhMuc = getDMById($sp['iddm']); 
 
-                $imgPath = '../../'.$sp['img'];
-                $hinh ="";
-                if (!empty($imgPath) && file_exists($imgPath)) {
-                    $hinh = '<img src="' . $imgPath . '" style="width:100px; height:100px; object-fit:cover;">';
-                } else {
-                    $hinh = 'No photo';
-                }
-
+                            $imgPath = '../../'.$sp['img'];
+                            $hinh = "";
+                            if (!empty($imgPath) && file_exists($imgPath)) {
+                                $hinh = '<img src="' . $imgPath . '" style="width:100px; height:100px; object-fit:cover;">';
+                            } else {
+                                $hinh = 'No photo';
+                            }
                         ?>  
                         <tr>  
+                            <td><?= htmlspecialchars($danhMuc['name']) ?></td> <!-- Hiển thị danh mục -->
                             <td><?= $hinh ?></td>  
                             <td class="product-name"><?= htmlspecialchars($sp['namesp']) ?></td>  
+                            <td><?= htmlspecialchars($sp['quantity']) ?></td>  
                             <td><?= htmlspecialchars($sp['price']) ?></td>  
                             <td><?= htmlspecialchars($sp['mota']) ?></td>  
                             <td><?= htmlspecialchars($sp['luotxem']) ?></td>  

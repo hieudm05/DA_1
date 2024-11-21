@@ -31,8 +31,6 @@ match ($act) {
     'formSuaSP' => (new HomeController())->formSuaSP(),
     'suasp' => (new HomeController())->formSuaSP(),    
     'updateSP' => (new HomeController())->updateSP(),  
-
-    // Accounts (Tài Khoản)  
     // Tài khoản
     'listTaiKhoan' => (new HomeController()) ->listTaiKhoan(),
     'update_account_status' => (new HomeController()) -> accoutAtive(),

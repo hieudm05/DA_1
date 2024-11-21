@@ -102,32 +102,31 @@ class HomeController
         require_once '../../views/Admins/SanPham/listSP.php';
     }
     public function postSP() {  
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $namesp = $_POST['namesp'];
-            $price = $_POST['price'];
-            $mota = $_POST['mota'];
-            $iddm = $_POST['iddm'];
-    
-            // Kiểm tra file ảnh
-            if (isset($_FILES['img']) && $_FILES['img']['error'] == UPLOAD_ERR_OK) {
-                $file_save = uploadFile($_FILES['img'], 'uploads');
-                if ($file_save) { 
-                    // Chỉ lưu tên tệp ảnh vào database
-                    if ($this->modelAdmin->postSP($namesp, $price, $file_save, $mota, $iddm)) {
-                        header('Location: router.php?act=listSP');
-                        exit();
-                    } else {
-                        echo "Lỗi khi thêm sản phẩm vào cơ sở dữ liệu.";
-                    }
-                } else {
-                    echo "Lỗi khi lưu tệp ảnh.";
-                }
-            }
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {  
+            $namesp = $_POST['namesp'];  
+            $price = $_POST['price'];  
+            $mota = $_POST['mota'];  
+            $iddm = $_POST['iddm'];  
+            $id_soluong = isset($_POST['id_soluong']) ? $_POST['id_soluong'] : null; 
             
-        } else {
-            header('Location: /router.php?act=listSP');
-            exit();
-        }
+            // Kiểm tra file ảnh  
+            if (isset($_FILES['img']) && $_FILES['img']['error'] == UPLOAD_ERR_OK) {  
+                $file_save = uploadFile($_FILES['img'], 'uploads');  
+                if ($file_save) {   
+                    if ($this->modelAdmin->postSP($namesp, $price, $file_save, $mota, $iddm, $id_soluong)) {  
+                        header('Location: router.php?act=listSP');  
+                        exit();  
+                    } else {  
+                        echo "Lỗi khi thêm sản phẩm vào cơ sở dữ liệu.";  
+                    }  
+                } else {  
+                    echo "Lỗi khi lưu tệp ảnh.";  
+                }  
+            }  
+        } else {  
+            header('Location: /router.php?act=listSP');  
+            exit();  
+        }  
     }
     
 public function deleteSP() {  
@@ -166,6 +165,7 @@ public function updateSP() {
         $price = $_POST['price'];  
         $mota = $_POST['mota'];  
         $iddm = $_POST['iddm'];  
+        $id_soluong = $_POST['id_soluong'];
         $img = ''; // Xử lý ảnh mới  
 
         if (isset($_FILES['img']) && $_FILES['img']['error'] == 0) {  
@@ -181,7 +181,7 @@ public function updateSP() {
 
         // Cập nhật sản phẩm
         $current_img = $_POST['current_img'];
-        if ($this->modelAdmin->updateSP($id, $namesp, $price, $img ?: $current_img, $mota, $iddm)) {  
+        if ($this->modelAdmin->updateSP($id, $namesp, $price, $img ?: $current_img, $mota, $iddm, $id_soluong)) {  
             header('Location: router.php?act=listSP');  
             exit;  
         } else {  

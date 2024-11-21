@@ -29,7 +29,11 @@
                     <div class="form-group">  
                         <label for="gia">Giá</label>  
                         <input id="gia" class="form-control" type="number" name="price" min="0" value="0" required>  
-                    </div>   
+                    </div> 
+                    <div class="form-group">  
+                        <label for="soluong">Số Lượng</label>  
+                        <input id="soluong" class="form-control" type="number" name="id_soluong" min="1" value="1" required>  <!-- Changed from 'soluong' to 'id_soluong' -->  
+                    </div>  
                     <div class="form-group">  
                         <label for="hinhanh">Hình Ảnh</label>  
                         <input id="hinhanh" class="form-control" type="file" name="img" accept="img/*" required>  

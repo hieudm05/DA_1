@@ -12,8 +12,7 @@
                     $hinh = '<img src="' . htmlspecialchars($imgPath) . '" style="width:100px; height:100px; object-fit:cover;">';
                 }
             }
-            ?>
-
+        ?>
         <div class="card-body">  
             <div class="col-sm-8">  
                 <form action="router.php?act=updateSP" method="POST" enctype="multipart/form-data">  
@@ -31,6 +30,11 @@
                     <div class="form-group">  
                         <label for="namesp">Tên sản phẩm</label>  
                         <input id="namesp" class="form-control" type="text" name="namesp" value="<?php echo htmlspecialchars($product['namesp']); ?>" required>  
+                    </div>  
+
+                    <div class="form-group">  
+                        <label for="quantity">Số lượng</label>  
+                        <input id="quantity" class="form-control" type="number" name="quantity" min="0" value="<?php echo htmlspecialchars($product['quantity']); ?>" required>  
                     </div>  
 
                     <div class="form-group">  
@@ -60,10 +64,4 @@
             </div>  
         </div>  
     </div>  
-</div>  
-
-<!-- Include Bootstrap JS and jQuery if needed -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-</body>  
-</html>
+</div>

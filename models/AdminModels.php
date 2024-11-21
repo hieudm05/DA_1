@@ -136,24 +136,41 @@ class AdminModels
             echo $e->getMessage();
         }
     }
-    public function postSP($namesp, $price, $img, $mota, $iddm) {  
+    public function postSP($namesp, $price, $img, $mota, $iddm, $id_soluong) {  
         try {  
-            $sql = 'INSERT INTO products (namesp, price, img, mota, iddm) VALUES (:namesp, :price, :img, :mota, :iddm)';  
+            if (empty($id_soluong) || !is_numeric($id_soluong)) {  
+                echo "Error: id_soluong must be a valid number.";  
+                return false;  
+            }  
+    
+            $sql = 'INSERT INTO products (namesp, price, img, mota, iddm, id_soluong) VALUES (:namesp, :price, :img, :mota, :iddm, :id_soluong)';  
             $stmt = $this->conn->prepare($sql);  
             $stmt->execute([  
-                'namesp' => $namesp,   
+                'namesp' => $namesp,  
                 'price' => $price,  
-                'img' => $img,   
-                'mota' => $mota,   
-                'iddm' => $iddm
+                'img' => $img,  
+                'mota' => $mota,  
+                'iddm' => $iddm,  
+                'id_soluong' => $id_soluong  
             ]);  
+    
+            $productId = $this->conn->lastInsertId();  
+    
+            $sqlQuantity = 'INSERT INTO quantitys_pro (product_id, quantity) VALUES (:product_id, :quantity)';  
+            $stmtQuantity = $this->conn->prepare($sqlQuantity);  
+            $stmtQuantity->execute([  
+                'product_id' => $productId,  
+                'quantity' => $id_soluong  
+            ]);  
+    
             return true;  
-        } catch(Exception $e) {  
-            // Display error message  
-            echo "Database error: " . $e->getMessage();  
+        } catch (PDOException $e) {  
+            error_log("Database error: " . $e->getMessage());  
+            echo "lỗi khi chương trình chạy.vui lòng thử lại";  
             return false;  
-        }  
+        } 
     }
+   
     public function getSPById($id) {  
         try {  
             $sql = 'SELECT * FROM products WHERE id = :id';  
@@ -189,16 +206,17 @@ class AdminModels
         }  
     }  
 
-    public function updateSP($id, $namesp, $price, $img, $mota, $iddm) {  
+    public function updateSP($id, $namesp, $price, $img, $mota, $iddm, $id_soluong) {  
         try {  
-            $sql = "UPDATE products SET namesp = :namesp, price = :price, img = :img, mota = :mota, iddm = :iddm WHERE id = :id";  
+            $sql = "UPDATE products SET namesp = :namesp, price = :price, img = :img, mota = :mota, iddm = :iddm, id_soluong = :id_soluong WHERE id = :id";  
             $stmt = $this->conn->prepare($sql);  
             $stmt->execute([  
                 'namesp' => $namesp,  
                 'price' => $price,  
                 'img' => $img,  
                 'mota' => $mota,  
-                'iddm' => $iddm,  
+                'iddm' => $iddm,
+                'id_soluong' => $id_soluong,
                 'id' => $id  
             ]);  
             return true;  
@@ -207,7 +225,23 @@ class AdminModels
             return false;  
         }  
     }  
-  
+  ////join slSp với SP
+  public function getAllProductsByQuantity() {
+    $sql = "SELECT 
+                products.id, 
+                products.namesp, 
+                products.price, 
+                products.img, 
+                quantitys_pro.quantity
+            FROM products
+            LEFT JOIN quantitys_pro ON products.id = quantitys_pro.product_id
+            ORDER BY products.price ASC";
+    
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
      //đơn hàng
      public function getAllBill() {
         try {
