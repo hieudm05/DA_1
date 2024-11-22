@@ -12,7 +12,7 @@ class ClientController
         $listDanhMuc = $this->modelClinets->getAllDanhMuc();
         $datas = $this ->modelClinets->getAllProductsByCategory();
         $top10 = $this -> modelClinets -> getTop10Sp();
-        var_dump($listDanhMuc);
+        // var_dump($listDanhMuc);
         require_once '../views/Clients/home.php';
         // require_once '../views/Clients/footer.php';
     }
@@ -112,7 +112,9 @@ class ClientController
             }
         }
     }
-
+    public function chitietSP(){
+        require_once '../views/Clients/productDetails/chitietSP.php';
+    }
     // List danh mục
     // public function listDm() {
     //     // $listStudent = $this->modelStudent->getAll();
