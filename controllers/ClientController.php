@@ -112,7 +112,6 @@ class ClientController
             }
         }
     }
-<<<<<<< HEAD
     public function chitietSP(){
         require_once '../views/Clients/productDetails/chitietSP.php';
     }
@@ -123,7 +122,7 @@ class ClientController
     //     // var_dump($listDanhMuc);
     //     require_once '../views/Clients/hde.php';
     // }
-=======
+
 
     public function search() {
         if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['search'])){
@@ -143,5 +142,5 @@ class ClientController
     public function thanhToan(){
         require_once '../views/Clients/carts/thanhtoan.php';
     }
->>>>>>> d1be85a571dc3365f53fc65502a123b3624bd2d5
+
 }
