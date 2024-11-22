@@ -136,40 +136,35 @@ class AdminModels
             echo $e->getMessage();
         }
     }
-    public function postSP($namesp, $price, $img, $mota, $iddm, $id_soluong) {  
-        try {  
-            if (empty($id_soluong) || !is_numeric($id_soluong)) {  
-                echo "Error: id_soluong must be a valid number.";  
-                return false;  
-            }  
-    
-            $sql = 'INSERT INTO products (namesp, price, img, mota, iddm, id_soluong) VALUES (:namesp, :price, :img, :mota, :iddm, :id_soluong)';  
-            $stmt = $this->conn->prepare($sql);  
-            $stmt->execute([  
-                'namesp' => $namesp,  
-                'price' => $price,  
-                'img' => $img,  
-                'mota' => $mota,  
-                'iddm' => $iddm,  
-                'id_soluong' => $id_soluong  
-            ]);  
-    
-            $productId = $this->conn->lastInsertId();  
-    
-            $sqlQuantity = 'INSERT INTO quantitys_pro (product_id, quantity) VALUES (:product_id, :quantity)';  
-            $stmtQuantity = $this->conn->prepare($sqlQuantity);  
-            $stmtQuantity->execute([  
-                'product_id' => $productId,  
-                'quantity' => $id_soluong  
-            ]);  
-    
-            return true;  
-        } catch (PDOException $e) {  
-            error_log("Database error: " . $e->getMessage());  
-            echo "lỗi khi chương trình chạy.vui lòng thử lại";  
-            return false;  
-        } 
+    public function postSP($namesp, $price, $img, $mota, $iddm, $quantity) {
+        try {
+            // Thực hiện câu lệnh INSERT để thêm sản phẩm mới
+            $sql = "INSERT INTO products (namesp, price, img, mota, iddm, quantity) 
+                    VALUES (:namesp, :price, :img, :mota, :iddm, :quantity)";
+            
+            // Chuẩn bị câu lệnh SQL
+            $stmt = $this->conn->prepare($sql);
+            
+            // Các giá trị cần truyền vào câu lệnh
+            $stmt->execute([
+                'namesp' => $namesp,
+                'price' => $price,
+                'img' => $img,
+                'mota' => $mota,
+                'iddm' => $iddm,
+                'quantity' => $quantity,
+            ]);
+            
+            return true;
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
     }
+    
+    
+    
+    
    
     public function getSPById($id) {  
         try {  
@@ -193,6 +188,23 @@ class AdminModels
         }  
     }
     
+    public function getAllProductsByCategory() {
+        $sql = "SELECT 
+                    products.id, 
+                    products.namesp, 
+                    products.price, 
+                    products.img,
+                    products.mota,
+                    products.luotxem,
+                    products.quantity,
+                    categories.name AS category_name
+                FROM categories
+                LEFT JOIN products ON categories.id = products.iddm
+                ORDER BY categories.name, products.price ASC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function deleteSP($id) {  
         try {  
@@ -206,9 +218,9 @@ class AdminModels
         }  
     }  
 
-    public function updateSP($id, $namesp, $price, $img, $mota, $iddm, $id_soluong) {  
+    public function updateSP($id, $namesp, $price, $img, $mota, $iddm, $quantity) {  
         try {  
-            $sql = "UPDATE products SET namesp = :namesp, price = :price, img = :img, mota = :mota, iddm = :iddm, id_soluong = :id_soluong WHERE id = :id";  
+            $sql = "UPDATE products SET namesp = :namesp, price = :price, img = :img, mota = :mota, iddm = :iddm, quantity = :quantity WHERE id = :id";  
             $stmt = $this->conn->prepare($sql);  
             $stmt->execute([  
                 'namesp' => $namesp,  
@@ -216,7 +228,7 @@ class AdminModels
                 'img' => $img,  
                 'mota' => $mota,  
                 'iddm' => $iddm,
-                'id_soluong' => $id_soluong,
+                'quantity' => $quantity,
                 'id' => $id  
             ]);  
             return true;  
@@ -225,22 +237,6 @@ class AdminModels
             return false;  
         }  
     }  
-  ////join slSp với SP
-  public function getAllProductsByQuantity() {
-    $sql = "SELECT 
-                products.id, 
-                products.namesp, 
-                products.price, 
-                products.img, 
-                quantitys_pro.quantity
-            FROM products
-            LEFT JOIN quantitys_pro ON products.id = quantitys_pro.product_id
-            ORDER BY products.price ASC";
-    
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
 
      //đơn hàng
      public function getAllBill() {

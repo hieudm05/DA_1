@@ -12,7 +12,7 @@ class ClientController
         $listDanhMuc = $this->modelClinets->getAllDanhMuc();
         $datas = $this ->modelClinets->getAllProductsByCategory();
         $top10 = $this -> modelClinets -> getTop10Sp();
-        var_dump($listDanhMuc);
+        // var_dump($listDanhMuc);
         require_once '../views/Clients/home.php';
         // require_once '../views/Clients/footer.php';
     }
@@ -113,11 +113,22 @@ class ClientController
         }
     }
 
-    // List danh mục
-    // public function listDm() {
-    //     // $listStudent = $this->modelStudent->getAll();
-    //     $listDanhMuc = $this->modelClinets->getAllDanhMuc();
-    //     // var_dump($listDanhMuc);
-    //     require_once '../views/Clients/hde.php';
-    // }
+    public function search() {
+        if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['search'])){
+            $search = $_POST['search'];
+            $datasSearch = $this->modelClinets->getAllSP($search);
+            // var_dump($datasSearch);
+        }else{
+            header('location: http://localhost/base_test_DA1/public/');
+        }
+        require_once '../views/Clients/products/products.php';
+    }
+
+    // Giỏ hàng
+    public function carts(){
+        require_once '../views/Clients/carts/cart.php';
+    }
+    public function thanhToan(){
+        require_once '../views/Clients/carts/thanhtoan.php';
+    }
 }

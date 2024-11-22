@@ -31,6 +31,11 @@ match ($act) {
     // Xử lí tài khoản
     'postAddAcount' => (new ClientController()) -> addAccount(),
 
+    // Tìm kiếm
+    'search' => (new ClientController()) ->search(),
+    'cart' => (new ClientController()) ->carts(),
+    'thanhtoan' => (new ClientController()) ->thanhToan(),
+
 };
 include '../views/Clients/footer.php';
 ob_end_flush();

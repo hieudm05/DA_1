@@ -1,50 +1,3 @@
-<style>
-.no {
-    transition: all 0.5s linear; 
-}
-.no:hover{
-    transform: translateY(-10px); 
-    opacity: 0.9; 
-}
-    /* Ẩn các nút khi không hover */
-.product-actions {
-    display: flex; /* Đảm bảo các nút nằm ngang nhau */
-    justify-content:space-between; 
-    gap: 20px; /* Khoảng cách giữa các nút */
-    position: absolute;
-    bottom: 90px;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0; 
-    transition: opacity 0.5s ease; /* Chỉ thêm transition cho opacity để các nút xuất hiện từ từ */
-}
-
-
-/* Khi hover vào sản phẩm, nút sẽ từ từ xuất hiện */
-.card:hover .product-actions {
-    opacity: 1; /* Đặt opacity thành 1 khi hover vào sản phẩm */
-}
-
-/* Cải thiện kiểu dáng của nút */
-.product-actions button {
-    padding: 5px 9px;
-    background-color: #C62E2E;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Thêm hiệu ứng thay đổi màu nền khi hover */
-}
-
-/* Hiệu ứng khi hover vào nút */
-.product-actions button:hover {
-    background-color: #F2E8C6; /* Thay đổi màu khi hover vào nút */
-}
-
-
-
-
-</style>
 <div class="container my-4">
     <div class="row">
         <!-- Sidebar Menu -->
@@ -66,7 +19,7 @@
                 <h5 class="">Sách mới bán chạy</h5>
                 <div class="d-flex flex-wrap">
                 <?php foreach($top10 as $top) :  $imgPath = '../'.$top['img'];  
-                $linkSp = "?act=sanpham&id=" . $top["id"];?>
+                $linkSp = "?act=sanphamchitiet&id=" . $top["id"];?>
                     <div class="col-sm-12 mt-2">
                         <div class="d-flex border p-2 position-relative">
                             <div class="badge bg-danger text-light position-absolute" style="top: -10px; left: 10px; z-index: 1;">20%</div>
@@ -221,7 +174,7 @@ $categories = array_unique(array_column($datas, 'category_name'));
         <h5 class=""><?= $category_name ?></h5>
         <div class="d-flex flex-nowrap" style="overflow-x: scroll; -ms-overflow-style: none; scrollbar-width: none; gap: 10px;">
             <?php foreach ($datas as $product):
-                 $linkSp = "?act=sanpham&id=" . $product["id"];
+                 $linkSp = "?act=sanphamchitiet&id=" . $product["id"];
                 $imgPath = '../'.$product['img'];
                 if ($product['category_name'] == $category_name):
             ?>
@@ -234,7 +187,7 @@ $categories = array_unique(array_column($datas, 'category_name'));
                             </div>
                             <!-- Nút giỏ hàng và yêu thích -->
                             <div class="product-actions">
-                                <button class="btn-cart"><i class="bi bi-cart-plus"></i></button>
+                                <a href="?act=cart"><button class="btn-cart"><i class="bi bi-cart-plus"></i></button></a>
                                 <button class="btn-wishlist"><i class="bi bi-heart"></i></button>
                             </div>
                         </div>
