@@ -106,20 +106,29 @@ class ClientModels
         try {
             // Câu lệnh SQL để lấy 10 sản phẩm có lượt xem cao nhất
             $sql = 'SELECT * FROM products ORDER BY luotxem DESC LIMIT 10';
-        
-            // Chuẩn bị câu lệnh SQL
             $stmt = $this->conn->prepare($sql);
-            
-            // Thực thi câu lệnh SQL
             $stmt->execute();
-    
-            // Trả về kết quả (mảng các sản phẩm)
             return $stmt->fetchAll();
         } catch (Exception $e) {
-            // Nếu có lỗi, in thông báo lỗi ra
             echo $e->getMessage();
         }
     }
+
+    // Tìm kiếm theo sản phẩm
+    public function getAllSP($search) {
+        try {
+            $sql = "SELECT * FROM products WHERE namesp LIKE '%$search%'";
+            
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+    
+            return $stmt->fetchAll();
+        } catch(Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+    
+    
     
     
     

@@ -31,7 +31,6 @@
                             $suasp = "router.php?act=suasp&id=" . $sp['id'];  
                             $xoasp = "router.php?act=xoasp&id=" . $sp['id'];  
                             
-                            $danhMuc = getDMById($sp['iddm']); 
 
                             $imgPath = '../../'.$sp['img'];
                             $hinh = "";
@@ -42,13 +41,13 @@
                             }
                         ?>  
                         <tr>  
-                            <td><?= htmlspecialchars($danhMuc['name']) ?></td> <!-- Hiển thị danh mục -->
+                            <td><?=$sp['category_name']  ?></td>
                             <td><?= $hinh ?></td>  
-                            <td class="product-name"><?= htmlspecialchars($sp['namesp']) ?></td>  
-                            <td><?= htmlspecialchars($sp['quantity']) ?></td>  
-                            <td><?= htmlspecialchars($sp['price']) ?></td>  
-                            <td><?= htmlspecialchars($sp['mota']) ?></td>  
-                            <td><?= htmlspecialchars($sp['luotxem']) ?></td>  
+                            <td class="product-name"><?= $sp['namesp'] ?></td>  
+                            <td><?= $sp['quantity'] ?></td>  
+                            <td><?= $sp['price'] ?></td>  
+                            <td><?= $sp['mota']?></td>  
+                            <td><?= $sp['luotxem'] ?></td>  
                             <td class="text-end">  
                                 <a href="<?= $suasp ?>" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>  
                                 <a href="<?= $xoasp ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xác nhận xóa sản phẩm')"><i class="bi bi-trash-fill"></i></a>  

@@ -112,6 +112,7 @@ class ClientController
             }
         }
     }
+<<<<<<< HEAD
     public function chitietSP(){
         require_once '../views/Clients/productDetails/chitietSP.php';
     }
@@ -122,4 +123,25 @@ class ClientController
     //     // var_dump($listDanhMuc);
     //     require_once '../views/Clients/hde.php';
     // }
+=======
+
+    public function search() {
+        if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['search'])){
+            $search = $_POST['search'];
+            $datasSearch = $this->modelClinets->getAllSP($search);
+            // var_dump($datasSearch);
+        }else{
+            header('location: http://localhost/base_test_DA1/public/');
+        }
+        require_once '../views/Clients/products/products.php';
+    }
+
+    // Giỏ hàng
+    public function carts(){
+        require_once '../views/Clients/carts/cart.php';
+    }
+    public function thanhToan(){
+        require_once '../views/Clients/carts/thanhtoan.php';
+    }
+>>>>>>> d1be85a571dc3365f53fc65502a123b3624bd2d5
 }

@@ -21,7 +21,47 @@ a, button, .card {
 a:hover, button:hover, .card:hover {
     transform: scale(1.05);  /* Phóng to nhẹ */
 }
+.no {
+    transition: all 0.5s linear; 
+}
+.no:hover{
+    transform: translateY(-10px); 
+    opacity: 0.9; 
+}
+    /* Ẩn các nút khi không hover */
+.product-actions {
+    display: flex; /* Đảm bảo các nút nằm ngang nhau */
+    justify-content:space-between; 
+    gap: 20px; /* Khoảng cách giữa các nút */
+    position: absolute;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0; 
+    transition: opacity 0.5s ease; /* Chỉ thêm transition cho opacity để các nút xuất hiện từ từ */
+}
 
+
+/* Khi hover vào sản phẩm, nút sẽ từ từ xuất hiện */
+.card:hover .product-actions {
+    opacity: 1; /* Đặt opacity thành 1 khi hover vào sản phẩm */
+}
+
+/* Cải thiện kiểu dáng của nút */
+.product-actions button {
+    padding: 5px 9px;
+    background-color: #C62E2E;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Thêm hiệu ứng thay đổi màu nền khi hover */
+}
+
+/* Hiệu ứng khi hover vào nút */
+.product-actions button:hover {
+    background-color: #F2E8C6; /* Thay đổi màu khi hover vào nút */
+}
     </style>
 </head>
 <body>
@@ -62,15 +102,18 @@ a:hover, button:hover, .card:hover {
                 </div>
                 <!-- Search Bar -->
                 <div class="col-8 col-md-4">
-                    <form class="d-flex justify-content-center">
+                    <form action="?act=search" method="post" enctype="multipart/form-data" class="d-flex justify-content-center">
                         <input type="search" 
                                class="form-control form-control-sm" 
                                placeholder="Tìm kiếm sản phẩm..." 
-                               style="height: 30px; padding: 0.25rem 0.5rem;">
-                        <input class="btn btn-dark btn-sm border-0" 
+                               style="height: 30px; padding: 0.25rem 0.5rem;" 
+                               name ="search" >
+                        <button class="btn btn-dark btn-sm border-0" 
                                type="submit" 
                                style="height: 30px; padding: 0 10px; border: none; background-color:#C62E2E;" 
-                               value="Tìm kiếm">
+                               >
+                               <i class="bi bi-search"></i>
+                        </button>
                     </form>
                 </div>
                 <!-- Contact Info -->

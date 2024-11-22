@@ -30,8 +30,17 @@ match ($act) {
     'logout' => (new ClientController()) -> logOut(),
     // Xử lí tài khoản
     'postAddAcount' => (new ClientController()) -> addAccount(),
+<<<<<<< HEAD
     //
     'chitietSP' => (new ClientController()) -> chitietSP(),
+=======
+
+    // Tìm kiếm
+    'search' => (new ClientController()) ->search(),
+    'cart' => (new ClientController()) ->carts(),
+    'thanhtoan' => (new ClientController()) ->thanhToan(),
+
+>>>>>>> d1be85a571dc3365f53fc65502a123b3624bd2d5
 };
 include '../views/Clients/footer.php';
 ob_end_flush();

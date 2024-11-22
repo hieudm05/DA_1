@@ -98,7 +98,8 @@ class HomeController
     }
     public function listSP() {
         $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
-        $listProducts = $this->modelAdmin->getAllSP();
+        $listProducts = $this->modelAdmin->getAllProductsByCategory();
+        var_dump($listProducts);
         require_once '../../views/Admins/SanPham/listSP.php';
     }
     public function postSP() {  
@@ -107,13 +108,13 @@ class HomeController
             $price = $_POST['price'];  
             $mota = $_POST['mota'];  
             $iddm = $_POST['iddm'];  
-            $id_soluong = isset($_POST['id_soluong']) ? $_POST['id_soluong'] : null; 
+            $quantity = $_POST['id_soluong'];
             
             // Kiểm tra file ảnh  
             if (isset($_FILES['img']) && $_FILES['img']['error'] == UPLOAD_ERR_OK) {  
                 $file_save = uploadFile($_FILES['img'], 'uploads');  
                 if ($file_save) {   
-                    if ($this->modelAdmin->postSP($namesp, $price, $file_save, $mota, $iddm, $id_soluong)) {  
+                    if ($this->modelAdmin->postSP($namesp, $price, $file_save, $mota, $iddm, $quantity)) {  
                         header('Location: router.php?act=listSP');  
                         exit();  
                     } else {  
@@ -165,7 +166,7 @@ public function updateSP() {
         $price = $_POST['price'];  
         $mota = $_POST['mota'];  
         $iddm = $_POST['iddm'];  
-        $id_soluong = $_POST['id_soluong'];
+        $quantity = $_POST['quantity'];
         $img = ''; // Xử lý ảnh mới  
 
         if (isset($_FILES['img']) && $_FILES['img']['error'] == 0) {  
@@ -181,7 +182,7 @@ public function updateSP() {
 
         // Cập nhật sản phẩm
         $current_img = $_POST['current_img'];
-        if ($this->modelAdmin->updateSP($id, $namesp, $price, $img ?: $current_img, $mota, $iddm, $id_soluong)) {  
+        if ($this->modelAdmin->updateSP($id, $namesp, $price, $img ?: $current_img, $mota, $iddm, $quantity)) {  
             header('Location: router.php?act=listSP');  
             exit;  
         } else {  
