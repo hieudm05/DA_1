@@ -127,12 +127,95 @@ class ClientModels
             echo $e->getMessage();
         }
     }
+    public function getSPById($id) {  
+        try {
+            $sql = 'SELECT * FROM products WHERE id ='.$id;
+    
+            $stmt = $this->conn->prepare($sql);
+        
+            $stmt->execute();
+
+            return $stmt->fetch();
+            
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
+    public function load_sanpham_cungloai($id, $iddm){
+       try {
+        $sql= "SELECT * FROM products WHERE iddm = ".$iddm." AND id <> ".$id;
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+       } catch (Exception $e) {
+        echo $e->getMessage();
+        }
+    }
+    
+    ///comment
+    public function addComment($idpro, $idUser, $noidung, $time) {
+        try {
+            $sql = "INSERT INTO comments (idpro, idUser, noidung, time) 
+                    VALUES (:idpro, :idUser, :noidung, :time)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                ':idpro' => $idpro,
+                ':idUser' => $idUser,
+                ':noidung' => $noidung,
+                ':time' => $time,
+            ]);
+    
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $e) {
+            // Ghi log lỗi
+            file_put_contents('error_log.txt', $e->getMessage(), FILE_APPEND);
+            return false;
+        }
+    }
     
     
     
     
+    public function getCommentsByProductId($id) {
+        $sql = "SELECT c.*, a.username 
+                FROM comments c
+                JOIN accounts a ON c.idUser = a.id
+                WHERE c.idpro = :id
+                ORDER BY c.time DESC";
     
-   
+        $stmt = $this->conn->prepare($sql);
+    
+        try {
+            $stmt->execute(['id' => $id]);
+            $comments = $stmt->fetchAll();
+            $logFile = 'log.txt'; // Đường dẫn file log
+            file_put_contents($logFile, print_r($comments, true), FILE_APPEND);
+    
+            return $comments;
+        } catch (PDOException $e) {
+            // Log lỗi ra file nếu có
+            file_put_contents('log.txt', $e->getMessage(), FILE_APPEND);
+            throw $e; // Ném lại lỗi để dễ debug
+        }
+    }
+    
+    
+    
+    public function deleteComment($id) {
+        $sql = "DELETE FROM comments WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+    }
+    public function getCommentById($id) {
+        $sql = "SELECT * FROM comments WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch();
+    }
+    
+    
     
     
     public function __destruct() {  // Hàm hủy kết nối đối tượng

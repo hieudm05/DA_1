@@ -30,16 +30,16 @@ match ($act) {
     'logout' => (new ClientController()) -> logOut(),
     // Xử lí tài khoản
     'postAddAcount' => (new ClientController()) -> addAccount(),
-
-    //
-    'chitietSP' => (new ClientController()) -> chitietSP(),
-
-
+    // Sản phẩm chi tiết
+    'sanphamchitiet' => (new ClientController()) -> sanphamchitiet(),
     // Tìm kiếm
-    'search' => (new ClientController()) ->search(),
-    'cart' => (new ClientController()) ->carts(),
-    'thanhtoan' => (new ClientController()) ->thanhToan(),
-
+    'search' => (new ClientController()) -> search(),
+    'cart' => (new ClientController()) -> carts(),
+    'thanhtoan' => (new ClientController()) -> thanhToan(),
+    // Comment
+    'formComment' => (new ClientController()) -> formComment(),
+    'deleteComment' => (new ClientController()) -> deleteComment(),
 };
+
 include '../views/Clients/footer.php';
 ob_end_flush();
