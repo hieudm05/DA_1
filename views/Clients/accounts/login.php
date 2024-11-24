@@ -1,4 +1,6 @@
+
 <div class="bg-light d-flex justify-content-center align-items-center mt-5" >
+
   <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
     <h3 class="text-center text-danger mb-4">Đăng nhập</h3>
     <form action="?act=postLogin" method="post" enctype="multipart/form-data">
@@ -11,7 +13,11 @@
         <input type="password" class="form-control" id="password" name="password" placeholder="">
       </div>
       <div class="d-flex justify-content-between">
+
         <a href="?act=forgot_password" class="text-decoration-none text-body-tertiary">Quên mật khẩu?</a>
+
+        <a href="#" class="text-decoration-none text-body-tertiary">Quên mật khẩu?</a>
+
       </div>
       <button type="submit" class="btn btn-danger w-100 mt-3">Đăng nhập</button>
     </form>
