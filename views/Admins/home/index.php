@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="./content/assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="./content/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="./content/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
@@ -100,7 +101,7 @@
                                     <p class="fw-light small-text mb-0"> Private message </p>
                                 </div>
                             </a>
-                            <a class="dropdown-item preview-item py-3">
+                            <a class="dropdown-item  preview-item py-3">
                                 <div class="preview-thumbnail">
                                     <i class="mdi mdi-airballoon m-auto text-primary"></i>
                                 </div>
@@ -192,7 +193,7 @@
             <nav class="sidebar sidebar-offcanvas "  id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="router.php">
                             <i class="mdi mdi-grid-large menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
@@ -206,14 +207,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="?act=addDm" aria-expanded="false"
+                        <a class="nav-link" href="?act=listTaiKhoan" aria-expanded="false"
                             aria-controls="form-elements">
                             <i class="menu-icon mdi mdi-account-circle-outline"></i>
                             <span class="menu-title">Quản lí tài khoản</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#charts" aria-expanded="false"
+                        <a class="nav-link" href="?act=listDonHang" aria-expanded="false"
                             aria-controls="charts">
                             <i class="menu-icon mdi mdi-chart-line"></i>
                             <span class="menu-title">Quản lí đơn hàng</span>
@@ -225,7 +226,7 @@
               </div> -->
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tables" aria-expanded="false"
+                        <a class="nav-link" href="?act=addSP" aria-expanded="false"
                             aria-controls="tables">
                             <i class="menu-icon mdi mdi-table"></i>
                             <span class="menu-title">Quản lí sản phẩm</span>
@@ -245,9 +246,16 @@
                             <span class="menu-title">Quản lí bình luận</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost/base_test_DA1/public/" aria-expanded="false"
+                            aria-controls="auth">
+                            <i class="menu-icon mdi mdi-card-text-outline"></i>
+                            <span class="menu-title">Đăng xuất</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
 
-            <div class="main-panel" >
+            <div class="main-panel">
     <div class="content-wrapper" >
             
