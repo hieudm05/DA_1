@@ -57,6 +57,7 @@ class ClientModels
             return false;
         }
     }
+
     
 
     // Login
@@ -69,6 +70,9 @@ class ClientModels
         ]);
         return $stmt->fetch();
     }
+
+    // đổi mật khẩu
+    
 
     // Danh mục
     public function getAllDanhMuc() {
@@ -178,6 +182,8 @@ class ClientModels
     
     
     
+    
+   
     public function getCommentsByProductId($id) {
         $sql = "SELECT c.*, a.username 
                 FROM comments c
@@ -215,10 +221,35 @@ class ClientModels
         return $stmt->fetch();
     }
     
+
+    public function productByCasterri($id) {
+        try {
+            // Lấy sản phẩm và tên danh mục
+            $sql = "SELECT p.*, c.name AS category_name
+                FROM products p
+                INNER JOIN categories c ON p.iddm = c.id
+                WHERE c.id = :id";
     
+            $stmt = $this->conn->prepare($sql);
     
+            // Gắn giá trị cho tham số :id
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    
+            // Thực thi câu lệnh
+            $stmt->execute();
+    
+            // Trả về kết quả
+            return $stmt->fetchAll();
+            
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
     
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;
     }
+
+
 }

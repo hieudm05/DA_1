@@ -13,6 +13,7 @@ Array
 )
 Array
 (
+<<<<<<< HEAD
     [0] => Array
         (
             [id] => 3
@@ -24,3 +25,177 @@ Array
         )
 
 )
+=======
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [idpro] => 24
+            [idUser] => 6
+            [noidung] => sản phẩm tệ
+            [time] => 2024-11-24 19:34:36
+            [username] => newAdmin
+        )
+
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 2
+            [idpro] => 22
+            [idUser] => 6
+            [noidung] => sản phậm tệ vãi
+
+            [time] => 2024-11-24 19:40:23
+            [username] => newAdmin
+        )
+
+)
+Array
+(
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 6
+            [noidung] => đánh giá đâu sao tệ vậy ???
+
+            [time] => 2024-11-24 19:40:42
+            [username] => newAdmin
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 6
+            [noidung] => đánh giá đâu sao tệ vậy ???
+
+            [time] => 2024-11-24 19:40:42
+            [username] => newAdmin
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 6
+            [noidung] => đánh giá đâu sao tệ vậy ???
+
+            [time] => 2024-11-24 19:40:42
+            [username] => newAdmin
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 4
+            [idpro] => 22
+            [idUser] => 8
+            [noidung] => được đấy
+            [time] => 2024-11-24 19:45:07
+            [username] => admin3
+        )
+
+    [1] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 6
+            [noidung] => đánh giá đâu sao tệ vậy ???
+
+            [time] => 2024-11-24 19:40:42
+            [username] => newAdmin
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 6
+            [noidung] => đánh giá đâu sao tệ vậy ???
+
+            [time] => 2024-11-24 19:40:42
+            [username] => newAdmin
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 6
+            [noidung] => đánh giá đâu sao tệ vậy ???
+
+            [time] => 2024-11-24 19:40:42
+            [username] => newAdmin
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 6
+            [noidung] => đánh giá đâu sao tệ vậy ???
+
+            [time] => 2024-11-24 19:40:42
+            [username] => newAdmin
+        )
+
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+>>>>>>> bd2d8f83351e666e3c4962b8ad13e7e94a50da58

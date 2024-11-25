@@ -108,11 +108,35 @@ class ClientController
             $sdt = $_POST['sdt'];
             $password = $_POST['password'];
 
+
             if($this->modelClients->addAccount($username, $email, $password, $sdt)){
+
+           
                 header('location: http://localhost/base_test_DA1/public/');
             }
         }
     }
+    // quên mật khẩu
+   
+    public function forgot_password(){
+        require_once '../views/Clients/accounts/forgot_password.php' ;
+    }
+    // lẫy mã
+    public function verify_code(){
+        require_once '../views/Clients/accounts/verify_code.php';
+    }
+    public function reset_password(){
+       
+ 
+            require_once '../views/Clients/accounts/reset_password.php';
+        
+    }
+    public function chitietSP(){
+        require_once '../views/Clients/productDetails/chitietSP.php';
+    }
+   
+    
+
     public function sanphamchitiet() {
         $id = $_GET['id']; 
         $sanPhamChiTiet = $this->modelClients->getSPById($id);
@@ -124,6 +148,7 @@ class ClientController
         require_once '../views/Clients/productDetails/chitietSP.php'; 
     }
     
+
     // List danh mục
     // public function listDm() {
     //     // $listStudent = $this->modelStudent->getAll();
@@ -132,11 +157,15 @@ class ClientController
     //     require_once '../views/Clients/hde.php';
     // }
 
-
+   
     public function search() {
         if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['search'])){
             $search = $_POST['search'];
+
             $datasSearch = $this->modelClients->getAllSP($search);
+
+      
+
             // var_dump($datasSearch);
         }else{
             header('location: http://localhost/base_test_DA1/public/');
@@ -151,6 +180,10 @@ class ClientController
     public function thanhToan(){
         require_once '../views/Clients/carts/thanhtoan.php';
     }
+
+
+
+
     //comment
     
     public function formComment() {
@@ -201,20 +234,17 @@ class ClientController
             echo "Bạn cần đăng nhập để xóa bình luận.";
         }
     }
-    public function checkAcc($userOrEmail, $pass) {
-        $sql = 'SELECT * FROM accounts WHERE (username = :userOrEmail OR email = :userOrEmail) AND password = :pass';
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([
-            ':userOrEmail' => $userOrEmail,
-            ':pass' => $pass
-        ]);
-        return $stmt->fetch();
-    }
-    
+      //   
+      public function productByCasterri(){
+        
+        $id = $_GET['id'] ;
+        $data = $this->modelClients->productByCasterri($id) ;
+        
+        // var_dump($data) ;
+        // extract($data) ;
+        
+        require_once '../views/Clients/productByCasteri/productByCasterri.php';
+        
+      }
+}    
 
-    
-    
-    
-    
-
-}
