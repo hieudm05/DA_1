@@ -5,6 +5,8 @@ if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = []; // Khởi tạo giỏ hàng nếu chưa có
 }
 include '../views/Clients/header.php';
+
+
 // Require file Common
 require_once '../commons/env.php'; // Khai báo biến môi trường
 require_once '../commons/function.php'; // Hàm hỗ trợ
@@ -16,7 +18,6 @@ require_once '../controllers/ClientController.php';
 // Require toàn bộ file Models
 require_once '../models/ClientModels.php';
 // require_once '../models/AdminModels.php';
-
 // Route
 $act = $_GET['act'] ?? '/';
 
@@ -31,8 +32,17 @@ match ($act) {
     'postLogin' => (new ClientController()) -> postLogin(),
     'signup' => (new ClientController()) -> signUp(),
     'logout' => (new ClientController()) -> logOut(),
+
+    // quên mật khẩu
+    'forgot_password' => (new ClientController()) -> forgot_password(),
+   
+    'verify_code' => (new ClientController()) -> verify_code(),
+    
+    'reset_password' => (new ClientController()) -> reset_password(),
+    
     // Xử lí tài khoản
     'postAddAcount' => (new ClientController()) -> addAccount(),
+    
 
     //
     'chitietSP' => (new ClientController()) -> chitietSP(),
@@ -48,6 +58,15 @@ match ($act) {
     'thanhtoan' => (new ClientController()) ->bills(),
     'billconfirm' => (new ClientController()) ->billConfirm(),
 
+    // Sản phẩm chi tiết
+    'sanphamchitiet' => (new ClientController()) -> sanphamchitiet(),
+    // Comment
+    'formComment' => (new ClientController()) -> formComment(),
+    'deleteComment' => (new ClientController()) -> deleteComment(),
+    // sản phẩm theo danh mục
+    'danhmuc'=> (new ClientController())-> productByCasterri(),
 };
+
 include '../views/Clients/footer.php';
 ob_end_flush();
+

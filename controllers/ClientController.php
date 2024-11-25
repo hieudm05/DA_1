@@ -1,18 +1,19 @@
 <?php 
 class ClientController
 {
-    public $modelClinets;
+    public $modelClients; 
 
-    public function __construct() {
-        $this->modelClinets = new ClientModels();
+    public function __construct()
+    {
+        $this->modelClients = new ClientModels(); 
     }
 
 
     public function home() {
-        $listDanhMuc = $this->modelClinets->getAllDanhMuc();
-        $datas = $this ->modelClinets->getAllProductsByCategory();
-        $top10 = $this -> modelClinets -> getTop10Sp();
-        // var_dump($datas);
+        $listDanhMuc = $this->modelClients->getAllDanhMuc();
+        $datas = $this ->modelClients->getAllProductsByCategory();
+        $top10 = $this -> modelClients -> getTop10Sp();
+        // var_dump($listDanhMuc);
         require_once '../views/Clients/home.php';
         // require_once '../views/Clients/footer.php';
     }
@@ -44,10 +45,10 @@ class ClientController
     
                 // Cập nhật thông tin
                 $current_img = $_POST['current_img'];
-                if ($this->modelClinets->updateAccout($id, $username, $email, $avatar ?: $current_img, $address, $sdt)) {
+                if ($this->modelClients->updateAccout($id, $username, $email, $avatar ?: $current_img, $address, $sdt)) {
                     // Cập nhật thành công
                     // Lấy lại thông tin người dùng mới
-                    $_SESSION['user'] = $this->modelClinets->getAccountById($id);
+                    $_SESSION['user'] = $this->modelClients->getAccountById($id);
                     header('Location: http://localhost/base_test_DA1/public/');
                     exit;
                 } else {
@@ -72,7 +73,7 @@ class ClientController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userOrEmail = $_POST['username']; 
             $pass = $_POST['password'];
-            $check = $this->modelClinets->checkAcc($userOrEmail, $pass);
+            $check = $this->modelClients->checkAcc($userOrEmail, $pass);
             if (is_array($check)) {
                 if($check['active'] === 1){
                     $thongbao ="Tài khoản đã bị khoá";
@@ -107,14 +108,47 @@ class ClientController
             $sdt = $_POST['sdt'];
             $password = $_POST['password'];
 
-            if($this->modelClinets->addAccount($username, $email, $password, $sdt)){
+
+            if($this->modelClients->addAccount($username, $email, $password, $sdt)){
+
+           
                 header('location: http://localhost/base_test_DA1/public/');
             }
         }
     }
+    // quên mật khẩu
+   
+    public function forgot_password(){
+        require_once '../views/Clients/accounts/forgot_password.php' ;
+    }
+    // lẫy mã
+    public function verify_code(){
+        require_once '../views/Clients/accounts/verify_code.php';
+    }
+    public function reset_password(){
+       
+ 
+            require_once '../views/Clients/accounts/reset_password.php';
+        
+    }
     public function chitietSP(){
         require_once '../views/Clients/productDetails/chitietSP.php';
     }
+   
+    
+
+    public function sanphamchitiet() {
+        $id = $_GET['id']; 
+        $sanPhamChiTiet = $this->modelClients->getSPById($id);
+        extract($sanPhamChiTiet); 
+        $sanPhamChung = $this->modelClients->load_sanpham_cungloai($id, $iddm); 
+        $sanPhamNoiBat = $this->modelClients->getTop10Sp(); 
+        $comments = $this->modelClients->getCommentsByProductId($id); 
+        
+        require_once '../views/Clients/productDetails/chitietSP.php'; 
+    }
+    
+
     // List danh mục
     // public function listDm() {
     //     // $listStudent = $this->modelStudent->getAll();
@@ -124,11 +158,15 @@ class ClientController
     // }
    
 
-
+   
     public function search() {
         if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['search'])){
             $search = $_POST['search'];
-            $datasSearch = $this->modelClinets->getAllSP($search);
+
+            $datasSearch = $this->modelClients->getAllSP($search);
+
+      
+
             // var_dump($datasSearch);
         }else{
             header('location: http://localhost/base_test_DA1/public/');
@@ -212,4 +250,70 @@ class ClientController
     //     require_once '../views/Clients/carts/thanhtoan.php';
     // }
 
-}
+
+
+
+    //comment
+    
+    public function formComment() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $idpro = $_GET['id'] ?? null;
+    
+            if (!$idpro) {
+                echo "Không tìm thấy sản phẩm để bình luận.";
+                return;
+            }
+    
+            $noidung = $_POST['comment'] ?? '';
+            $time = date('Y-m-d H:i:s'); 
+    
+            if (isset($_SESSION['user']) && $_SESSION['user']['id']) {
+                $idUser = $_SESSION['user']['id']; 
+    
+                if ($this->modelClients->addComment($idpro, $idUser, $noidung, $time)) {
+                    header('Location: ?act=sanphamchitiet&id=' . $idpro); 
+                    exit();
+                } else {
+                    echo "Không thể thêm bình luận. Vui lòng thử lại.";
+                }
+            } else {
+                echo "Bạn cần <a href='?act=login'>đăng nhập</a> để gửi bình luận.";
+            }
+        }
+    }
+    
+    
+
+    public function deleteComment() {
+        $commentId = $_GET['id']; // Get the comment ID
+        $comment = $this->modelClients->getCommentById($commentId); // Retrieve the comment from the database
+    
+        if (isset($_SESSION['user'])) {
+            $userId = $_SESSION['user']['id']; // Get logged-in user ID
+    
+            // If the user is the one who made the comment or if the user is an admin
+            if ($comment['idUser'] == $userId || $_SESSION['user']['role'] == 'admin') {
+                $this->modelClients->deleteComment($commentId);
+                header('Location: ?act=sanphamchitiet&id=' . $comment['idpro']);
+                exit();
+            } else {
+                echo "Bạn không có quyền xóa bình luận này.";
+            }
+        } else {
+            echo "Bạn cần đăng nhập để xóa bình luận.";
+        }
+    }
+      //   
+      public function productByCasterri(){
+        
+        $id = $_GET['id'] ;
+        $data = $this->modelClients->productByCasterri($id) ;
+        
+        // var_dump($data) ;
+        // extract($data) ;
+        
+        require_once '../views/Clients/productByCasteri/productByCasterri.php';
+        
+      }
+}    
+

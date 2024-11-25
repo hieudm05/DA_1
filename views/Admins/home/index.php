@@ -240,7 +240,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#auth" aria-expanded="false"
+                        <a class="nav-link" href="?act=listComments" aria-expanded="false"
                             aria-controls="auth">
                             <i class="menu-icon mdi mdi-card-text-outline"></i>
                             <span class="menu-title">Quản lí bình luận</span>
