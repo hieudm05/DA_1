@@ -12,7 +12,7 @@ class ClientController
         $listDanhMuc = $this->modelClinets->getAllDanhMuc();
         $datas = $this ->modelClinets->getAllProductsByCategory();
         $top10 = $this -> modelClinets -> getTop10Sp();
-        // var_dump($listDanhMuc);
+        // var_dump($datas);
         require_once '../views/Clients/home.php';
         // require_once '../views/Clients/footer.php';
     }
@@ -122,6 +122,7 @@ class ClientController
     //     // var_dump($listDanhMuc);
     //     require_once '../views/Clients/hde.php';
     // }
+   
 
 
     public function search() {
@@ -136,11 +137,79 @@ class ClientController
     }
 
     // Giỏ hàng
-    public function carts(){
+    public function carts() {
+        // Kiểm tra nếu giỏ hàng chưa tồn tại, khởi tạo mảng giỏ hàng
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
+        }
+
+        // Kiểm tra nếu người dùng nhấn nút "Thêm vào giỏ hàng"
+        if (isset($_POST['addcart']) && $_POST['addcart']) {
+            // Lấy dữ liệu từ form và xử lý đầu vào
+            $id = htmlspecialchars($_POST['id']);
+            $namesp = htmlspecialchars($_POST['namesp']);
+            $img = htmlspecialchars($_POST['img']);
+            $price = (float) htmlspecialchars($_POST['price']);
+            $mota = htmlspecialchars($_POST['mota']);
+            $quantity = htmlspecialchars($_POST['quantity']);
+            $soluong = 1;
+            $tongTien = $soluong * $price;
+
+            // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
+            $exists = false;
+            foreach ($_SESSION['cart'] as &$item) {
+                if ($item['id'] == $id) {
+                    // Nếu sản phẩm đã tồn tại, tăng số lượng
+                    $item['soluong'] += 1;
+                    $item['tongTien'] = $item['soluong'] * $item['price'];
+                    $exists = true;
+                    break;
+                }
+            }
+
+            // Nếu sản phẩm chưa tồn tại, thêm sản phẩm mới vào giỏ hàng
+            if (!$exists) {
+                $newProduct = [
+                    'id' => $id,
+                    'namesp' => $namesp,
+                    'img' => $img,
+                    'price' => $price,
+                    'soluong' => $soluong,
+                    'quantity' => $quantity,
+                    'tongTien' => $tongTien,
+                    'mota' => $mota
+                ];
+                array_push($_SESSION['cart'], $newProduct);
+            }
+        }
+
+        // Gọi view giỏ hàng
         require_once '../views/Clients/carts/cart.php';
     }
-    public function thanhToan(){
+    public function deleteCarts(){
+        if (isset($_GET['id'])) {
+            $id = $_GET['id']; // Lấy ID từ URL
+            if (isset($_SESSION['cart'][$id])) { 
+                unset($_SESSION['cart'][$id]); // Xóa sản phẩm khỏi giỏ hàng
+            }
+        } else {
+            $_SESSION['cart'] = []; // Xóa toàn bộ giỏ hàng
+        }
+        header('location: ?act=addcart'); // Chuyển hướng về trang giỏ hàng
+    }
+     
+
+    public function bills(){
         require_once '../views/Clients/carts/thanhtoan.php';
     }
+    public function billConfirm(){
+      
+        require_once '../views/Clients/carts/bill.php';
+    }
+    //   public function myBills(){
+    //     $datas = $this->modelClinets->loadall_bill($_SESSION['user']['id']);
+    //     var_dump($datas);
+    //     require_once '../views/Clients/carts/thanhtoan.php';
+    // }
 
 }

@@ -91,7 +91,9 @@ class ClientModels
                     products.id, 
                     products.namesp, 
                     products.price, 
-                    products.img, 
+                    products.img,
+                    products.mota,
+                    products.quantity,
                     categories.name AS category_name
                 FROM categories
                 LEFT JOIN products ON categories.id = products.iddm
@@ -128,13 +130,90 @@ class ClientModels
         }
     }
     
+    // Giỏ hàng
+    public function getProductById($id){
+        try {
+            $sql = 'SELECT * FROM products WHERE id ='.$id;
     
+            $stmt = $this->conn->prepare($sql);
+        
+            $stmt->execute();
+
+            return $stmt->fetch();
+            
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
     
+    // Lưu sản phẩm trong giỏ hàng vào cart
+    public function addCarts($idUser, $idpro, $img, $name, $price, $soluong, $thanhtien, $mota) {
+        // SQL để thêm sản phẩm vào giỏ hàng
+        $sql = 'INSERT INTO carts (idUser, idpro, img, name, price, soluong, thanhtien, mota) 
+                VALUES (:idUser, :idpro, :img, :name, :price, :soluong, :thanhtien, :mota)';
+        
+        // Chuẩn bị câu lệnh SQL
+        $stmt = $this->conn->prepare($sql);
+        
+        // Thực thi câu lệnh với các tham số
+        $stmt->execute([
+            'idUser' => $idUser,
+            'idpro' => $idpro,
+            'img' => $img,
+            'name' => $name,
+            'price' => $price,
+            'soluong' => $soluong,
+            'thanhtien' => $thanhtien,
+            'mota' => $mota
+        ]);
+        
+        return true;
+    }
+    public function listCartByUser(){
+        try {
+            $sql = 'SELECT * FROM carts ORDER BY id DESC';
+            $stmt = $this->conn->prepare($sql);
+        
+            $stmt->execute();
+
+            return $stmt->fetch();
+            
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    // bill
+    function loadall_bill($kyw="", $iduser=0) {
+        try {
+             // Khởi tạo câu lệnh SQL
+        $sql = "SELECT * FROM bills WHERE 1";
     
+        // Thêm điều kiện cho iduser nếu iduser > 0
+        if ($iduser > 0) {
+            $sql .= " AND iduser=" . intval($iduser);
+        }
+        
+        // Thêm điều kiện tìm kiếm từ khóa nếu có
+        if ($kyw != "") {
+            $sql .= " AND id LIKE '%" . htmlspecialchars($kyw, ENT_QUOTES) . "%'";
+        }
+        
+        // Thêm mệnh đề ORDER BY để sắp xếp theo ID giảm dần
+        $sql .= " ORDER BY id DESC";
+        
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch();
+            
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
     
-   
-    
-    
+
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;
     }

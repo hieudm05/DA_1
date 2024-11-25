@@ -187,8 +187,17 @@ $categories = array_unique(array_column($datas, 'category_name'));
                             </div>
                             <!-- Nút giỏ hàng và yêu thích -->
                             <div class="product-actions">
-                                <a href="?act=cart"><button class="btn-cart"><i class="bi bi-cart-plus"></i></button></a>
-                                <button class="btn-wishlist"><i class="bi bi-heart"></i></button>
+                               <form action="?act=addcart" method="post">
+                                <input type="hidden" name="id" value="<?= $product['id'] ?>" >
+                                <input type="hidden" name="namesp" value="<?= $product['namesp'] ?>" >
+                                <input type="hidden" name="img" value="<?= $product['img'] ?>">
+                                 <input type="hidden" name="price" value="<?= $product['price'] ?>"> 
+                                 <input type="hidden" name="quantity" value="<?= $product['quantity'] ?>"> 
+                                 <input type="hidden" name="mota" value="<?= $product['mota'] ?>"> 
+                                <!-- <button name="addcart" class="btn-cart"><i class="bi bi-cart-plus"></i></button> -->
+                                <input type="submit" name="addcart" class="btn-cart" value="&#128722;">
+                                    <button class="btn-wishlist"><i class="bi bi-heart"></i></button>
+                               </form>
                             </div>
                         </div>
                     </div>

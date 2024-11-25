@@ -1,6 +1,9 @@
 <?php 
 session_start();
 ob_start();
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = []; // Khởi tạo giỏ hàng nếu chưa có
+}
 include '../views/Clients/header.php';
 // Require file Common
 require_once '../commons/env.php'; // Khai báo biến môi trường
@@ -37,8 +40,13 @@ match ($act) {
 
     // Tìm kiếm
     'search' => (new ClientController()) ->search(),
-    'cart' => (new ClientController()) ->carts(),
-    'thanhtoan' => (new ClientController()) ->thanhToan(),
+    // Giỏ hàng
+    'addcart' => (new ClientController()) ->carts(),
+    'deleteCart' => (new ClientController()) ->deleteCarts(),
+
+    // Bill
+    'thanhtoan' => (new ClientController()) ->bills(),
+    'billconfirm' => (new ClientController()) ->billConfirm(),
 
 };
 include '../views/Clients/footer.php';

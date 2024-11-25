@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -125,7 +126,19 @@ a:hover, button:hover, .card:hover {
                                 <div class="fw-bold">19004953</div>
                             </span>
                         </li>
-                        <li><a class="nav-link text-dark" style="font-size: 18px;" href="#"><i class="bi bi-cart3"></i></a></li>
+                            <li class="nav-item position-relative">
+                                <a class="nav-link text-dark" style="font-size: 20px;" href="?act=addcart">
+                                    <i class="bi bi-cart3"></i>
+                                </a>
+                                <!-- Badge hiển thị số lượng -->
+                               
+                                <span class="badge rounded-pill bg-danger position-absolute" style="top: 0; right: 0; font-size: 10px;">
+                                   3
+                                </span>
+                               
+                               
+                            </li>
+
                         <?php if(isset($_SESSION['user'])){  extract($_SESSION['user']); $imgPath = './../' . $avatar; $avt = $imgPath ? $imgPath : './img/userNo.jpg';  ?>
                         <li class="nav-item dropdown d-flex align-items-center">
                             <a class="dropdown-toggle text-dark" data-bs-toggle="dropdown" href="" role="button" style="font-size: 18px;" aria-expanded="false"><img src="<?= $avt ?>" height="24" width="24"  style="border-radius: 50% ;" alt=""></a>
@@ -179,13 +192,13 @@ a:hover, button:hover, .card:hover {
                     </a>
 
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <?php if(is_array($listDanhMuc)):   foreach($listDanhMuc as $dm)  :?>
+                    <?php  foreach($listDanhMuc as $dm)  :?>
                         <?php 
                         $linkDm = "?act=sanpham&id=" . $dm["id"];
-                        ?>
-                        <li><a class="dropdown-item" href="<?= $linkDm ?>"> <?= $dm['name'] ?></a></li>
+                        ?> 
+                        <li><a class="dropdown-item" href="<?= $linkDm ?>"> <?= $dm['id'] ?></a></li>
                        
-                        <?php endforeach; endif; ?>
+                        <?php endforeach; ?>
                     </ul>
                 </li>
                 <li class="nav-item">
