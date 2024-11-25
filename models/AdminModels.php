@@ -253,7 +253,46 @@ class AdminModels
         }
     }
 
-    /////////////////////////////////////////
+    //binh luan
+    public function getAllComments() {
+    try {
+        $sql = 'SELECT * FROM comments ORDER BY time DESC';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+        return false;
+    }
+}
+
+
+    public function getCommentsByProduct($idpro) {
+        try {
+            $sql = 'SELECT * FROM comments WHERE idpro = :idpro ORDER BY time DESC';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['idpro' => $idpro]);
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+
+    
+
+    public function deleteComment($id) {
+        try {
+            $sql = 'DELETE FROM comments WHERE id = :id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            return true;
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;
     }

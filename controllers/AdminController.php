@@ -200,6 +200,22 @@ public function listBills() {
     $listOrders = $this->modelAdmin->getAllBill(); // Lấy danh sách đơn hàng
     require_once '../../views/Admins/donHang/listDonHang.php'; // Đường dẫn file view danh sách đơn hàng
 }
+///bình luận
+public function listComments() {
+    $listBinhLuan = $this->modelAdmin->getAllComments();
+    require_once '../../views/Admins/BinhLuan/listComments.php';
+}
+
+
+public function deleteComment() {
+    $id = $_GET['id'];
+    if ($this->modelAdmin->deleteComment($id)) {
+        header('Location: router.php?act=listComments');
+        exit;
+    } else {
+        echo "Không thể xóa bình luận.";
+    }
+}
 
 
 }
