@@ -1,6 +1,9 @@
 <?php 
 session_start();
 ob_start();
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = []; // Khởi tạo giỏ hàng nếu chưa có
+}
 include '../views/Clients/header.php';
 
 
@@ -47,17 +50,17 @@ match ($act) {
 
     // Tìm kiếm
     'search' => (new ClientController()) ->search(),
-    'cart' => (new ClientController()) ->carts(),
-    'thanhtoan' => (new ClientController()) ->thanhToan(),
+    // Giỏ hàng
+    'viewcart' => (new ClientController()) ->viewCarts(),
+    'addcart' => (new ClientController()) ->carts(),
+    'deleteCart' => (new ClientController()) ->deleteCarts(),
 
-    // Xử lí tài khoản
-    'postAddAcount' => (new ClientController()) -> addAccount(),
+    // Bill
+    'thanhtoan' => (new ClientController()) ->bills(),
+    'billconfirm' => (new ClientController()) ->billConfirm(),
+
     // Sản phẩm chi tiết
     'sanphamchitiet' => (new ClientController()) -> sanphamchitiet(),
-    // Tìm kiếm
-    'search' => (new ClientController()) -> search(),
-    'cart' => (new ClientController()) -> carts(),
-    'thanhtoan' => (new ClientController()) -> thanhToan(),
     // Comment
     'formComment' => (new ClientController()) -> formComment(),
     'deleteComment' => (new ClientController()) -> deleteComment(),
