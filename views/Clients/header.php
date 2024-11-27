@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
        /* Áp dụng cho toàn bộ trang */
 * {
@@ -63,6 +64,7 @@ a:hover, button:hover, .card:hover {
 .product-actions button:hover {
     background-color: #F2E8C6; /* Thay đổi màu khi hover vào nút */
 }
+
     </style>
 </head>
 <body>
@@ -127,7 +129,7 @@ a:hover, button:hover, .card:hover {
                             </span>
                         </li>
                             <li class="nav-item position-relative">
-                                <a class="nav-link text-dark" style="font-size: 20px;" href="?act=addcart">
+                                <a class="nav-link text-dark" style="font-size: 20px;" href="?act=viewcart">
                                     <i class="bi bi-cart3"></i>
                                 </a>
                                 <!-- Badge hiển thị số lượng -->

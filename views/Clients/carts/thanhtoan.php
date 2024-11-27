@@ -49,7 +49,7 @@
         <!-- Phần tóm tắt đơn hàng -->
         <div class="col-md-4">
             <div class="p-3 shadow-sm rounded">
-                <h5 class="mb-3">Tóm tắt đơn hàng</h5>
+                <h5 class="mb-3">Đơn hàng</h5>
                 <!-- <div class="d-flex justify-content-between">
                     <span>Tạm tính:</span>
                     <span class="text-danger">4,040,000₫</span>
@@ -59,13 +59,21 @@
                     <span class="text-success">Miễn phí</span>
                 </div>
                 <hr>
+                  <!-- Thêm ô nhập Voucher -->
+                  <div class="input-group">
+                        <input type="text" class="form-control" id="voucher-code" placeholder="Nhập mã voucher">
+                        <div class="input-group-append">
+                            <button class="btn btn-danger" type="button"><i class="bi bi-arrow-right"></i></button>
+                        </div>
+                    </div>
+                <hr>
                 <?php $tongCong = 0; foreach($_SESSION['cart'] as $cart){} 
                         extract($cart);
                         $tongCong += $tongTien; 
                     ?>
                 <div class="d-flex justify-content-between">
-                    <h5>Tổng cộng:</h5>
-                    <h5 class="text-danger"><?= $tongCong ?></h5>
+                    <h5 class="text-danger">Tổng tiền:</h5>
+                    <h5 class="text-danger"><?= number_format($tongCong, 0, ',', '.') ?> VNĐ</h5>
                 </div>
                 <input class="btn btn-danger btn-block mt-3" value="Xác nhận đơn hàng" type="submit">
             </div>

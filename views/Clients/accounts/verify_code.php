@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-
 <div class="container mt-5">
     <h3>Nhập mã xác nhận</h3>
     <form method="POST">

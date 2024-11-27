@@ -185,7 +185,6 @@ $categories = array_unique(array_column($datas, 'category_name'));
                                 <a href="<?=$linkSp?>" class="text-dark text-decoration-none"><h5 class="card-title" style="font-size: 1rem;"><?= $product['namesp'] ?></h5></a>
                                 <h6><span class="card-text text-danger"><?= $product['price'] ?>đ</span></h6>
                             </div>
-                            <!-- Nút giỏ hàng và yêu thích -->
                             <div class="product-actions">
                                <form action="?act=addcart" method="post">
                                 <input type="hidden" name="id" value="<?= $product['id'] ?>" >
@@ -196,8 +195,9 @@ $categories = array_unique(array_column($datas, 'category_name'));
                                  <input type="hidden" name="mota" value="<?= $product['mota'] ?>"> 
                                 <!-- <button name="addcart" class="btn-cart"><i class="bi bi-cart-plus"></i></button> -->
                                 <input type="submit" name="addcart" class="btn-cart" value="&#128722;">
-                                    <button class="btn-wishlist"><i class="bi bi-heart"></i></button>
+                                <!-- Nút giỏ hàng và yêu thích -->
                                </form>
+                               <a href="#"><button class="btn-wishlist"><i class="bi bi-heart"></i></button></a>
                             </div>
                         </div>
                     </div>

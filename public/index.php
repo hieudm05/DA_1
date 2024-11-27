@@ -51,6 +51,7 @@ match ($act) {
     // Tìm kiếm
     'search' => (new ClientController()) ->search(),
     // Giỏ hàng
+    'viewcart' => (new ClientController()) ->viewCarts(),
     'addcart' => (new ClientController()) ->carts(),
     'deleteCart' => (new ClientController()) ->deleteCarts(),
 
