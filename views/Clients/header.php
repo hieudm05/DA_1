@@ -137,7 +137,7 @@ a:hover, button:hover, .card:hover {
                                 <?php }else{ ?>
                                     <li><a class="dropdown-item" href="?act=signup">Lấy lại pass</a></li>
                                 <?php } ?>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="dropdown-item" href="?act=listFavourites">Sản phẩm yêu thích</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="?act=logout">Đăng xuất</a></li> 
                             </ul>

@@ -246,5 +246,42 @@ class ClientController
         require_once '../views/Clients/productByCasteri/productByCasterri.php';
         
       }
+      ///yeuthich
+      public function addFavourite() {
+        if (isset($_SESSION['user']) && isset($_GET['id'])) {
+            $userId = $_SESSION['user']['id'];
+            $productId = $_GET['id'];
+            
+            // Thiết lập múi giờ là giờ Hà Nội (UTC+7)
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            
+            // Lấy thời gian hiện tại theo giờ Hà Nội
+            $addedAt = date('Y-m-d H:i:s');
+            
+            if ($this->modelClients->checkFavourite($userId, $productId)) {
+                echo "Sản phẩm đã có trong danh sách yêu thích.";
+            } else {
+                if ($this->modelClients->addToFavourite($userId, $productId, $addedAt)) {
+                    header("Location: ?act=listFavourites");
+                    exit();
+                } else {
+                    echo "Không thể thêm sản phẩm vào danh sách yêu thích.";
+                }
+            }
+        } else {
+            echo "Bạn cần đăng nhập để sử dụng chức năng này.";
+        }
+    }
+    
+    public function listFavourites() {
+        if (isset($_SESSION['user'])) {
+            $userId = $_SESSION['user']['id'];
+            $favourites = $this->modelClients->getFavouritesByUser($userId);
+            require_once '../views/Clients/favourites/listFavourites.php';
+        } else {
+            echo "Bạn cần đăng nhập để xem danh sách yêu thích.";
+        }
+    }
+        
 }    
 

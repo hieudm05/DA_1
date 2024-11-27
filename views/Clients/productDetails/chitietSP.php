@@ -49,10 +49,14 @@
 
                         <!-- Nút hành động -->
                         <div class="d-flex mb-4">
-                            <button class="btn btn-warning rounded-pill me-3">Thêm vào giỏ hàng</button>
-                            <button class="btn btn-danger rounded-pill me-2">Mua ngay</button>
-                            <button class="btn btn-danger rounded-pill"><i class="bi bi-heart-fill"></i></button>
-                        </div>
+                        <button class="btn btn-warning rounded-pill me-3">Thêm vào giỏ hàng</button>
+                        <button class="btn btn-danger rounded-pill me-2">Mua ngay</button>
+
+                        <!-- Nút trái tim thêm vào yêu thích -->
+                        <a href="?act=addFavourite&id=<?= $sanPhamChiTiet['id'] ?>" class="btn btn-danger rounded-pill">
+                            <i class="bi bi-heart-fill"></i>
+                        </a>
+                    </div>
 
                         <div class="mt-4">
                             <p>Đánh giá: <span class="text-warning">★★★★★</span> (200 đánh giá)</p>

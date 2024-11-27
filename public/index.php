@@ -63,6 +63,10 @@ match ($act) {
     'deleteComment' => (new ClientController()) -> deleteComment(),
     // sản phẩm theo danh mục
     'danhmuc'=> (new ClientController())-> productByCasterri(),
+    //yeuthich
+    'listFavourites' => (new ClientController())->listFavourites(),
+    'addFavourite' => (new ClientController())->addFavourite(),
+
 };
 
 include '../views/Clients/footer.php';

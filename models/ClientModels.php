@@ -250,6 +250,67 @@ class ClientModels
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;
     }
-
+    //yeuthich
+    public function checkFavourite($userId, $productId) {
+        try {
+            $sql = "SELECT * FROM favorites WHERE user_id = :user_id AND pro_id = :pro_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['
+            :user_id' => $userId,
+            ':pro_id' => $productId
+            ]);
+            
+            return $stmt->fetch();
+        } catch (Exception $e) {
+            echo "Lỗi khi kiểm tra sản phẩm yêu thích: " . $e->getMessage();
+            return false; 
+        }
+    }
+    
+    public function addToFavourite($userId, $productId, $addedAt) {
+        try {
+            $sql = "INSERT INTO favorites (user_id, pro_id, added_at) VALUES (:user_id, :pro_id, :added_at)";
+            $stmt = $this->conn->prepare($sql);
+            $result = $stmt->execute([
+                ':user_id' => $userId,
+                ':pro_id' => $productId,
+                ':added_at' => $addedAt
+            ]);
+            
+            return $result;
+        } catch (Exception $e) {
+            echo "Lỗi khi thêm sản phẩm vào yêu thích: " . $e->getMessage();
+            return false; 
+        }
+    }
+    
+    public function getFavouritesByUser($userId) {
+        try {
+            $sql = "
+                SELECT 
+                    f.id AS favorite_id, 
+                    f.added_at, 
+                    p.id AS product_id, 
+                    p.namesp, 
+                    p.price, 
+                    p.img, 
+                    a.username AS user_name, 
+                    a.email AS user_email 
+                FROM favorites f
+                JOIN products p ON f.pro_id = p.id
+                JOIN accounts a ON f.user_id = a.id
+                WHERE f.user_id = :user_id
+            ";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':user_id' => $userId]);
+            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo "Lỗi khi lấy danh sách yêu thích của người dùng: " . $e->getMessage();
+            return []; 
+        }
+    }
+    
+            
 
 }
