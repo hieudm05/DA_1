@@ -57,9 +57,6 @@ class ClientModels
             return false;
         }
     }
-
-    
-
     // Login
     public function checkAcc($userOrEmail, $pass) {
         $sql = 'SELECT * FROM accounts WHERE (username = :userOrEmail OR email = :userOrEmail) AND password = :pass';

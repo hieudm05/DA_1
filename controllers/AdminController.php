@@ -8,6 +8,14 @@ class HomeController
     }
 
     public function home() {
+        $listBillStatus = $this->modelAdmin->getAllBill_3();
+        $sumBills = $this->modelAdmin->getTotalOrders();
+        $sumTotalBill = $this->modelAdmin->sumTotalOrders();
+        $sumProducts = $this->modelAdmin->sumProducts();
+        $sumComments = $this->modelAdmin->sumComments();
+
+        // printf($sumBills);
+        // var_dump($listBillStatus);
         require_once '../../views/Admins/home/home.php';
     }
     // Danh Mục
@@ -194,7 +202,6 @@ public function updateSP() {
     }  
 }
  //đơn hàng
-
     public function listBills() {
         $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
         $listOrders = $this->modelAdmin->getAllBill(); 
@@ -211,6 +218,18 @@ public function updateSP() {
         }
         require_once '../../views/Admins/donHang/listDonHang.php';
     }
+    public function confirmOrder() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $bill_status = 1;
+            $id = $_GET['id'];
+
+            $this->modelAdmin->updateOrderStatus($id ,$bill_status);
+            header('location: router.php');
+            
+        }
+    }
+    
+
 
 ///bình luận
 public function listComments() {
@@ -229,6 +248,6 @@ public function deleteComment() {
     }
 }
 
-
+    
 }
 

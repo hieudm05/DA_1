@@ -181,8 +181,19 @@ class ClientController
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
         }
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user']) && $_SESSION['user']['role'] != 'admin') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
+            if( $_SESSION['user']['role'] == 1){
+                echo '<script>
+                // Khắc phục lỗi mất thanh cuộn
+                document.body.style.overflowX = "auto"; 
+                document.body.style.overflowY = "auto";  
+                Swal.fire({
+                    text: "Admin không thể mua hàng",
+                    icon: "warning",
+                    confirmButtonColor: "#C62E2E"
+                    });
+            </script>';
+        }
             $id = $_POST['id'];
             $namesp = $_POST['namesp'];
             $img = $_POST['img'];
@@ -244,6 +255,19 @@ class ClientController
                     });
               </script>';
               require_once '../views/Clients/accounts/login.php';
+        }
+        if($_SESSION['user']['role'] == 1){
+            echo '<script>
+            // Khắc phục lỗi mất thanh cuộn
+            document.body.style.overflowX = "auto"; 
+            document.body.style.overflowY = "auto";  
+            Swal.fire({
+                text: "Admin không thể mua hàng",
+                icon: "warning",
+                confirmButtonColor: "#C62E2E"
+                });
+          </script>';
+            $this->home();
         }
         $listCarts= $this->modelClients->listCartByUser($_SESSION['user']['id']);
                 // var_dump($listCarts);

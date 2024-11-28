@@ -39,6 +39,8 @@ match ($act) {
     //đơn hàng 
     'listDonHang' => (new HomeController())->listBills(),
     'updateOrder' => (new HomeController()) -> updateStatusBills(),
+    // Xác nhận đơn hàng
+    'confirmOrder' => (new HomeController()) ->confirmOrder(),
     //binh luan
     'listComments' => (new HomeController())->listComments(),
     'deleteComment' => (new HomeController())->deleteComment(),

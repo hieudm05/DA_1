@@ -248,9 +248,75 @@ class AdminModels
             
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
-    
-            // Trả về kết quả, trong đó mỗi phần tử là một mảng chứa thông tin của hóa đơn và tên người dùng
             return $stmt->fetchAll();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+    public function getAllBill_3() {
+        try {
+            $sql = 'SELECT bills.*, accounts.username AS user_name FROM bills 
+                    JOIN accounts ON bills.idUser = accounts.id 
+                    WHERE bills.bill_status = 0
+                    ORDER BY bills.id DESC ' ;
+            
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function getTotalOrders(){
+        try {
+            $sql = "SELECT COUNT(*) AS total_orders FROM bills";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+              // Lấy kết quả trả về
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['total_orders'];
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    // Tổng doanh thu
+    public function sumTotalOrders(){
+        try {
+            $sql = "SELECT SUM(bills.total) AS total FROM bills";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+              // Lấy kết quả trả về
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['total'] ? $row['total'] : 0 ;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+    // Tổng số sản phẩm
+    public function sumProducts(){
+        try {
+            $sql = "SELECT COUNT(*) AS total FROM products";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+              // Lấy kết quả trả về
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['total'] ? $row['total'] : 0 ;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    // Tổng bình luận
+    public function sumComments(){
+        try {
+            $sql = "SELECT COUNT(*) AS total FROM comments";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+              // Lấy kết quả trả về
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['total'] ? $row['total'] : 0 ;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -318,7 +384,6 @@ class AdminModels
             return false;
         }
     }
-    
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;
     }

@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="./content/assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="./content/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
@@ -249,7 +251,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="http://localhost/base_test_DA1/public/" aria-expanded="false"
                             aria-controls="auth">
-                            <i class="menu-icon mdi mdi-card-text-outline"></i>
+                            <i class="menu-icon bi bi-box-arrow-right"></i>
                             <span class="menu-title">Đăng xuất</span>
                         </a>
                     </li>
