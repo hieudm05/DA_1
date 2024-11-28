@@ -708,3 +708,231 @@ Array
 )
 =======
 >>>>>>> 64bb072c58083e096a334a16c4df90fdc526a87d
+Array
+(
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => djjd
+            [time] => 2024-11-25 16:57:06
+            [username] => thanhvien
+        )
+
+    [1] => Array
+        (
+            [id] => 2
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => j
+            [time] => 2024-11-25 09:54:07
+            [username] => thanhvien
+        )
+
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 4
+            [idpro] => 24
+            [idUser] => 1
+            [noidung] => hay lắm
+            [time] => 2024-11-27 23:57:57
+            [username] => admin
+        )
+
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => djjd
+            [time] => 2024-11-25 16:57:06
+            [username] => thanhvien
+        )
+
+    [1] => Array
+        (
+            [id] => 2
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => j
+            [time] => 2024-11-25 09:54:07
+            [username] => thanhvien
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => djjd
+            [time] => 2024-11-25 16:57:06
+            [username] => thanhvien
+        )
+
+    [1] => Array
+        (
+            [id] => 2
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => j
+            [time] => 2024-11-25 09:54:07
+            [username] => thanhvien
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => djjd
+            [time] => 2024-11-25 16:57:06
+            [username] => thanhvien
+        )
+
+    [1] => Array
+        (
+            [id] => 2
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => j
+            [time] => 2024-11-25 09:54:07
+            [username] => thanhvien
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => djjd
+            [time] => 2024-11-25 16:57:06
+            [username] => thanhvien
+        )
+
+    [1] => Array
+        (
+            [id] => 2
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => j
+            [time] => 2024-11-25 09:54:07
+            [username] => thanhvien
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => djjd
+            [time] => 2024-11-25 16:57:06
+            [username] => thanhvien
+        )
+
+    [1] => Array
+        (
+            [id] => 2
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => j
+            [time] => 2024-11-25 09:54:07
+            [username] => thanhvien
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => djjd
+            [time] => 2024-11-25 16:57:06
+            [username] => thanhvien
+        )
+
+    [1] => Array
+        (
+            [id] => 2
+            [idpro] => 22
+            [idUser] => 2
+            [noidung] => j
+            [time] => 2024-11-25 09:54:07
+            [username] => thanhvien
+        )
+
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)

@@ -1,55 +1,49 @@
-<div class="container">  
-    <div class="card">  
-        <div class="card-header d-flex justify-content-between align-items-center">  
-            <h3 class="mb-0">Danh Sách Đơn Hàng</h3>  
-        </div>  
-        <div class="card-body">   
-            <!-- Search Bar -->  
-            <div class="mb-3 d-flex align-items-center">  
-                <input type="text" id="searchInput" class="form-control me-2" placeholder="Tìm kiếm đơn hàng" aria-label="Search" style="width: 400px;">  
-                <button id="searchButton" class="btn btn-primary" style="width: 120px;" type="button">Tìm kiếm</button>  
-            </div>  
+<div class="container">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="mb-0">Danh Sách Đơn Hàng</h3>
+    </div>
+    <div class="card-body">
+        <!-- Search Bar -->
+        <div class="mb-3 d-flex align-items-center">
+            <input type="text" id="searchInput" class="form-control me-2" placeholder="Tìm kiếm đơn hàng" aria-label="Search" style="width: 400px;">
+            <button id="searchButton" class="btn btn-primary" style="width: 120px;" type="button">Tìm kiếm</button>
+        </div>
 
-            <table class="table table-light" id="orderTable">  
-                <thead class="thead-dark">  
-                    <tr>    
-                        <th>Mã Đơn</th>  
-                        <th>Khách Hàng</th>   
-                        <th>Tên Sản Phẩm</th>  
-                        <th>Ngày Đặt Hàng</th>  
-                        <th>Số Lượng</th>  
-                        <th>Tổng Giá Trị</th>  
-                        <th>Phương Thức Thanh Toán</th>  
-                        <th>Tình Trạng</th>  
-                        <th class="text-end">Cập Nhật Tình Trạng</th>  
-                    </tr>  
-                </thead>   
-                                <tbody>  
-                    <?php foreach($listOrders as $order) : ?>  
-                        <?php   
-                            $updateStatus = "router.php?act=updateOrder&id=" . $order['id'];  
-                        ?>  
-                        <tr>  
-                            <td><?= htmlspecialchars($order['id']) ?></td> 
-                            <td class="customer-name"><?= htmlspecialchars($order['bill_name']) ?></td> 
-                            <td><?= htmlspecialchars($order['product_name']) ?></td>   
-                            <td><?= htmlspecialchars(date('d/m/Y', strtotime($order['timedathang']))) ?></td>  
-                            <td><?= htmlspecialchars($order['quantity']) ?></td>  
-                            <td><?= htmlspecialchars(number_format($order['total'], 0, ',', '.')) ?> ₫</td>  
-                            <td><?= htmlspecialchars($order['bill_pttt'] == 1 ? 'Thanh toán trực tiếp' : 'Chuyển khoản') ?></td>   
-                            <td><?= htmlspecialchars(['Đơn hàng mới', 'Đang xử lý', 'Đang giao hàng', 'Đã giao'][$order['bill_status']]) ?></td> 
-                            <td class="text-end">  
-                                <a href="<?= $updateStatus ?>" class="btn btn-warning btn-sm">Cập Nhật</a>  
-                            </td>  
-                        </tr>  
-                    <?php endforeach; ?>  
-                </tbody>  
-            </table>  
-        </div>  
-    </div>  
-</div>  
+        <!-- Grid to display orders -->
+        <div class="row">
+            <?php foreach($listOrders as $order): ?>
+                <?php   
+                    $updateStatus = "router.php?act=updateOrder&id=" . $order['id'];
+                ?>
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Đơn Hàng #<?= $order['id'] ?></h5>
+                            <p class="card-text"><strong>Khách Hàng:</strong> <?= $order['user_name'] ?></p>
+                            <p class="card-text"><strong>Sản Phẩm:</strong> <?= $order['bill_name'] ?></p>
+                            <p class="card-text"><strong>Ngày Đặt Hàng:</strong> <?= date('d/m/Y', strtotime($order['ngaydathang'])) ?></p>
+                            <p class="card-text"><strong>Số Lượng:</strong> <?= $order['quantity'] ?></p>
+                            <p class="card-text"><strong>Tổng Giá Trị:</strong> <?= number_format($order['total'], 0, ',', '.') ?> ₫</p>
+                            <p class="card-text"><strong>Phương Thức Thanh Toán:</strong> <?= $order['bill_pttt'] == 1 ? 'Thanh toán trực tiếp' : 'Chuyển khoản' ?></p>
 
-<!-- Include Bootstrap JS and jQuery if needed -->  
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>  
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>  
-</body>  
+                            <!-- Select to update order status -->
+                            <form action="<?= $updateStatus ?>" method="POST">
+                                <div class="mb-3">
+                                    <label for="statusSelect" class="form-label"><strong>Tình Trạng</strong>:</label>
+                                    <select class="form-control-sm" name="bill_status" id="statusSelect" required>
+                                        <option value="0" <?= $order['bill_status'] == 0 ? 'selected' : '' ?>>Đơn hàng mới</option>
+                                        <option value="1" <?= $order['bill_status'] == 1 ? 'selected' : '' ?>>Đang xử lý</option>
+                                        <option value="2" <?= $order['bill_status'] == 2 ? 'selected' : '' ?>>Đang giao hàng</option>
+                                        <option value="3" <?= $order['bill_status'] == 3 ? 'selected' : '' ?>>Đã giao</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-warning btn-sm">Cập Nhật</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>

@@ -49,13 +49,25 @@
 
                         <!-- Nút hành động -->
                         <div class="d-flex mb-4">
-                        <button class="btn btn-warning rounded-pill me-3">Thêm vào giỏ hàng</button>
+                        <form action="?act=addcart" method="post">
+                                <input type="hidden" name="id" value="<?= $sanPhamChiTiet['id'] ?>" >
+                                <input type="hidden" name="namesp" value="<?= $sanPhamChiTiet['namesp'] ?>" >
+                                <input type="hidden" name="img" value="<?= $sanPhamChiTiet['img'] ?>">
+                                 <input type="hidden" name="price" value="<?= $sanPhamChiTiet['price'] ?>"> 
+                                 <input type="hidden" name="quantity" value="<?= $sanPhamChiTiet['quantity'] ?>"> 
+                                 <input type="hidden" name="mota" value="<?= $sanPhamChiTiet['mota'] ?>"> 
+                                 <?php if($_SESSION['user']['role'] !== 1) :?>
+                                <button name="addcart" class="btn btn-danger rounded-pill me-2">Thêm vào giỏ hàng</i></button>
+                                <!-- Nút giỏ hàng và yêu thích -->
+                               </form>
                         <button class="btn btn-danger rounded-pill me-2">Mua ngay</button>
 
                         <!-- Nút trái tim thêm vào yêu thích -->
                         <a href="?act=addFavourite&id=<?= $sanPhamChiTiet['id'] ?>" class="btn btn-danger rounded-pill">
                             <i class="bi bi-heart-fill"></i>
                         </a>
+                        <?php endif ?>
+
                     </div>
 
                         <div class="mt-4">
@@ -150,8 +162,10 @@
                                     <h6><span class="card-text text-danger"><?= $product['price'] ?>đ</span></h6>
                                 </div>
                                 <div class="product-actions">
+                                <?php if($_SESSION['user']['role'] !== 1) :?>
                                     <button class="btn-cart"><i class="bi bi-cart-plus"></i></button>
                                     <button class="btn-wishlist"><i class="bi bi-heart"></i></button>
+                                <?php endif ?>
                                 </div>
                             </div>
                         </div>

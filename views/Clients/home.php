@@ -193,15 +193,12 @@ $categories = array_unique(array_column($datas, 'category_name'));
                                  <input type="hidden" name="price" value="<?= $product['price'] ?>"> 
                                  <input type="hidden" name="quantity" value="<?= $product['quantity'] ?>"> 
                                  <input type="hidden" name="mota" value="<?= $product['mota'] ?>"> 
-                                <!-- <button name="addcart" class="btn-cart"><i class="bi bi-cart-plus"></i></button> -->
-                                <input type="submit" name="addcart" class="btn-cart" value="&#128722;">
+                                 <?php if($_SESSION['user']['role'] !== 1) :?>
+                                <button name="addcart" class="btn-cart"><i class="bi bi-cart-plus"></i></button>
                                 <!-- Nút giỏ hàng và yêu thích -->
                                </form>
-<<<<<<< HEAD
                                <a href="?act=addFavourite&id=<?= $product['id']?>"><button class="btn-wishlist"><i class="bi bi-heart"></i></button></a>
-=======
-                               <a href="#"><button class="btn-wishlist"><i class="bi bi-heart"></i></button></a>
->>>>>>> 64bb072c58083e096a334a16c4df90fdc526a87d
+                               <?php endif ?>
                             </div>
                         </div>
                     </div>

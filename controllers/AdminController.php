@@ -99,7 +99,7 @@ class HomeController
     public function listSP() {
         $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
         $listProducts = $this->modelAdmin->getAllProductsByCategory();
-        var_dump($listProducts);
+        // var_dump($listProducts);
         require_once '../../views/Admins/SanPham/listSP.php';
     }
     public function postSP() {  
@@ -195,11 +195,23 @@ public function updateSP() {
 }
  //đơn hàng
 
-public function listBills() {
-    $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
-    $listOrders = $this->modelAdmin->getAllBill(); // Lấy danh sách đơn hàng
-    require_once '../../views/Admins/donHang/listDonHang.php'; // Đường dẫn file view danh sách đơn hàng
-}
+    public function listBills() {
+        $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
+        $listOrders = $this->modelAdmin->getAllBill(); 
+        require_once '../../views/Admins/donHang/listDonHang.php'; 
+    }
+    public function updateStatusBills(){
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $bill_status = $_POST['bill_status'];
+            $id = $_GET['id'];
+            // var_dump($id);
+            $listOrders = $this->modelAdmin->getAllBill(); 
+            $this->modelAdmin->updateOrderStatus($id ,$bill_status);
+            header('location: router.php?act=listDonHang');
+        }
+        require_once '../../views/Admins/donHang/listDonHang.php';
+    }
+
 ///bình luận
 public function listComments() {
     $listBinhLuan = $this->modelAdmin->getAllComments();

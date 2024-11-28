@@ -241,17 +241,43 @@ class AdminModels
      //đơn hàng
      public function getAllBill() {
         try {
-            $sql = 'SELECT * FROM bills ORDER BY id DESC';
-    
+            // Truy vấn kết hợp giữa bảng bills và bảng accounts
+            $sql = 'SELECT bills.*, accounts.username AS user_name FROM bills 
+                    JOIN accounts ON bills.idUser = accounts.id 
+                    ORDER BY bills.id DESC';
+            
             $stmt = $this->conn->prepare($sql);
-        
             $stmt->execute();
-
+    
+            // Trả về kết quả, trong đó mỗi phần tử là một mảng chứa thông tin của hóa đơn và tên người dùng
             return $stmt->fetchAll();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             echo $e->getMessage();
         }
     }
+
+    // Cập nhật trạng thái đơn hàng
+    public function updateOrderStatus($orderId, $status) {
+        // SQL query để cập nhật trạng thái đơn hàng
+        $sql = "UPDATE bills SET bill_status = :status WHERE id = :orderId";
+        
+        // Chuẩn bị câu lệnh
+        $stmt = $this->conn->prepare($sql);
+        
+        // Gắn giá trị vào các tham số
+        $stmt->bindParam(':status', $status, PDO::PARAM_INT);
+        $stmt->bindParam(':orderId', $orderId, PDO::PARAM_INT);
+        
+        // Thực thi câu lệnh
+        if ($stmt->execute()) {
+            return true; // Nếu cập nhật thành công
+        } else {
+            return false; // Nếu có lỗi xảy ra
+        }
+    }
+    
+    
+    
 
     //binh luan
     public function getAllComments() {
