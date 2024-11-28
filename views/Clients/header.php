@@ -16,11 +16,11 @@
 }
 
 /* Hiệu ứng mượt mà cho phần tử khi hover */
-a, button, .card {
+a, button{
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
-a:hover, button:hover, .card:hover {
+a:hover, button:hover {
     transform: scale(1.05);  /* Phóng to nhẹ */
 }
 .no {
@@ -128,18 +128,22 @@ a:hover, button:hover, .card:hover {
                                 <div class="fw-bold">19004953</div>
                             </span>
                         </li>
-                            <li class="nav-item position-relative">
+                           <li class="nav-item position-relative">
                                 <a class="nav-link text-dark" style="font-size: 20px;" href="?act=viewcart">
                                     <i class="bi bi-cart3"></i>
                                 </a>
                                 <!-- Badge hiển thị số lượng -->
                                
-                                <span class="badge rounded-pill bg-danger position-absolute" style="top: 0; right: 0; font-size: 10px;">
-                                   3
-                                </span>
-                               
-                               
+                                <span class="<?= isset($_SESSION['cart']) && count($_SESSION['cart']) > 0 ? 'badge rounded-pill bg-danger position-absolute' : '' ?>" style="top: 0; right: 0; font-size: 10px;">
+                                    <?php 
+                                    if (isset($_SESSION['cart'])) {
+                                        $productCount = count($_SESSION['cart']);
+                                        echo $productCount > 0 ? $productCount : ''; // Chỉ hiển thị số sản phẩm nếu có
+                                    }
+                                    ?>
+                                </span>  
                             </li>
+
 
                         <?php if(isset($_SESSION['user'])){  extract($_SESSION['user']); $imgPath = './../' . $avatar; $avt = $imgPath ? $imgPath : './img/userNo.jpg';  ?>
                         <li class="nav-item dropdown d-flex align-items-center">
@@ -150,6 +154,8 @@ a:hover, button:hover, .card:hover {
                                     <li><a class="dropdown-item" href="http://localhost/base_test_DA1/views/Admins/router.php">Đăng nhập admin</a></li>
                                 <?php }else{ ?>
                                     <li><a class="dropdown-item" href="?act=signup">Lấy lại pass</a></li>
+                                    <li><a class="dropdown-item" href="?act=listFavourites">Sản Phẩm yêu thích</a></li>
+                                    <li><a class="dropdown-item" href="?act=billInfo">Đơn hàng của bạn</a></li>
                                 <?php } ?>
                                 <li><a class="dropdown-item" href="?act=listFavourites">Sản Phẩm yêu thích</a></li>
                                 <li><hr class="dropdown-divider"></li>

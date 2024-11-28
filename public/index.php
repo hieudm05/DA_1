@@ -1,9 +1,6 @@
 <?php 
 session_start();
 ob_start();
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = []; // Khởi tạo giỏ hàng nếu chưa có
-}
 include '../views/Clients/header.php';
 
 
@@ -53,11 +50,12 @@ match ($act) {
     // Giỏ hàng
     'viewcart' => (new ClientController()) ->viewCarts(),
     'addcart' => (new ClientController()) ->carts(),
-    'deleteCart' => (new ClientController()) ->deleteCarts(),
+    'deletecart' => (new ClientController()) ->deleteCarts(),
 
     // Bill
     'thanhtoan' => (new ClientController()) ->bills(),
     'billconfirm' => (new ClientController()) ->billConfirm(),
+    'billInfo' => (new ClientController()) -> infoBills(),
 
     // Sản phẩm chi tiết
     'sanphamchitiet' => (new ClientController()) -> sanphamchitiet(),

@@ -49,21 +49,29 @@
 
                         <!-- Nút hành động -->
                         <div class="d-flex mb-4">
-                        <a href="?act=viewcart"><button class="btn btn-warning rounded-pill me-3">Thêm vào giỏ hàng</button></a>
+                        <form action="?act=addcart" method="post">
+                                <input type="hidden" name="id" value="<?= $sanPhamChiTiet['id'] ?>" >
+                                <input type="hidden" name="namesp" value="<?= $sanPhamChiTiet['namesp'] ?>" >
+                                <input type="hidden" name="img" value="<?= $sanPhamChiTiet['img'] ?>">
+                                 <input type="hidden" name="price" value="<?= $sanPhamChiTiet['price'] ?>"> 
+                                 <input type="hidden" name="quantity" value="<?= $sanPhamChiTiet['quantity'] ?>"> 
+                                 <input type="hidden" name="mota" value="<?= $sanPhamChiTiet['mota'] ?>"> 
+                                <button name="addcart" class="btn btn-danger rounded-pill me-2">Thêm vào giỏ hàng</i></button>
+                                <!-- Nút giỏ hàng và yêu thích -->
+                               </form>
                         <button class="btn btn-danger rounded-pill me-2">Mua ngay</button>
 
                         <!-- Nút trái tim thêm vào yêu thích -->
                         <a href="?act=addFavourite&id=<?= $sanPhamChiTiet['id'] ?>" class="btn btn-danger rounded-pill">
                             <i class="bi bi-heart-fill"></i>
                         </a>
+
                     </div>
 
                         <div class="mt-4">
                             <p>Đánh giá: <span class="text-warning">★★★★★</span> (200 đánh giá)</p>
                             <div class="comment-section mt-4">
                                 <h4 class="fw-bold mb-3">Bình luận</h4>
-
-                                <!-- Điều chỉnh chiều cao của phần bình luận -->
                                 <div class="list-group" style="max-height: 300px; overflow-y: auto;">
                                 <?php foreach ($comments as $comment): ?>
                                     <?php if ($comment['status'] == 1): ?>  <!-- Check if the comment is visible -->
@@ -82,10 +90,10 @@
                                                 </div>
                                             <?php endif; ?>
                                         </div>
-                                    <?php endif; ?>
+                                <?php endif; ?>
                                 <?php endforeach; ?>
-                            </div>
 
+                            </div>
                                 <?php if (isset($_SESSION['user'])): ?>
                                     <form action="?act=formComment&id=<?= $sanPhamChiTiet['id'] ?>" method="POST" class="mt-4">
                                         <div class="mb-3">
@@ -97,7 +105,8 @@
                                 <?php else: ?>
                                     <p class="mt-3">Bạn cần <a href="?act=login" class="text-decoration-none">đăng nhập</a> để bình luận.</p>
                                 <?php endif; ?>
-                            </div>
+                                <!-- Điều chỉnh chiều cao của phần bình luận -->
+                        </div>
                         </div>
                     </div>
                 </div>
