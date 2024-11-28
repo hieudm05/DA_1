@@ -325,7 +325,7 @@ class ClientController
             if (isset($_SESSION['user']) || $_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Lấy thông tin từ session
                 $nameUser = $_SESSION['user']['username'];
-                $email = isset($_POST['email']) ? $_POST['email'] : $_SESSION['user']['email']; ; 
+                $email = isset($_POST['email']) ? $_POST['email'] : $_SESSION['user']['email']; 
                 $sdt = isset($_POST['sdt']) ? $_POST['sdt'] : $_SESSION['user']['sdt']; 
                 $address = isset($_POST['address']) ? $_POST['address'] : $_SESSION['user']['address'];  
                 $user_id = $_SESSION['user']['id'];

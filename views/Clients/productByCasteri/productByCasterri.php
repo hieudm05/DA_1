@@ -29,10 +29,8 @@
                     </div>
                     <!-- Nút giỏ hàng và yêu thích -->
                     <div class="product-actions">
-                    <?php if($_SESSION['user']['role'] !== 1) :?>
                         <button class="btn-cart"><i class="bi bi-cart-plus"></i></button>
                         <button class="btn-wishlist"><i class="bi bi-heart"></i></button>
-                    <?php endif ?>
                     </div>
                 </div>
             </div>

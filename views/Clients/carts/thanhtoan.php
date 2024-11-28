@@ -18,11 +18,11 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="full-name" class="form-label">Họ và tên</label>
-                        <input type="text" class="form-control" id="full-name" value="<?= $nameUser ?>" placeholder="Nhập họ và tên">
+                        <input type="text" class="form-control" name="username" id="full-name" value="<?= $nameUser ?>" placeholder="Nhập họ và tên">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="phone-number" class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control" id="phone-number" value="<?= $sdt ?>" placeholder="Nhập số điện thoại">
+                        <input type="text" class="form-control" name="sdt" id="phone-number" value="<?= $sdt ?>" placeholder="Nhập số điện thoại">
                     </div>
                 </div>
 

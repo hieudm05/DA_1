@@ -128,7 +128,6 @@ a:hover, button:hover {
                                 <div class="fw-bold">19004953</div>
                             </span>
                         </li>
-                           <?php if($_SESSION['user']['role'] !== 1) :?>
                            <li class="nav-item position-relative">
                                 <a class="nav-link text-dark" style="font-size: 20px;" href="?act=viewcart">
                                     <i class="bi bi-cart3"></i>
@@ -145,7 +144,7 @@ a:hover, button:hover {
                                 </span>  
                             </li>
 
-                           <?php endif; ?>
+
                         <?php if(isset($_SESSION['user'])){  extract($_SESSION['user']); $imgPath = './../' . $avatar; $avt = $imgPath ? $imgPath : './img/userNo.jpg';  ?>
                         <li class="nav-item dropdown d-flex align-items-center">
                             <a class="dropdown-toggle text-dark" data-bs-toggle="dropdown" href="" role="button" style="font-size: 18px;" aria-expanded="false"><img src="<?= $avt ?>" height="24" width="24"  style="border-radius: 50% ;" alt=""></a>

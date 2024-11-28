@@ -13,7 +13,19 @@
                     <?= $bill_pttt == 1 ? 'Thanh toán khi nhận hàng' : 'Thanh toán trực tuyến'; ?>
                 </p>
                 <p><strong>Trạng thái:</strong> 
-                    <?= $bill_status == 0 ? 'Đơn hàng mới' : 'Thanh toán trực tuyến'; ?>
+                <?php
+                        if ($bill_status == 0) {
+                            echo 'Đơn hàng mới';
+                        } elseif ($bill_status == 1) {
+                            echo 'Đang xử lý';
+                        } elseif ($bill_status == 2) {
+                            echo 'Đã giao hàng';
+                        } elseif ($bill_status == 3) {
+                            echo 'Đã giao';
+                        } else {
+                            echo 'Không xác định';
+                        }
+                    ?>
                 </p>
                 <p><strong>Tổng Tiền:</strong> <?php echo number_format($total, 0, ',', '.') . " VND"; ?></p>
             </div>

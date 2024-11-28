@@ -56,7 +56,6 @@
                                  <input type="hidden" name="price" value="<?= $sanPhamChiTiet['price'] ?>"> 
                                  <input type="hidden" name="quantity" value="<?= $sanPhamChiTiet['quantity'] ?>"> 
                                  <input type="hidden" name="mota" value="<?= $sanPhamChiTiet['mota'] ?>"> 
-                                 <?php if($_SESSION['user']['role'] !== 1) :?>
                                 <button name="addcart" class="btn btn-danger rounded-pill me-2">Thêm vào giỏ hàng</i></button>
                                 <!-- Nút giỏ hàng và yêu thích -->
                                </form>
@@ -66,7 +65,6 @@
                         <a href="?act=addFavourite&id=<?= $sanPhamChiTiet['id'] ?>" class="btn btn-danger rounded-pill">
                             <i class="bi bi-heart-fill"></i>
                         </a>
-                        <?php endif ?>
 
                     </div>
 
@@ -74,7 +72,17 @@
                             <p>Đánh giá: <span class="text-warning">★★★★★</span> (200 đánh giá)</p>
                             <div class="comment-section mt-4">
                                 <h4 class="fw-bold mb-3">Bình luận</h4>
-
+                                <?php if (isset($_SESSION['user'])): ?>
+                                    <form action="?act=formComment&id=<?= $sanPhamChiTiet['id'] ?>" method="POST" class="mt-4">
+                                        <div class="mb-3">
+                                            <label for="comment" class="form-label">Nhập bình luận của bạn</label>
+                                            <textarea name="comment" class="form-control" id="comment" rows="4" placeholder="Bình luận của bạn..." required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-danger">Gửi bình luận</button>
+                                    </form>
+                                <?php else: ?>
+                                    <p class="mt-3">Bạn cần <a href="?act=login" class="text-decoration-none">đăng nhập</a> để bình luận.</p>
+                                <?php endif; ?>
                                 <!-- Điều chỉnh chiều cao của phần bình luận -->
                                 <div class="list-group" style="max-height: 300px; overflow-y: auto;">
                                     <?php foreach ($comments as $comment): ?>
@@ -96,18 +104,6 @@
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
-
-                                <?php if (isset($_SESSION['user'])): ?>
-                                    <form action="?act=formComment&id=<?= $sanPhamChiTiet['id'] ?>" method="POST" class="mt-4">
-                                        <div class="mb-3">
-                                            <label for="comment" class="form-label">Nhập bình luận của bạn</label>
-                                            <textarea name="comment" class="form-control" id="comment" rows="4" placeholder="Bình luận của bạn..." required></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-danger">Gửi bình luận</button>
-                                    </form>
-                                <?php else: ?>
-                                    <p class="mt-3">Bạn cần <a href="?act=login" class="text-decoration-none">đăng nhập</a> để bình luận.</p>
-                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -162,10 +158,8 @@
                                     <h6><span class="card-text text-danger"><?= $product['price'] ?>đ</span></h6>
                                 </div>
                                 <div class="product-actions">
-                                <?php if($_SESSION['user']['role'] !== 1) :?>
                                     <button class="btn-cart"><i class="bi bi-cart-plus"></i></button>
                                     <button class="btn-wishlist"><i class="bi bi-heart"></i></button>
-                                <?php endif ?>
                                 </div>
                             </div>
                         </div>
