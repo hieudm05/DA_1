@@ -197,11 +197,7 @@ $categories = array_unique(array_column($datas, 'category_name'));
                                 <input type="submit" name="addcart" class="btn-cart" value="&#128722;">
                                 <!-- Nút giỏ hàng và yêu thích -->
                                </form>
-<<<<<<< HEAD
                                <a href="?act=addFavourite&id=<?= $product['id']?>"><button class="btn-wishlist"><i class="bi bi-heart"></i></button></a>
-=======
-                               <a href="#"><button class="btn-wishlist"><i class="bi bi-heart"></i></button></a>
->>>>>>> 64bb072c58083e096a334a16c4df90fdc526a87d
                             </div>
                         </div>
                     </div>

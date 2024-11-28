@@ -12,6 +12,7 @@
                         <th>Sản Phẩm</th>
                         <th>Nội Dung</th>
                         <th>Thời Gian</th>
+                        <th>Trạng Thái</th>
                         <th>Hành Động</th>
                     </tr>
                 </thead>
@@ -20,24 +21,28 @@
                         <?php foreach ($listBinhLuan as $comment) : ?>
                             <tr>
                                 <td><?= htmlspecialchars($comment['id']) ?></td>
-                                <!-- Display customer name or 'Ẩn danh' if not available -->
                                 <td><?= htmlspecialchars($comment['customer_name'] ?? 'Ẩn danh') ?></td>
-                                <!-- Display product name or 'Không xác định' if not available -->
                                 <td><?= htmlspecialchars($comment['product_name'] ?? 'Không xác định') ?></td>
                                 <td><?= htmlspecialchars($comment['noidung']) ?></td>
                                 <td><?= htmlspecialchars($comment['time']) ?></td>
+                                <td><?= $comment['status'] ? 'Hiện' : 'Ẩn' ?></td>
                                 <td>
-                                    <a href="router.php?act=deleteComment&id=<?= $comment['id'] ?>" 
-                                       class="btn btn-danger btn-sm"
-                                       onclick="return confirm('Bạn có chắc chắn muốn xóa bình luận này?');">
-                                       Xóa
+                                    <a href="router.php?act=toggleComment&id=<?= htmlspecialchars($comment['id']) ?>" 
+                                    class="btn btn-warning btn-sm">
+                                    <?= $comment['status'] ? 'Ẩn' : 'Hiện' ?>
+                                    </a>
+                                    <a href="router.php?act=deleteComment&id=<?= htmlspecialchars($comment['id']) ?>" 
+                                    class="btn btn-danger btn-sm" 
+                                    onclick="return confirm('Bạn có chắc chắn muốn xóa bình luận này?');">
+                                    Xóa
                                     </a>
                                 </td>
+
                             </tr>
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="6" class="text-center">Không có bình luận nào.</td>
+                            <td colspan="7" class="text-center">Không có bình luận nào.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

@@ -230,6 +230,9 @@ class ClientController
               </script>';
               require_once '../views/Clients/accounts/login.php';
         }
+        $listCarts= $this->modelClients->listCartByUser($_SESSION['user']['id']);
+        // var_dump($listCarts);
+        require_once '../views/Clients/carts/cart.php';
     }
 
     public function viewCarts(){
@@ -347,6 +350,7 @@ class ClientController
             echo "Bạn cần đăng nhập để xóa bình luận.";
         }
     }
+    
       //   
       public function productByCasterri(){
         

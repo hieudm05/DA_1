@@ -380,29 +380,24 @@ class ClientModels
     //     }
     // }
     
-   
     public function getCommentsByProductId($id) {
         $sql = "SELECT c.*, a.username 
                 FROM comments c
                 JOIN accounts a ON c.idUser = a.id
-                WHERE c.idpro = :id
-                ORDER BY c.time DESC";
-    
+                WHERE c.idpro = :id AND c.status = 1
+                ORDER BY c.time DESC";  // Add `c.status = 1` to check visibility
+        
         $stmt = $this->conn->prepare($sql);
-    
+        
         try {
             $stmt->execute(['id' => $id]);
             $comments = $stmt->fetchAll();
-            $logFile = 'log.txt'; // Đường dẫn file log
-            file_put_contents($logFile, print_r($comments, true), FILE_APPEND);
-    
             return $comments;
         } catch (PDOException $e) {
-            // Log lỗi ra file nếu có
-            file_put_contents('log.txt', $e->getMessage(), FILE_APPEND);
-            throw $e; // Ném lại lỗi để dễ debug
+            throw $e;
         }
     }
+    
     
     
     

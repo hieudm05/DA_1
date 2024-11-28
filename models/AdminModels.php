@@ -188,22 +188,46 @@ class AdminModels
         }  
     }
     
-    public function getAllProductsByCategory() {
-        $sql = "SELECT 
-                    products.id, 
-                    products.namesp, 
-                    products.price, 
-                    products.img,
-                    products.mota,
-                    products.luotxem,
-                    products.quantity,
-                    categories.name AS category_name
-                FROM categories
-                LEFT JOIN products ON categories.id = products.iddm
-                ORDER BY categories.name, products.price ASC";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function getAllProductsByCategory($categoryId = null, $searchTerm = null) {  
+        $sql = "SELECT   
+                    products.id,   
+                    products.namesp,   
+                    products.price,   
+                    products.img,  
+                    products.mota,  
+                    products.luotxem,  
+                    products.quantity,  
+                    categories.name AS category_name  
+                FROM categories  
+                LEFT JOIN products ON categories.id = products.iddm";  
+        
+        $conditions = [];  
+        
+        if ($categoryId) {  
+            $conditions[] = "products.iddm = :categoryId";  
+        }  
+        if ($searchTerm) {  
+            $conditions[] = "products.namesp LIKE :searchTerm";  
+        }  
+    
+        if (count($conditions) > 0) {  
+            $sql .= " WHERE " . implode(' AND ', $conditions);  
+        }  
+    
+        $sql .= " ORDER BY categories.name, products.price ASC";  
+    
+        $stmt = $this->conn->prepare($sql);  
+    
+        if ($categoryId) {  
+            $stmt->bindParam(':categoryId', $categoryId, PDO::PARAM_INT);  
+        }  
+        if ($searchTerm) {  
+            $searchTerm = '%' . $searchTerm . '%'; 
+            $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);  
+        }  
+    
+        $stmt->execute();  
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  
     }
 
     public function deleteSP($id) {  
@@ -255,16 +279,20 @@ class AdminModels
 
     //binh luan
     public function getAllComments() {
-    try {
-        $sql = 'SELECT * FROM comments ORDER BY time DESC';
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll();
-    } catch (Exception $e) {
-        echo 'Error: ' . $e->getMessage();
-        return false;
+        try {
+            $sql = 'SELECT comments.*, products.namesp AS product_name 
+                    FROM comments 
+                    LEFT JOIN products ON comments.idpro = products.id 
+                    ORDER BY comments.time DESC';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
     }
-}
+    
 
 
     public function getCommentsByProduct($idpro) {
@@ -292,6 +320,31 @@ class AdminModels
             return false;
         }
     }
+    public function getCommentById($id) {
+        try {
+            $sql = 'SELECT * FROM comments WHERE id = :id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
+    public function updateCommentStatus($id, $status) {
+        try {
+            $sql = 'UPDATE comments SET status = :status WHERE id = :id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['status' => $status, 'id' => $id]);
+            return true;
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
+    
     
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;
