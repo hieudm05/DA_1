@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $result->fetch_assoc();
 
     if ($user && strtotime($user['reset_expires']) > time()) {
+        
         header("Location: ?act=reset_password&email=$email");
         exit;
     } else {

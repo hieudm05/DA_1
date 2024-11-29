@@ -12,8 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($stmt->affected_rows > 0) {
         // Gửi email mã xác nhận (mã giả lập)
-        echo "Mã xác nhận của bạn là: $code"; // Thay bằng hàm gửi email thực
-        header("Location: ?act=verify_code&email=$email");
+        echo "<script>
+            alert('Mã xác nhận của bạn là: $code');
+            window.location.href = '?act=verify_code&email=$email';
+        </script>";
         exit;
     } else {
         echo "Email không tồn tại!";

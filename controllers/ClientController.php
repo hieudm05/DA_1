@@ -240,8 +240,6 @@ class ClientController
         $id = $_GET['id'] ;
         $data = $this->modelClients->productByCasterri($id) ;
         
-        // var_dump($data) ;
-        // extract($data) ;
         
         require_once '../views/Clients/productByCasteri/productByCasterri.php';
         
