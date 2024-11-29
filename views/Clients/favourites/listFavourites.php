@@ -29,5 +29,5 @@
         <?php else : ?>
             <p>Danh sách yêu thích của bạn đang trống.</p>
         <?php endif; ?>
-    </div> <!-- End of .row -->
+    </div>
 </div>
