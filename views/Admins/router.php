@@ -38,6 +38,12 @@ match ($act) {
 
     //đơn hàng 
     'listDonHang' => (new HomeController())->listBills(),
+    'updateOrder' => (new HomeController()) -> updateStatusBills(),
+    //binh luan
+    'listComments' => (new HomeController())->listComments(),
+    'deleteComment' => (new HomeController())->deleteComment(),
+    'toggleComment' => (new HomeController())->toggleComment(),
+
 };
 
     

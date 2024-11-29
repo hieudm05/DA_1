@@ -96,11 +96,15 @@ class HomeController
         require_once '../../views/Admins/SanPham/formAddSP.php';
         
     }
-    public function listSP() {
+    public function listSP() {  
         $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
-        $listProducts = $this->modelAdmin->getAllProductsByCategory();
+    
+        $categoryId = isset($_GET['category']) ? $_GET['category'] : null;  
+        $searchTerm = isset($_GET['search']) ? $_GET['search'] : null;  
+    
+        $listProducts = $this->modelAdmin->getAllProductsByCategory($categoryId, $searchTerm);   
         var_dump($listProducts);
-        require_once '../../views/Admins/SanPham/listSP.php';
+        require_once '../../views/Admins/SanPham/listSP.php';  
     }
     public function postSP() {  
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {  
@@ -147,11 +151,10 @@ public function deleteSP() {
     }  
 }
 public function formSuaSP() {
-    $id = $_GET['id']; // Retrieve product ID from GET request
-    $product = $this->modelAdmin->getSPById($id); // Fetch the product details by ID
-    $listDanhMuc = $this->modelAdmin->getAllDanhMuc(); // Fetch all categories for selection
+    $id = $_GET['id'];
+    $product = $this->modelAdmin->getSPById($id); 
+    $listDanhMuc = $this->modelAdmin->getAllDanhMuc(); 
 
-    // Check if product exists
     if ($product) {
         require_once '../../views/Admins/SanPham/formupdateSP.php';
     } else {
@@ -195,11 +198,58 @@ public function updateSP() {
 }
  //đơn hàng
 
-public function listBills() {
-    $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
-    $listOrders = $this->modelAdmin->getAllBill(); // Lấy danh sách đơn hàng
-    require_once '../../views/Admins/donHang/listDonHang.php'; // Đường dẫn file view danh sách đơn hàng
+    public function listBills() {
+        $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
+        $listOrders = $this->modelAdmin->getAllBill(); 
+        require_once '../../views/Admins/donHang/listDonHang.php'; 
+    }
+    public function updateStatusBills(){
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $bill_status = $_POST['bill_status'];
+            $id = $_GET['id'];
+            // var_dump($id);
+            $listOrders = $this->modelAdmin->getAllBill(); 
+            $this->modelAdmin->updateOrderStatus($id ,$bill_status);
+            header('location: router.php?act=listDonHang');
+        }
+        require_once '../../views/Admins/donHang/listDonHang.php';
+    }
+
+///bình luận
+public function listComments() {
+    $listBinhLuan = $this->modelAdmin->getAllComments();
+    require_once '../../views/Admins/BinhLuan/listComments.php';
 }
+
+
+public function deleteComment() {
+    $id = $_GET['id'];
+    if ($this->modelAdmin->deleteComment($id)) {
+        header('Location: router.php?act=listComments');
+        exit;
+    } else {
+        echo "Không thể xóa bình luận.";
+    }
+}
+public function toggleComment() {
+    $id = $_GET['id'];
+    $comment = $this->modelAdmin->getCommentById($id);
+    if ($comment) {
+        $newStatus = $comment['status'] ? 0 : 1;
+        if ($this->modelAdmin->updateCommentStatus($id, $newStatus)) {
+            header('Location: router.php?act=listComments'); 
+            exit;
+        } else {
+            echo "Không thể cập nhật trạng thái bình luận.";
+        }
+    } else {
+        echo "Bình luận không tồn tại.";
+    }
+}
+
+
+
+
 
 
 }

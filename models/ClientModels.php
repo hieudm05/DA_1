@@ -95,7 +95,9 @@ class ClientModels
                     products.id, 
                     products.namesp, 
                     products.price, 
-                    products.img, 
+                    products.img,
+                    products.mota,
+                    products.quantity,
                     categories.name AS category_name
                 FROM categories
                 LEFT JOIN products ON categories.id = products.iddm
@@ -107,16 +109,33 @@ class ClientModels
 
     // Top sản phẩm bán chạy
     public function getTop10Sp() {
-        try {
-            // Câu lệnh SQL để lấy 10 sản phẩm có lượt xem cao nhất
-            $sql = 'SELECT * FROM products ORDER BY luotxem DESC LIMIT 10';
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute();
-            return $stmt->fetchAll();
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-    }
+            $sql = "SELECT 
+                p.id AS product_id,
+                p.namesp AS product_name,
+                p.price,
+                p.img,
+                p.mota,
+                SUM(c.soluong) AS total_quantity
+            FROM 
+                products p
+            JOIN 
+                carts c ON p.id = c.idpro
+            JOIN 
+                bills b ON c.idbill = b.id
+            WHERE 
+                b.bill_status = 0
+            GROUP BY 
+                p.id, p.namesp, p.price, p.img, p.mota
+            ORDER BY 
+                total_quantity DESC
+            LIMIT 10;
+
+            ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }   
 
     // Tìm kiếm theo sản phẩm
     public function getAllSP($search) {
@@ -179,33 +198,238 @@ class ClientModels
         }
     }
     
+    // Giỏ hàng
+    public function getProductById($id){
+        try {
+            $sql = 'SELECT * FROM products WHERE id ='.$id;
+    
+            $stmt = $this->conn->prepare($sql);
+        
+            $stmt->execute();
+
+            return $stmt->fetch();
+            
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
+    // Kiểm tra xem giỏ hàng có tồn tại sản phẩm
+    public function checkCarts($idUser, $idProduct){
+        try {
+            $sql = 'SELECT * FROM carts WHERE idUser = :idUser AND idpro = :idProduct';
+    
+            $stmt = $this->conn->prepare($sql);
+        
+            $stmt->execute(['idUser'=> $idUser, 'idProduct'=> $idProduct]);
+
+            return $stmt->fetch();
+            
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    // Lưu sản phẩm trong giỏ hàng vào cart
+    public function addCarts($idUser, $idpro, $img, $name, $price, $soluong, $thanhtien, $mota, $remaining_quantity) {
+        // SQL để thêm sản phẩm vào giỏ hàng
+        $sql = 'INSERT INTO carts (idUser, idpro, img, name, price, soluong, thanhtien, mota, created_at, remaining_quantity) 
+                VALUES (:idUser, :idpro, :img, :name, :price, :soluong, :thanhtien, :mota, NOW(), :remaining_quantity)';
+        
+        // Chuẩn bị câu lệnh SQL
+        $stmt = $this->conn->prepare($sql);
+        
+        // Thực thi câu lệnh với các tham số
+        $stmt->execute([
+            'idUser' => $idUser,
+            'idpro' => $idpro,
+            'img' => $img,
+            'name' => $name,
+            'price' => $price,
+            'soluong' => $soluong,
+            'thanhtien' => $thanhtien,
+            'mota' => $mota,
+            'remaining_quantity' => $remaining_quantity
+        ]);
+        
+        return true;
+    }
+    // Lấy số lượng trong bảng carts để kiểm tra còn tăng lên chứ
+    public function getCartQuantity($idUser, $idpro) {
+        try {
+            $sql = 'SELECT soluong FROM carts WHERE idUser = :idUser AND idpro = :idpro';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                'idUser' => $idUser,
+                'idpro' => $idpro
+            ]);
+            
+            $result = $stmt->fetch();
+            return $result ? $result['soluong'] : 0; // Nếu không có sản phẩm
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
+    // Nếu mà có rồi, thì cập nhật số lượng
+    public function updateQuantity($idUser, $idpro, $soluong, $thanhtien) {
+        try {
+            $sql = 'UPDATE carts SET soluong = :soluong, thanhtien = :thanhtien WHERE idUser = :idUser AND idpro = :idpro';
+ 
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                'idUser' => $idUser,
+                'idpro' => $idpro,
+                'soluong' => $soluong,
+                'thanhtien' => $thanhtien
+            ]);
+            
+        } catch (Exception $e) {
+            // Xử lý lỗi nếu có
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    // Lấy số lượng sản phẩm tồn kho để trừ xuống
+    public function getRemainingQuantity( $idpro) {
+        try {
+            $sql = 'SELECT remaining_quantity FROM carts WHERE idpro = :idpro';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                'idpro' => $idpro
+            ]);
+            
+            $result = $stmt->fetch();
+            return $result['remaining_quantity'];
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    // Cập nhật sản phẩm còn lại trong kho 
+    public function updateRemainingQuantity( $idpro,$remaining_quantity) {
+        try {
+            $sql = 'UPDATE carts SET  remaining_quantity = :remaining_quantity WHERE idpro = :idpro';
+ 
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                'idpro' => $idpro,
+                'remaining_quantity' => $remaining_quantity
+            ]);
+            
+        } catch (Exception $e) {
+            // Xử lý lỗi nếu có
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
+
+    public function listCartByUser($idUser){
+        try {
+            $sql = 'SELECT * FROM carts WHERE idUser = :idUser ORDER BY id DESC';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                ':idUser' => $idUser
+            ]);
+
+            return $stmt->fetchAll();
+            
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+
+    // Xoá hết sản phẩm theo user
+    public function deleteAllCarts($id){
+        $sql = "DELETE FROM carts WHERE idUser = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+    }
+    // Xoá cụ thể sản phẩm theo user
+    public function deleteCarts($id) {
+        try {
+            $sql = 'DELETE FROM carts WHERE id =:id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                ':id' => $id
+            ]);
+    
+            return true; 
+        } catch (Exception $e) {
+            // Xử lý lỗi nếu có
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
+    // Thanh toán
+    public function addBill($iduser, $bill_name, $bill_address, $bill_sdt, $bill_email, $total, $ngaydathang, $bill_pttt, $quantity) {
+        try {
+            $sql = 'INSERT INTO bills (iduser, bill_name, bill_address, bill_sdt, bill_email, total, ngaydathang, bill_pttt, quantity) 
+                    VALUES (:iduser, :bill_name, :bill_address, :bill_sdt, :bill_email, :total, :ngaydathang, :bill_pttt, :quantity)';
+            $stmt = $this->conn->prepare($sql);
+            
+            $stmt->execute([
+                ':iduser' => $iduser,
+                ':bill_name' => $bill_name,
+                ':bill_address' => $bill_address,
+                ':bill_sdt' => $bill_sdt,
+                ':bill_email' => $bill_email,
+                ':total' => $total,
+                ':ngaydathang' => $ngaydathang,
+                'bill_pttt' => $bill_pttt,
+                'quantity' => $quantity,
+            ]);
+            
+            return true;
+        } catch (PDOException $e) {
+            echo "Lỗi: " . $e->getMessage();
+            return false;
+        }
+    }
+    
+    // Sau khi thanh toán thành công thì xoá sản phẩm trong carts
+    public function clearCart($user_id) {
+        // Xóa tất cả sản phẩm trong giỏ hàng của người dùng sau khi đặt hàng
+        $sql = "DELETE FROM carts WHERE idUser = :user_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    // Bill
+    public function getAllBillByIdUser($idUser){
+        $sql = "SELECT * FROM bills WHERE idUser = :idUser";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+    }
     
     
-    
-    
-   
     public function getCommentsByProductId($id) {
         $sql = "SELECT c.*, a.username 
                 FROM comments c
                 JOIN accounts a ON c.idUser = a.id
-                WHERE c.idpro = :id
-                ORDER BY c.time DESC";
-    
+                WHERE c.idpro = :id AND c.status = 1
+                ORDER BY c.time DESC";  // Add `c.status = 1` to check visibility
+        
         $stmt = $this->conn->prepare($sql);
-    
+        
         try {
             $stmt->execute(['id' => $id]);
             $comments = $stmt->fetchAll();
-            $logFile = 'log.txt'; // Đường dẫn file log
-            file_put_contents($logFile, print_r($comments, true), FILE_APPEND);
-    
             return $comments;
         } catch (PDOException $e) {
-            // Log lỗi ra file nếu có
-            file_put_contents('log.txt', $e->getMessage(), FILE_APPEND);
-            throw $e; // Ném lại lỗi để dễ debug
+            throw $e;
         }
     }
+    
     
     
     
@@ -246,10 +470,69 @@ class ClientModels
             return false;
         }
     }
+    //yeuthich
+    public function checkFavourite($userId, $productId) {
+        try {
+            $sql = "SELECT * FROM favorites WHERE user_id = :user_id AND pro_id = :pro_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['
+            :user_id' => $userId,
+            ':pro_id' => $productId
+            ]);
+            
+            return $stmt->fetch();
+        } catch (Exception $e) {
+            echo "Lỗi khi kiểm tra sản phẩm yêu thích: " . $e->getMessage();
+            return false; 
+        }
+    }
+    
+    public function addToFavourite($userId, $productId, $addedAt) {
+        try {
+            $sql = "INSERT INTO favorites (user_id, pro_id, added_at) VALUES (:user_id, :pro_id, :added_at)";
+            $stmt = $this->conn->prepare($sql);
+            $result = $stmt->execute([
+                ':user_id' => $userId,
+                ':pro_id' => $productId,
+                ':added_at' => $addedAt
+            ]);
+            
+            return $result;
+        } catch (Exception $e) {
+            echo "Lỗi khi thêm sản phẩm vào yêu thích: " . $e->getMessage();
+            return false; 
+        }
+    }
+    
+    public function getFavouritesByUser($userId) {
+        try {
+            $sql = "
+                SELECT 
+                    f.id AS favorite_id, 
+                    f.added_at, 
+                    p.id AS product_id, 
+                    p.namesp, 
+                    p.price, 
+                    p.img, 
+                    a.username AS user_name, 
+                    a.email AS user_email 
+                FROM favorites f
+                JOIN products p ON f.pro_id = p.id
+                JOIN accounts a ON f.user_id = a.id
+                WHERE f.user_id = :user_id
+            ";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':user_id' => $userId]);
+            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo "Lỗi khi lấy danh sách yêu thích của người dùng: " . $e->getMessage();
+            return []; 
+        }
+    }
     
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;
-    }
-
+    }   
 
 }

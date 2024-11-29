@@ -15,9 +15,6 @@
       <div class="d-flex justify-content-between">
 
         <a href="?act=forgot_password" class="text-decoration-none text-body-tertiary">Quên mật khẩu?</a>
-
-        <a href="#" class="text-decoration-none text-body-tertiary">Quên mật khẩu?</a>
-
       </div>
       <button type="submit" class="btn btn-danger w-100 mt-3">Đăng nhập</button>
     </form>

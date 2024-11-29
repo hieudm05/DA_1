@@ -1,4 +1,3 @@
-
 </div>
     </div>
 <script src="./content/assets/vendors/js/vendor.bundle.base.js"></script>

@@ -188,22 +188,46 @@ class AdminModels
         }  
     }
     
-    public function getAllProductsByCategory() {
-        $sql = "SELECT 
-                    products.id, 
-                    products.namesp, 
-                    products.price, 
-                    products.img,
-                    products.mota,
-                    products.luotxem,
-                    products.quantity,
-                    categories.name AS category_name
-                FROM categories
-                LEFT JOIN products ON categories.id = products.iddm
-                ORDER BY categories.name, products.price ASC";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function getAllProductsByCategory($categoryId = null, $searchTerm = null) {  
+        $sql = "SELECT   
+                    products.id,   
+                    products.namesp,   
+                    products.price,   
+                    products.img,  
+                    products.mota,  
+                    products.luotxem,  
+                    products.quantity,  
+                    categories.name AS category_name  
+                FROM categories  
+                LEFT JOIN products ON categories.id = products.iddm";  
+        
+        $conditions = [];  
+        
+        if ($categoryId) {  
+            $conditions[] = "products.iddm = :categoryId";  
+        }  
+        if ($searchTerm) {  
+            $conditions[] = "products.namesp LIKE :searchTerm";  
+        }  
+    
+        if (count($conditions) > 0) {  
+            $sql .= " WHERE " . implode(' AND ', $conditions);  
+        }  
+    
+        $sql .= " ORDER BY categories.name, products.price ASC";  
+    
+        $stmt = $this->conn->prepare($sql);  
+    
+        if ($categoryId) {  
+            $stmt->bindParam(':categoryId', $categoryId, PDO::PARAM_INT);  
+        }  
+        if ($searchTerm) {  
+            $searchTerm = '%' . $searchTerm . '%'; 
+            $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);  
+        }  
+    
+        $stmt->execute();  
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  
     }
 
     public function deleteSP($id) {  
@@ -241,19 +265,113 @@ class AdminModels
      //đơn hàng
      public function getAllBill() {
         try {
-            $sql = 'SELECT * FROM bills ORDER BY id DESC';
-    
+            // Truy vấn kết hợp giữa bảng bills và bảng accounts
+            $sql = 'SELECT bills.*, accounts.username AS user_name FROM bills 
+                    JOIN accounts ON bills.idUser = accounts.id 
+                    ORDER BY bills.id DESC';
+            
             $stmt = $this->conn->prepare($sql);
-        
             $stmt->execute();
-
+    
+            // Trả về kết quả, trong đó mỗi phần tử là một mảng chứa thông tin của hóa đơn và tên người dùng
             return $stmt->fetchAll();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             echo $e->getMessage();
         }
     }
 
-    /////////////////////////////////////////
+    // Cập nhật trạng thái đơn hàng
+    public function updateOrderStatus($orderId, $status) {
+        // SQL query để cập nhật trạng thái đơn hàng
+        $sql = "UPDATE bills SET bill_status = :status WHERE id = :orderId";
+        
+        // Chuẩn bị câu lệnh
+        $stmt = $this->conn->prepare($sql);
+        
+        // Gắn giá trị vào các tham số
+        $stmt->bindParam(':status', $status, PDO::PARAM_INT);
+        $stmt->bindParam(':orderId', $orderId, PDO::PARAM_INT);
+        
+        // Thực thi câu lệnh
+        if ($stmt->execute()) {
+            return true; // Nếu cập nhật thành công
+        } else {
+            return false; // Nếu có lỗi xảy ra
+        }
+    }
+    
+    
+    
+
+    //binh luan
+    public function getAllComments() {
+        try {
+            $sql = 'SELECT comments.*, products.namesp AS product_name 
+                    FROM comments 
+                    LEFT JOIN products ON comments.idpro = products.id 
+                    ORDER BY comments.time DESC';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
+
+
+    public function getCommentsByProduct($idpro) {
+        try {
+            $sql = 'SELECT * FROM comments WHERE idpro = :idpro ORDER BY time DESC';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['idpro' => $idpro]);
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+
+    
+
+    public function deleteComment($id) {
+        try {
+            $sql = 'DELETE FROM comments WHERE id = :id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            return true;
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    public function getCommentById($id) {
+        try {
+            $sql = 'SELECT * FROM comments WHERE id = :id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
+    public function updateCommentStatus($id, $status) {
+        try {
+            $sql = 'UPDATE comments SET status = :status WHERE id = :id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['status' => $status, 'id' => $id]);
+            return true;
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
+    
+    
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;
     }

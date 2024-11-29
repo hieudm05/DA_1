@@ -47,22 +47,27 @@ match ($act) {
 
     // Tìm kiếm
     'search' => (new ClientController()) ->search(),
-    'cart' => (new ClientController()) ->carts(),
-    'thanhtoan' => (new ClientController()) ->thanhToan(),
+    // Giỏ hàng
+    'viewcart' => (new ClientController()) ->viewCarts(),
+    'addcart' => (new ClientController()) ->carts(),
+    'deletecart' => (new ClientController()) ->deleteCarts(),
 
-    // Xử lí tài khoản
-    'postAddAcount' => (new ClientController()) -> addAccount(),
+    // Bill
+    'thanhtoan' => (new ClientController()) ->bills(),
+    'billconfirm' => (new ClientController()) ->billConfirm(),
+    'billInfo' => (new ClientController()) -> infoBills(),
+
     // Sản phẩm chi tiết
     'sanphamchitiet' => (new ClientController()) -> sanphamchitiet(),
-    // Tìm kiếm
-    'search' => (new ClientController()) -> search(),
-    'cart' => (new ClientController()) -> carts(),
-    'thanhtoan' => (new ClientController()) -> thanhToan(),
     // Comment
     'formComment' => (new ClientController()) -> formComment(),
     'deleteComment' => (new ClientController()) -> deleteComment(),
     // sản phẩm theo danh mục
     'danhmuc'=> (new ClientController())-> productByCasterri(),
+    //yeuthich
+    'listFavourites' => (new ClientController())->listFavourites(),
+    'addFavourite' => (new ClientController())->addFavourite(),
+
 };
 
 include '../views/Clients/footer.php';

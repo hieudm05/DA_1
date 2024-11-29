@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
        /* Áp dụng cho toàn bộ trang */
 * {
@@ -15,11 +16,11 @@
 }
 
 /* Hiệu ứng mượt mà cho phần tử khi hover */
-a, button, .card {
+a, button{
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
-a:hover, button:hover, .card:hover {
+a:hover, button:hover {
     transform: scale(1.05);  /* Phóng to nhẹ */
 }
 .no {
@@ -63,6 +64,7 @@ a:hover, button:hover, .card:hover {
 .product-actions button:hover {
     background-color: #F2E8C6; /* Thay đổi màu khi hover vào nút */
 }
+
     </style>
 </head>
 <body>
@@ -126,7 +128,23 @@ a:hover, button:hover, .card:hover {
                                 <div class="fw-bold">19004953</div>
                             </span>
                         </li>
-                        <li><a class="nav-link text-dark" style="font-size: 18px;" href="#"><i class="bi bi-cart3"></i></a></li>
+                           <li class="nav-item position-relative">
+                                <a class="nav-link text-dark" style="font-size: 20px;" href="?act=viewcart">
+                                    <i class="bi bi-cart3"></i>
+                                </a>
+                                <!-- Badge hiển thị số lượng -->
+                               
+                                <span class="<?= isset($_SESSION['cart']) && count($_SESSION['cart']) > 0 ? 'badge rounded-pill bg-danger position-absolute' : '' ?>" style="top: 0; right: 0; font-size: 10px;">
+                                    <?php 
+                                    if (isset($_SESSION['cart'])) {
+                                        $productCount = count($_SESSION['cart']);
+                                        echo $productCount > 0 ? $productCount : ''; // Chỉ hiển thị số sản phẩm nếu có
+                                    }
+                                    ?>
+                                </span>  
+                            </li>
+
+
                         <?php if(isset($_SESSION['user'])){  extract($_SESSION['user']); $imgPath = './../' . $avatar; $avt = $imgPath ? $imgPath : './img/userNo.jpg';  ?>
                         <li class="nav-item dropdown d-flex align-items-center">
                             <a class="dropdown-toggle text-dark" data-bs-toggle="dropdown" href="" role="button" style="font-size: 18px;" aria-expanded="false"><img src="<?= $avt ?>" height="24" width="24"  style="border-radius: 50% ;" alt=""></a>
@@ -136,8 +154,10 @@ a:hover, button:hover, .card:hover {
                                     <li><a class="dropdown-item" href="http://localhost/base_test_DA1/views/Admins/router.php">Đăng nhập admin</a></li>
                                 <?php }else{ ?>
                                     <li><a class="dropdown-item" href="?act=signup">Lấy lại pass</a></li>
+                                    <li><a class="dropdown-item" href="?act=listFavourites">Sản Phẩm yêu thích</a></li>
+                                    <li><a class="dropdown-item" href="?act=billInfo">Đơn hàng của bạn</a></li>
                                 <?php } ?>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="dropdown-item" href="?act=listFavourites">Sản Phẩm yêu thích</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="?act=logout">Đăng xuất</a></li> 
                             </ul>
@@ -180,13 +200,13 @@ a:hover, button:hover, .card:hover {
                     </a>
 
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <?php if(is_array($listDanhMuc)):   foreach($listDanhMuc as $dm)  :?>
+                    <?php  foreach($listDanhMuc as $dm)  :?>
                         <?php 
                         $linkDm = "?act=sanpham&id=" . $dm["id"];
-                        ?>
-                        <li><a class="dropdown-item" href="<?= $linkDm ?>"> <?= $dm['name'] ?></a></li>
+                        ?> 
+                        <li><a class="dropdown-item" href="<?= $linkDm ?>"> <?= $dm['id'] ?></a></li>
                        
-                        <?php endforeach; endif; ?>
+                        <?php endforeach; ?>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -207,6 +227,8 @@ a:hover, button:hover, .card:hover {
 </nav>
 
 </header>
+
+
 
 
 
