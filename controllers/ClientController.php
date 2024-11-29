@@ -13,7 +13,7 @@ class ClientController
         $listDanhMuc = $this->modelClients->getAllDanhMuc();
         $datas = $this ->modelClients->getAllProductsByCategory();
         $top10 = $this -> modelClients -> getTop10Sp();
-        var_dump($top10);
+        // var_dump($top10);
         // var_dump($listDanhMuc);
         require_once '../views/Clients/home.php';
         // require_once '../views/Clients/footer.php';
@@ -181,19 +181,27 @@ class ClientController
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
         }
+        $userRole = $_SESSION['user']['role'] ?? null; // Gán null nếu không tồn tại
+        if( $userRole == 1){
+            
+            echo '<script>
+            // Khắc phục lỗi mất thanh cuộn
+            document.body.style.overflowX = "auto"; 
+            document.body.style.overflowY = "auto";  
+            Swal.fire({
+                text: "Admin không thể mua hàng",
+                icon: "warning",
+                confirmButtonColor: "#C62E2E"
+                });
+        </script>';
+        $listCarts= $this->modelClients->listCartByUser($_SESSION['user']['id']);
+        // var_dump($listCarts);
+        // header('location: http://localhost/base_test_DA1/public/');
+        $this->home();
+        exit();
+    }
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
-            if( $_SESSION['user']['role'] == 1){
-                echo '<script>
-                // Khắc phục lỗi mất thanh cuộn
-                document.body.style.overflowX = "auto"; 
-                document.body.style.overflowY = "auto";  
-                Swal.fire({
-                    text: "Admin không thể mua hàng",
-                    icon: "warning",
-                    confirmButtonColor: "#C62E2E"
-                    });
-            </script>';
-        }
+           
             $id = $_POST['id'];
             $namesp = $_POST['namesp'];
             $img = $_POST['img'];
@@ -255,23 +263,11 @@ class ClientController
                     });
               </script>';
               require_once '../views/Clients/accounts/login.php';
-        }
-        if($_SESSION['user']['role'] == 1){
-            echo '<script>
-            // Khắc phục lỗi mất thanh cuộn
-            document.body.style.overflowX = "auto"; 
-            document.body.style.overflowY = "auto";  
-            Swal.fire({
-                text: "Admin không thể mua hàng",
-                icon: "warning",
-                confirmButtonColor: "#C62E2E"
-                });
-          </script>';
-            $this->home();
+            //   $listCarts= $this->modelClients->listCartByUser($_SESSION['user']['id']);
+              // var_dump($listCarts);
         }
         $listCarts= $this->modelClients->listCartByUser($_SESSION['user']['id']);
-                // var_dump($listCarts);
-                require_once '../views/Clients/carts/cart.php';
+        require_once '../views/Clients/carts/cart.php';
     }
 
     public function viewCarts(){
@@ -439,7 +435,9 @@ class ClientController
                     }, 2000); // Giả lập thời gian xử lý 2 giây (thay thế bằng thời gian thực tế xử lý thanh toán)
                     </script>";
                     $this->modelClients->addBill($user_id, $name, $address, $sdt, $email, $tongCong, $ngaydathang, $pttt, $quantity);
+                    // $this->modelClients->orderDetails($order_id, $product_id, $quantity, $price);
                     $this->modelClients->clearCart($_SESSION['user']['id']);
+                   
                     // Cập nhật lại session giỏ hàng dựa trên danh sách mới
                     $_SESSION['cart'] = [];
                     require_once '../views/Clients/carts/thanhtoan.php';
@@ -512,6 +510,7 @@ class ClientController
             echo "Bạn cần đăng nhập để xóa bình luận.";
         }
     }
+    
       //   
       public function productByCasterri(){
         

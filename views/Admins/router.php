@@ -44,6 +44,7 @@ match ($act) {
     //binh luan
     'listComments' => (new HomeController())->listComments(),
     'deleteComment' => (new HomeController())->deleteComment(),
+    'toggleComment' => (new HomeController())->toggleComment(),
 
 };
 

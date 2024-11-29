@@ -157,6 +157,7 @@ a:hover, button:hover {
                                     <li><a class="dropdown-item" href="?act=listFavourites">Sản Phẩm yêu thích</a></li>
                                     <li><a class="dropdown-item" href="?act=billInfo">Đơn hàng của bạn</a></li>
                                 <?php } ?>
+                                <li><a class="dropdown-item" href="?act=listFavourites">Sản Phẩm yêu thích</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="?act=logout">Đăng xuất</a></li> 
                             </ul>
@@ -226,7 +227,6 @@ a:hover, button:hover {
 </nav>
 
 </header>
-
 
 
 

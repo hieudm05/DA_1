@@ -105,34 +105,44 @@ class ClientModels
     }
 
     // Top sản phẩm bán chạy
-    public function getTop10Sp() {
-            $sql = "SELECT 
-                p.id AS product_id,
-                p.namesp AS product_name,
-                p.price,
-                p.img,
-                p.mota,
-                SUM(c.soluong) AS total_quantity
-            FROM 
-                products p
-            JOIN 
-                carts c ON p.id = c.idpro
-            JOIN 
-                bills b ON c.idbill = b.id
-            WHERE 
-                b.bill_status = 0
-            GROUP BY 
-                p.id, p.namesp, p.price, p.img, p.mota
-            ORDER BY 
-                total_quantity DESC
-            LIMIT 10;
+    // public function getTop10Sp() {
+    //         $sql = "SELECT 
+    //             p.id AS product_id,
+    //             p.namesp AS product_name,
+    //             p.price,
+    //             p.img,
+    //             p.mota,
+    //             SUM(c.soluong) AS total_quantity
+    //         FROM 
+    //             products p
+    //         JOIN 
+    //             carts c ON p.id = c.idpro
+    //         JOIN 
+    //             bills b ON c.idbill = b.id
+    //         WHERE 
+    //             b.bill_status = 3
+    //         GROUP BY 
+    //             p.id, p.namesp, p.price, p.img, p.mota
+    //         ORDER BY 
+    //             total_quantity DESC
+    //         LIMIT 10";
 
-            ";
+    //     $stmt = $this->conn->prepare($sql);
+    //     $stmt->execute();
+    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // }   
 
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }   
+    public function getTop10Sp(){
+        try {
+            // Câu lệnh SQL để lấy 10 sản phẩm có lượt xem cao nhất
+            $sql = 'SELECT * FROM products ORDER BY luotxem DESC LIMIT 10';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 
     // Tìm kiếm theo sản phẩm
     public function getAllSP($search) {
@@ -397,10 +407,32 @@ class ClientModels
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
     }
+    // // Sau khi xoá dữ liệu bảng carts thì dữ liệu bảng bảng carts sẽ được lưu và đây
+    // public function orderDetails($order_id, $product_id, $quantity, $price){
+    //     $sql = "INSERT INTO order_details (order_id, product_id, quantity, price)
+    //     SELECT idbill, idpro, soluong, price FROM carts WHERE idbill = :idbill";
+    //     $stmt = $this->conn->prepare($sql);
+    //     $stmt->bindParam(':idbill', $idbill, PDO::PARAM_INT);
+    //     $stmt->execute();
+
+    // }
+
+    // Cập nhật idbill vào bảng carts sau khi thanh toán
+        // public function updateCartWithOrderId($userId, $orderId): void {
+        //     $sql = "UPDATE carts 
+        //             SET idbill = :orderId 
+        //             WHERE user_id = :userId AND idbill IS NULL"; // Chỉ cập nhật những sản phẩm chưa có idbill
+
+        //     $stmt = $this->conn->prepare($sql);
+        //     $stmt->bindParam(':orderId', $orderId, PDO::PARAM_INT);
+        //     $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        //     $stmt->execute();
+        // }
+
 
     // Bill
     public function getAllBillByIdUser($idUser){
-        $sql = "SELECT * FROM bills WHERE idUser = :idUser";
+        $sql = "SELECT * FROM bills WHERE idUser = :idUser ORDER BY bills.id DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
         $stmt->execute();
@@ -409,29 +441,24 @@ class ClientModels
     }
     
     
-   
     public function getCommentsByProductId($id) {
         $sql = "SELECT c.*, a.username 
                 FROM comments c
                 JOIN accounts a ON c.idUser = a.id
-                WHERE c.idpro = :id
-                ORDER BY c.time DESC";
-    
+                WHERE c.idpro = :id AND c.status = 1
+                ORDER BY c.time DESC";  // Add `c.status = 1` to check visibility
+        
         $stmt = $this->conn->prepare($sql);
-    
+        
         try {
             $stmt->execute(['id' => $id]);
             $comments = $stmt->fetchAll();
-            $logFile = 'log.txt'; // Đường dẫn file log
-            file_put_contents($logFile, print_r($comments, true), FILE_APPEND);
-    
             return $comments;
         } catch (PDOException $e) {
-            // Log lỗi ra file nếu có
-            file_put_contents('log.txt', $e->getMessage(), FILE_APPEND);
-            throw $e; // Ném lại lỗi để dễ debug
+            throw $e;
         }
     }
+    
     
     
     

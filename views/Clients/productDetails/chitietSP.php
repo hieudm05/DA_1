@@ -31,7 +31,7 @@
 
                         <!-- Thông tin bổ sung -->
                         <div class="row mb-4">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <p><strong>Mô tả: </strong><?= $sanPhamChiTiet["mota"] ?></p>
                             </div>
                         </div>
@@ -72,6 +72,28 @@
                             <p>Đánh giá: <span class="text-warning">★★★★★</span> (200 đánh giá)</p>
                             <div class="comment-section mt-4">
                                 <h4 class="fw-bold mb-3">Bình luận</h4>
+                                <div class="list-group" style="max-height: 300px; overflow-y: auto;">
+                                <?php foreach ($comments as $comment): ?>
+                                    <?php if ($comment['status'] == 1): ?>  <!-- Check if the comment is visible -->
+                                        <div class="list-group-item list-group-item-action border rounded-3 mb-3">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <strong class="text-primary"><?= htmlspecialchars($comment['username']) ?></strong>
+                                                <small class="text-muted"><?= htmlspecialchars($comment['time']) ?></small>
+                                            </div>
+                                            <p class="mt-2"><?= htmlspecialchars($comment['noidung']) ?></p>
+
+                                            <?php if (isset($_SESSION['user'])): ?>
+                                                <div class="d-flex justify-content-end">
+                                                    <?php if ($_SESSION['user']['id'] == $comment['idUser'] || $_SESSION['user']['role'] == 'admin'): ?>
+                                                        <a href="?act=deleteComment&id=<?= $comment['id'] ?>" class="btn btn-danger btn-sm">Xóa</a>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                <?php endif; ?>
+                                <?php endforeach; ?>
+
+                            </div>
                                 <?php if (isset($_SESSION['user'])): ?>
                                     <form action="?act=formComment&id=<?= $sanPhamChiTiet['id'] ?>" method="POST" class="mt-4">
                                         <div class="mb-3">
@@ -84,27 +106,7 @@
                                     <p class="mt-3">Bạn cần <a href="?act=login" class="text-decoration-none">đăng nhập</a> để bình luận.</p>
                                 <?php endif; ?>
                                 <!-- Điều chỉnh chiều cao của phần bình luận -->
-                                <div class="list-group" style="max-height: 300px; overflow-y: auto;">
-                                    <?php foreach ($comments as $comment): ?>
-                                        <div class="list-group-item list-group-item-action border rounded-3 mb-3">
-                                            <div class="d-flex justify-content-between align-items-start">
-                                                <strong class="text-primary"><?= htmlspecialchars($comment['username']) ?></strong>
-                                                <small class="text-muted"><?= htmlspecialchars($comment['time']) ?></small>
-                                            </div>
-                                            <p class="mt-2"><?= htmlspecialchars($comment['noidung']) ?></p>
-
-                                            <?php if (isset($_SESSION['user'])): ?>
-                                                <div class="d-flex justify-content-end">
-                                                    <!-- Hiển thị nút xóa nếu người dùng là chủ bình luận hoặc admin -->
-                                                    <?php if ($_SESSION['user']['id'] == $comment['idUser'] || $_SESSION['user']['role'] == 'admin'): ?>
-                                                        <a href="?act=deleteComment&id=<?= $comment['id'] ?>" class="btn btn-danger btn-sm">Xóa</a>
-                                                    <?php endif; ?>
-                                                </div>
-                                            <?php endif; ?>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -126,6 +128,7 @@
                 <!-- Phần sản phẩm nổi bật -->
                 <h4 class="fw-bold mb-3">Sản phẩm nổi bật</h4>
                 <?php foreach($sanPhamNoiBat as $product) : ?>
+                    <?php $imgPath = './../' . $product["img"] ?>
                     <?php $linkSp = "?act=sanphamchitiet&id=" . $product["id"];?>
                     <div class="col-sm-12 mt-2">
                         <div class="d-flex border p-2 position-relative">
