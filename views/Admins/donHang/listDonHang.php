@@ -20,7 +20,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Đơn Hàng #<?= $order['id'] ?></h5>
                             <p class="card-text"><strong>Khách Hàng:</strong> <?= $order['user_name'] ?></p>
-                            <p class="card-text"><strong>Sản Phẩm:</strong> <?= $order['bill_name'] ?></p>
+                            <p class="card-text"><strong>Sản Phẩm:</strong> <?= $order['product_names'] ?></p>
                             <p class="card-text"><strong>Ngày Đặt Hàng:</strong> <?= date('d/m/Y', strtotime($order['ngaydathang'])) ?></p>
                             <p class="card-text"><strong>Số Lượng:</strong> <?= $order['quantity'] ?></p>
                             <p class="card-text"><strong>Tổng Giá Trị:</strong> <?= number_format($order['total'], 0, ',', '.') ?> ₫</p>

@@ -104,38 +104,22 @@ class ClientModels
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Top sản phẩm bán chạy
-    // public function getTop10Sp() {
-    //         $sql = "SELECT 
-    //             p.id AS product_id,
-    //             p.namesp AS product_name,
-    //             p.price,
-    //             p.img,
-    //             p.mota,
-    //             SUM(c.soluong) AS total_quantity
-    //         FROM 
-    //             products p
-    //         JOIN 
-    //             carts c ON p.id = c.idpro
-    //         JOIN 
-    //             bills b ON c.idbill = b.id
-    //         WHERE 
-    //             b.bill_status = 3
-    //         GROUP BY 
-    //             p.id, p.namesp, p.price, p.img, p.mota
-    //         ORDER BY 
-    //             total_quantity DESC
-    //         LIMIT 10";
-
-    //     $stmt = $this->conn->prepare($sql);
-    //     $stmt->execute();
-    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // }   
-
     public function getTop10Sp(){
         try {
             // Câu lệnh SQL để lấy 10 sản phẩm có lượt xem cao nhất
-            $sql = 'SELECT * FROM products ORDER BY luotxem DESC LIMIT 10';
+            $sql = "SELECT 
+                    p.id AS id, 
+                    p.namesp AS namesp, 
+                    p.img,
+                    p.price,
+                    SUM(bi.quantity) AS total_quantity_sold
+                FROM bill_items bi
+                JOIN bills b ON bi.bill_id = b.id
+                JOIN products p ON bi.product_id = p.id
+                WHERE b.bill_status = 3 
+                GROUP BY bi.product_id
+                ORDER BY total_quantity_sold DESC
+                LIMIT 10";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll();
@@ -374,30 +358,45 @@ class ClientModels
     }
     
     // Thanh toán
-    public function addBill($iduser, $bill_name, $bill_address, $bill_sdt, $bill_email, $total, $ngaydathang, $bill_pttt, $quantity) {
+    public function addBill($iduser, $bill_address, $bill_sdt, $bill_email, $total, $ngaydathang, $bill_pttt, $quantity) {
         try {
-            $sql = 'INSERT INTO bills (iduser, bill_name, bill_address, bill_sdt, bill_email, total, ngaydathang, bill_pttt, quantity) 
-                    VALUES (:iduser, :bill_name, :bill_address, :bill_sdt, :bill_email, :total, :ngaydathang, :bill_pttt, :quantity)';
+            $sql = 'INSERT INTO bills (iduser, bill_address, bill_sdt, bill_email, total, ngaydathang, bill_pttt, quantity) 
+                    VALUES (:iduser, :bill_address, :bill_sdt, :bill_email, :total, :ngaydathang, :bill_pttt, :quantity)';
             $stmt = $this->conn->prepare($sql);
             
             $stmt->execute([
                 ':iduser' => $iduser,
-                ':bill_name' => $bill_name,
                 ':bill_address' => $bill_address,
                 ':bill_sdt' => $bill_sdt,
                 ':bill_email' => $bill_email,
                 ':total' => $total,
                 ':ngaydathang' => $ngaydathang,
-                'bill_pttt' => $bill_pttt,
-                'quantity' => $quantity,
+                ':bill_pttt' => $bill_pttt,
+                ':quantity' => $quantity,
             ]);
-            
-            return true;
+            $idBill = $this->conn->lastInsertId();
+            return $idBill;
         } catch (PDOException $e) {
             echo "Lỗi: " . $e->getMessage();
             return false;
         }
     }
+
+    // Chuyển dữ liệu từ bảng carts sang bảng bill_item
+    public function addBillItem($bill_id, $product_id, $quantity, $price){
+        $sql = 'INSERT INTO bill_items (bill_id, product_id, quantity, price) VALUES (:bill_id, :product_id, :quantity, :price)';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':bill_id' => $bill_id,
+            ':product_id' => $product_id,
+            ':quantity' => $quantity,
+            ':price' => $price
+        ]);
+        return true;
+    }
+    
+
+    // update bills
     
     // Sau khi thanh toán thành công thì xoá sản phẩm trong carts
     public function clearCart($user_id) {
@@ -407,32 +406,46 @@ class ClientModels
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
     }
-    // // Sau khi xoá dữ liệu bảng carts thì dữ liệu bảng bảng carts sẽ được lưu và đây
-    // public function orderDetails($order_id, $product_id, $quantity, $price){
-    //     $sql = "INSERT INTO order_details (order_id, product_id, quantity, price)
-    //     SELECT idbill, idpro, soluong, price FROM carts WHERE idbill = :idbill";
-    //     $stmt = $this->conn->prepare($sql);
-    //     $stmt->bindParam(':idbill', $idbill, PDO::PARAM_INT);
-    //     $stmt->execute();
 
-    // }
+    // Xử lí dữ liệu mua ngay 
+   
+    
 
-    // Cập nhật idbill vào bảng carts sau khi thanh toán
-        // public function updateCartWithOrderId($userId, $orderId): void {
-        //     $sql = "UPDATE carts 
-        //             SET idbill = :orderId 
-        //             WHERE user_id = :userId AND idbill IS NULL"; // Chỉ cập nhật những sản phẩm chưa có idbill
-
-        //     $stmt = $this->conn->prepare($sql);
-        //     $stmt->bindParam(':orderId', $orderId, PDO::PARAM_INT);
-        //     $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        //     $stmt->execute();
-        // }
-
+    public function reduceProductQuantity($product_id, $quantity) {
+        $sql = "UPDATE products SET quantity = quantity - :quantity WHERE id = :product_id AND quantity >= :quantity";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+    
+    
 
     // Bill
     public function getAllBillByIdUser($idUser){
-        $sql = "SELECT * FROM bills WHERE idUser = :idUser ORDER BY bills.id DESC";
+        $sql = 'SELECT 
+                        bills.id AS bill_id,
+                        bills.*, 
+                        accounts.username AS user_name, 
+                        GROUP_CONCAT(p.namesp ORDER BY p.namesp ASC) AS product_names,
+                        GROUP_CONCAT(bi.quantity ORDER BY p.namesp ASC) AS product_quantities, 
+                        GROUP_CONCAT(bi.price ORDER BY p.namesp ASC) AS product_prices, 
+                        GROUP_CONCAT(p.img ORDER BY p.namesp ASC) AS product_images 
+                    FROM 
+                        bills
+                    JOIN 
+                        accounts ON bills.idUser = accounts.id
+                    LEFT JOIN 
+                        bill_items bi ON bills.id = bi.bill_id
+                    LEFT JOIN 
+                        products p ON bi.product_id = p.id
+                    WHERE idUser = :idUser
+                    GROUP BY 
+                        bills.id
+                    ORDER BY 
+                        bills.id DESC;
+                    ';
+        // $sql = "SELECT * FROM bills  ORDER BY bills.id DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
         $stmt->execute();
@@ -565,3 +578,4 @@ class ClientModels
     }   
 
 }
+

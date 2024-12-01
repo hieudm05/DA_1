@@ -26,7 +26,7 @@
                             <img  src="<?=  $imgPath ?>" alt="Sách Nổi Bật" style="height: 100px; object-fit: cover; width: 120px;">
                             <div class="ms-3" style="flex-grow: 1; font-size: 0.85rem;">
                                 <a href="<?= $linkSp ?>"><h5 style="font-size: 1rem;"><?= $top['namesp'] ?></h5></a>
-                                <p><span class="text-danger">87,200đ</span> <del>109,000đ</del></p>
+                                <p><span class="text-danger"><?=$top['price'] ?></span> <del>109,000đ</del></p>
                             </div>
                         </div>
                        

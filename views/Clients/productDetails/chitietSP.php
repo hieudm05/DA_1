@@ -41,9 +41,7 @@
                             <p class="text-danger fw-bold fs-3 mb-0 me-3"><?= $sanPhamChiTiet["price"] ?>đ</p>
                             <p class="text-muted text-decoration-line-through mb-0 me-3">115,000đ</p>
                             <div class="input-group" style="width: 120px;">
-                                <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">-</button>
-                                <input type="text" class="form-control text-center" value="1" min="1" id="quantity-input">
-                                <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()">+</button>
+                                <input type="number" class="form-control text-center" value="1" min="1" id="quantity-input">
                             </div>
                         </div>
 
@@ -59,8 +57,12 @@
                                 <button name="addcart" class="btn btn-danger rounded-pill me-2">Thêm vào giỏ hàng</i></button>
                                 <!-- Nút giỏ hàng và yêu thích -->
                                </form>
-                        <button class="btn btn-danger rounded-pill me-2">Mua ngay</button>
-
+                        <form action="?act=postMuaNgay&id=<?= $id ?>" method="post">
+                                <input type="hidden" name="id" value="<?= $sanPhamChiTiet['id'] ?>" >
+                                 <input type="hidden" name="price" value="<?= $sanPhamChiTiet['price'] ?>"> 
+                                 <input type="hidden" name="soluong" value="1"> 
+                            <button class="btn btn-danger rounded-pill me-2">Mua ngay</button>
+                        </form>
                         <!-- Nút trái tim thêm vào yêu thích -->
                         <a href="?act=addFavourite&id=<?= $sanPhamChiTiet['id'] ?>" class="btn btn-danger rounded-pill">
                             <i class="bi bi-heart-fill"></i>

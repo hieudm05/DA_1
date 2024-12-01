@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+<div class="d-flex justify-content-center align-items-center mt-4 bg-light">
     <div class="col-sm-8">
         <h2 class="text-center mb-4">Quản lý đơn hàng</h2>
         <?php foreach ($listBill as $bill) : extract($bill); ?>
@@ -9,7 +9,7 @@
                         <p><strong>Trạng thái:</strong> 
                         <?php
                             if ($bill_status == 0) {
-                                echo '🟡 Đơn hàng mới';
+                                echo '🟡 Đang chờ xác nhận';
                             } elseif ($bill_status == 1) {
                                 echo '🔵 Đang xử lý';
                             } elseif ($bill_status == 2) {
@@ -39,7 +39,7 @@
                         </div>
                         <div class="modal-body">
                             <p><strong>Mã Đơn Hàng:</strong> <?= $id ?></p>
-                            <p><strong>Tên sản phẩm:</strong> <?= $bill_name ?></p>
+                            <p><strong>Tên sản phẩm:</strong> <?= $product_names ?></p>
                             <p><strong>Email:</strong> <?= $bill_email ?></p>
                             <p><strong>Số Điện Thoại:</strong> <?= $bill_sdt ?></p>
                             <p><strong>Địa Chỉ:</strong> <?= $bill_address ?></p>

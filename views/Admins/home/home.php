@@ -71,7 +71,7 @@
                                         <?= $user_name ?>
                                     </td>
                                     <td class="text-center"> 
-                                        <?= $bill_name ?>
+                                        <?= $product_names ?>
                                     </td>
                                     <td class="text-center"> 
                                         <?= $ngaydathang ?>
@@ -116,7 +116,67 @@
                     <!-- Revenue Chart -->
                     <div class="col-md-7 mb-4">
                         <div class="card">
-                            <?php include 'bieudotuan.php' ?>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Biểu đồ Thống kê Doanh thu theo Ngày trong Tuần</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="chart"></canvas>
+                        </div>
+
+                <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Các nhãn cho các ngày trong tuần
+                    const labels = [
+                        "Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", 
+                        "Thứ Năm", "Thứ Sáu", "Thứ Bảy"
+                    ];
+
+                    // Mảng doanh thu từ PHP
+                    const revenues = <?php echo json_encode($listRevenue); ?>;
+
+                    // Tính giá trị tối đa để xác định khoảng cách cho trục Y
+                    const maxRevenue = Math.max(...revenues);
+
+                    // Khởi tạo biểu đồ
+                    const ctx = document.getElementById('chart').getContext('2d');
+                    const chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Doanh thu (VNĐ)',
+                                data: revenues,
+                                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true,
+                                        max: maxRevenue + (maxRevenue * 0.1), // Tăng thêm 10% giá trị doanh thu cao nhất
+                                        stepSize: 10000000, // Đặt khoảng cách giữa các mức là 10 triệu VNĐ
+                                        callback: function(value) {
+                                            return value.toLocaleString(); // Định dạng tiền tệ
+                                        }
+                                    }
+                                }]
+                            },
+                            tooltips: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        return tooltipItem.yLabel.toLocaleString() + ' VNĐ';
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+                </script>
+
                         </div>
                     </div>
 

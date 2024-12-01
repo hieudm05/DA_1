@@ -224,7 +224,17 @@ class ClientController
                     $currentRemainingQuantity = $this->modelClients->getRemainingQuantity($id);
                     $this->modelClients->updateRemainingQuantity($id, $currentRemainingQuantity - 1);
                 } else {
-                    // Xử lý khi hết hàng trong kho
+                    echo '<script>
+                                 // Khắc phục lỗi mất thanh cuộn
+                                document.body.style.overflowX = "auto"; 
+                                document.body.style.overflowY = "auto";  
+                                Swal.fire({
+                                    text: "Sản phẩm đã hết hàng!",
+                                    icon: "error",
+                                    confirmButtonColor: "#C62E2E"
+                                });
+                            </script>';
+                            exit(); 
                 }
             }
         
@@ -434,8 +444,16 @@ class ClientController
                         });
                     }, 2000); // Giả lập thời gian xử lý 2 giây (thay thế bằng thời gian thực tế xử lý thanh toán)
                     </script>";
-                    $this->modelClients->addBill($user_id, $name, $address, $sdt, $email, $tongCong, $ngaydathang, $pttt, $quantity);
-                    // $this->modelClients->orderDetails($order_id, $product_id, $quantity, $price);
+                    $idbill = $this->modelClients->addBill($user_id, $address, $sdt, $email, $tongCong, $ngaydathang, $pttt, $quantity);
+                    $cart_items = $this->modelClients->listCartByUser($_SESSION['user']['id']);
+                    foreach($cart_items as $item){
+                            $product_id = $item['idpro'];
+                            $quantity = $item['soluong'];
+                            $price = $item['price'];
+                            // Lưu sản phẩm vào bill_items
+                            $this->modelClients->addBillItem($idbill, $product_id, $quantity, $price);
+                            // $total+=$quantity * $price;
+                    }
                     $this->modelClients->clearCart($_SESSION['user']['id']);
                    
                     // Cập nhật lại session giỏ hàng dựa trên danh sách mới
@@ -446,7 +464,153 @@ class ClientController
         }
     }
 
-    public function infoBills(){
+    public function postMuaNgay() {
+           $userRole = $_SESSION['user']['role'] ?? null; // Gán null nếu không tồn tại
+        if( $userRole == 1){
+            
+            echo '<script>
+            // Khắc phục lỗi mất thanh cuộn
+            document.body.style.overflowX = "auto"; 
+            document.body.style.overflowY = "auto";  
+            Swal.fire({
+                text: "Admin không thể mua hàng",
+                icon: "warning",
+                confirmButtonColor: "#C62E2E"
+                });
+        </script>';
+        $listCarts= $this->modelClients->listCartByUser($_SESSION['user']['id']);
+        // var_dump($listCarts);
+        // header('location: http://localhost/base_test_DA1/public/');
+        $this->home();
+        exit();
+    }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['user']) {
+            $nameUser = isset($_SESSION['user']['username']) ? $_SESSION['user']['username'] : '';
+            $email = isset($_SESSION['user']['email']) && !empty($_SESSION['user']['email']) ? $_SESSION['user']['email'] : '';
+            $sdt = isset($_SESSION['user']['sdt']) && !empty($_SESSION['user']['sdt']) ? $_SESSION['user']['sdt'] : '';
+            $address = isset($_SESSION['user']['address']) && !empty($_SESSION['user']['address']) ? $_SESSION['user']['address'] : '';
+            $user_id = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : '';
+            $id_pro = $_GET['id'];
+            // Đặt tên tạm vậy thôi
+            $listCarts = $this->modelClients->getProductById($id_pro);
+            extract($listCarts);
+            $soluong = isset($_POST['soluong']) ? $_POST['soluong'] : 1;
+            $thanhtien = $soluong * $price;
+            $remaining_quantity = $quantity - 1;
+            // Cập nhật dữ liệu trong products
+            // var_dump($listCarts);
+            require_once '../views/Clients/carts/thanhtoan2.php';
+            }else{
+                echo '<script>
+                // Khắc phục lỗi mất thanh cuộn
+                        document.body.style.overflowX = "auto"; 
+                        document.body.style.overflowY = "auto";  
+                        Swal.fire({
+                            text: "Bạn cần đăng nhập để mua hàng",
+                            icon: "error",
+                            confirmButtonColor: "#C62E2E"
+                        });
+                    </script>';
+                    require_once '../views/Clients/accounts/login.php';
+            
+            }
+        }
+
+            public function xuLiMuaNgay(){
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['user']) {
+                $nameUser = $_SESSION['user']['username'];
+                $email = isset($_POST['email']) ? $_POST['email'] : $_SESSION['user']['email']; 
+                $sdt = isset($_POST['sdt']) ? $_POST['sdt'] : $_SESSION['user']['sdt']; 
+                $address = isset($_POST['address']) ? $_POST['address'] : $_SESSION['user']['address'];  
+                $user_id = $_SESSION['user']['id'];
+                    $id_pro = $_GET['id'];
+                    // Đặt tên tạm vậy thôi
+                    $listCarts = $this->modelClients->getProductById($id_pro);
+                    extract($listCarts);
+                    $soluong = 1;
+                    $thanhtien = $soluong * $price;
+                    $remaining_quantity = $quantity - 1;
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    $ngaydathang = date('d-m-Y H:i:s'); 
+                    $pttt = isset($_POST['pttt']) ? $_POST['pttt'] : 0;
+                    // Cập nhật dữ liệu trong products
+                    // var_dump($listCarts);
+                    // Khởi tạo mảng lỗi
+                        $errors = [];
+
+                        // Mảng các trường cần kiểm tra
+                        $fields = [
+                            'name' => $nameUser,
+                            'email' => $email,
+                            'sdt' => $sdt,
+                            'pttt' => $pttt,
+                            'address' => $address
+                        ];
+
+                        // Kiểm tra nếu giá trị rỗng
+                        foreach ($fields as $key => $value) {
+                            if (empty($value)) {
+                                $errors[$key] = 'Thanh toán thất bại.';
+                            }
+                        }
+
+                        // Nếu có lỗi thì hiển thị thông báo và không tiếp tục
+                        if (!empty($errors)) {
+                            foreach ($errors as $message) {
+                                echo "<script>
+                                    document.body.style.overflowX = 'auto'; 
+                                    document.body.style.overflowY = 'auto';  
+                                    Swal.fire({
+                                        text: '$message',
+                                        icon: 'error',
+                                        confirmButtonColor: '#C62E2E'
+                                    });
+                                </script>";
+                            }
+                            require_once '../views/Clients/carts/thanhtoan2.php'; // Trả về trang thanh toán sau khi có lỗi
+                        }else{
+                                    echo "<script>
+                            Swal.fire({
+                                title: 'Đang xử lý...',
+                                text: 'Vui lòng đợi...',
+                                allowOutsideClick: false, // Không cho phép người dùng đóng popup
+                                didOpen: () => {
+                                    Swal.showLoading(); // Hiển thị hiệu ứng loading
+                                }
+                            });
+
+                            // Giả lập một chút thời gian cho việc xử lý (thay thế bằng code thanh toán thực tế)
+                            setTimeout(function() {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thành công',
+                                    text: 'Đặt hàng thành công',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // Chuyển hướng hoặc thực hiện hành động sau khi xác nhận
+                                        window.location.href = 'http://localhost/base_test_DA1/public/'; // Ví dụ chuyển về trang chủ sau khi thành công
+                                    }
+                                });
+                            }, 2000); // Giả lập thời gian xử lý 2 giây (thay thế bằng thời gian thực tế xử lý thanh toán)
+                            </script>";
+                            $idbill = $this->modelClients->addBill($user_id, $address, $sdt, $email, $thanhtien, $ngaydathang, $pttt, $quantity);
+
+                            // Lưu sản phẩm vào bill_items
+                            $this->modelClients->addBillItem($idbill, $id_pro, $soluong, $price);
+                        }
+
+
+                    require_once '../views/Clients/carts/thanhtoan2.php';
+                    }
+            
+            }
+    
+
+    
+
+        public function infoBills(){
         $listBill = $this->modelClients->getAllBillByIdUser($_SESSION['user']['id']);
         if(!$listBill){
             echo '<div class="d-flex justify-content-center align-items-center mt-5">
@@ -558,5 +722,9 @@ class ClientController
         }
     }
         
-}    
+}  
+
+
+
+
 

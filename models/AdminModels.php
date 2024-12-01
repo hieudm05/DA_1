@@ -265,10 +265,27 @@ class AdminModels
      //đơn hàng
      public function getAllBill() {
         try {
-            // Truy vấn kết hợp giữa bảng bills và bảng accounts
-            $sql = 'SELECT bills.*, accounts.username AS user_name FROM bills 
-                    JOIN accounts ON bills.idUser = accounts.id 
-                    ORDER BY bills.id DESC';
+            $sql = 'SELECT 
+                        bills.id AS bill_id,
+                        bills.*, 
+                        accounts.username AS user_name, 
+                        GROUP_CONCAT(p.namesp ORDER BY p.namesp ASC) AS product_names,
+                        GROUP_CONCAT(bi.quantity ORDER BY p.namesp ASC) AS product_quantities, 
+                        GROUP_CONCAT(bi.price ORDER BY p.namesp ASC) AS product_prices, 
+                        GROUP_CONCAT(p.img ORDER BY p.namesp ASC) AS product_images 
+                    FROM 
+                        bills
+                    JOIN 
+                        accounts ON bills.idUser = accounts.id
+                    LEFT JOIN 
+                        bill_items bi ON bills.id = bi.bill_id
+                    LEFT JOIN 
+                        products p ON bi.product_id = p.id
+                    GROUP BY 
+                        bills.id
+                    ORDER BY 
+                        bills.id DESC;
+                    ';
             
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
@@ -276,20 +293,32 @@ class AdminModels
         } catch (Exception $e) {
             echo $e->getMessage();
         }
+        
     }
     public function getAllBill_3() {
         try {
-            $sql = 'SELECT bills.*, accounts.username AS user_name FROM bills 
+            $sql = 'SELECT 
+                        bills.*, 
+                        accounts.username AS user_name, 
+                        GROUP_CONCAT(p.namesp ORDER BY p.namesp ASC) AS product_names, 
+                        GROUP_CONCAT(bi.quantity ORDER BY p.namesp ASC) AS product_quantities, 
+                        GROUP_CONCAT(bi.price ORDER BY p.namesp ASC) AS product_prices, 
+                        GROUP_CONCAT(p.img ORDER BY p.namesp ASC) AS product_images
+                    FROM bills 
                     JOIN accounts ON bills.idUser = accounts.id 
-                    WHERE bills.bill_status = 0
-                    ORDER BY bills.id DESC ' ;
-            
+                    LEFT JOIN bill_items bi ON bills.id = bi.bill_id 
+                    LEFT JOIN products p ON bi.product_id = p.id 
+                    WHERE bills.bill_status = 0 
+                    GROUP BY bills.id 
+                    ORDER BY bills.id DESC';
+        
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (Exception $e) {
             echo $e->getMessage();
         }
+        
     }
 
     public function getTotalOrders(){
@@ -308,7 +337,7 @@ class AdminModels
     // Tổng doanh thu
     public function sumTotalOrders(){
         try {
-            $sql = "SELECT SUM(bills.total) AS total FROM bills";
+            $sql = "SELECT SUM(bills.total) AS total FROM bills WHERE bills.bill_status = 3 ";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
               // Lấy kết quả trả về
@@ -345,6 +374,35 @@ class AdminModels
             echo $e->getMessage();
         }
     }
+
+    public function getDailyRevenue() {
+        // SQL để lấy doanh thu theo ngày trong tuần
+        $sql = "SELECT 
+                DAYOFWEEK(STR_TO_DATE(ngaydathang, '%Y-%m-%d')) AS day_of_week, 
+                SUM(total) AS total_revenue 
+                FROM bills 
+                WHERE bill_status = 3 
+                GROUP BY day_of_week 
+                ORDER BY day_of_week";
+        
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $listRevenue = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Khởi tạo mảng doanh thu cho các ngày trong tuần
+        $revenues = array_fill(0, 7, 0); // Mảng chứa doanh thu cho 7 ngày trong tuần
+        
+        // Gán doanh thu cho đúng ngày trong tuần
+        foreach ($listRevenue as $data) {
+            if ($data['day_of_week'] !== NULL) {
+                $revenues[$data['day_of_week'] - 1] = $data['total_revenue']; // Gán doanh thu vào mảng
+            }
+        }
+        
+        return $revenues; // Trả về mảng doanh thu
+    }
+    
+
 
     // Cập nhật trạng thái đơn hàng
     public function updateOrderStatus($orderId, $status) {

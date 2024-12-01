@@ -13,11 +13,15 @@ class HomeController
         $sumTotalBill = $this->modelAdmin->sumTotalOrders();
         $sumProducts = $this->modelAdmin->sumProducts();
         $sumComments = $this->modelAdmin->sumComments();
-
-        // printf($sumBills);
-        // var_dump($listBillStatus);
+        $listRevenue = $this->modelAdmin->getDailyRevenue();
+        // print_r($listRevenue);
         require_once '../../views/Admins/home/home.php';
     }
+    // public function renderDailyRevenueChart() {
+    //     // Lấy dữ liệu từ Model
+    //     $data = $this->modelAdmin->getDailyRevenue();
+    //     require_once '../../views/Admins/home/bieudotuan.php';
+    // }
     // Danh Mục
     public function formAddDm() {
         require_once '../../views/Admins/DanhMuc/formAddDM.php';
@@ -208,6 +212,7 @@ public function updateSP() {
     public function listBills() {
         $listDanhMuc = $this->modelAdmin->getAllDanhMuc();
         $listOrders = $this->modelAdmin->getAllBill(); 
+        // var_dump($listOrders);
         require_once '../../views/Admins/donHang/listDonHang.php'; 
     }
     

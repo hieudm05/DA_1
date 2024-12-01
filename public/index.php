@@ -60,6 +60,10 @@ match ($act) {
     'billconfirm' => (new ClientController()) ->billConfirm(),
     'billInfo' => (new ClientController()) -> infoBills(),
 
+    // Mua ngay
+    'postMuaNgay' => (new ClientController()) ->postMuaNgay(),
+    'xuly_thanhtoan' => (new ClientController()) ->xuLiMuaNgay(),
+
     // Sản phẩm chi tiết
     'sanphamchitiet' => (new ClientController()) -> sanphamchitiet(),
     // Comment
