@@ -453,7 +453,7 @@ class ClientModels
         return $results;
     }
     
-    
+    /// bình luận
     public function getCommentsByProductId($id) {
         $sql = "SELECT c.*, a.username 
                 FROM comments c
@@ -486,6 +486,8 @@ class ClientModels
         $stmt->execute([':id' => $id]);
         return $stmt->fetch();
     }
+    
+    
     
 
     public function productByCasterri($id) {
@@ -572,6 +574,20 @@ class ClientModels
             return []; 
         }
     }
+    public function removeFavourite($userId, $productId) {
+        try {
+            $sql = "DELETE FROM favorites WHERE user_id = :user_id AND pro_id = :pro_id";
+            $stmt = $this->conn->prepare($sql);
+            return $stmt->execute([
+                ':user_id' => $userId,
+                ':pro_id' => $productId
+            ]);
+        } catch (Exception $e) {
+            echo "Lỗi khi xóa sản phẩm yêu thích: " . $e->getMessage();
+            return false;
+        }
+    }
+    
     
     public function __destruct() {  // Hàm hủy kết nối đối tượng
         $this->conn = null;

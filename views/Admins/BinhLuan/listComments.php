@@ -31,10 +31,6 @@
                                     class="btn btn-warning btn-sm">
                                     <?= $comment['status'] ? 'Ẩn' : 'Hiện' ?>
                                     </a>
-                                    <a href="router.php?act=deleteComment&id=<?= htmlspecialchars($comment['id']) ?>" 
-                                    class="btn btn-danger btn-sm" 
-                                    onclick="return confirm('Bạn có chắc chắn muốn xóa bình luận này?');">
-                                    Xóa
                                     </a>
                                 </td>
 

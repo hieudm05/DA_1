@@ -13,8 +13,8 @@ class HomeController
         $sumTotalBill = $this->modelAdmin->sumTotalOrders();
         $sumProducts = $this->modelAdmin->sumProducts();
         $sumComments = $this->modelAdmin->sumComments();
-        $listRevenue = $this->modelAdmin->getDailyRevenue();
-        // print_r($listRevenue);
+        $revenues = $this->modelAdmin->getDailyRevenue();
+        // print_r($revenues);
         require_once '../../views/Admins/home/home.php';
     }
     // public function renderDailyRevenueChart() {

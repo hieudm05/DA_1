@@ -389,7 +389,10 @@ class AdminModels
         $stmt->execute();
         $listRevenue = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
-        // Khởi tạo mảng doanh thu cho các ngày trong tuần
+        // Lấy ngày hôm nay (0 đến 6, từ Chủ Nhật đến Thứ Bảy)
+        $currentDay = date('w'); // day of the week (0 for Sunday, 6 for Saturday)
+        
+        // Khởi tạo mảng doanh thu cho các ngày trong tuần (0 đến 6)
         $revenues = array_fill(0, 7, 0); // Mảng chứa doanh thu cho 7 ngày trong tuần
         
         // Gán doanh thu cho đúng ngày trong tuần
@@ -399,8 +402,15 @@ class AdminModels
             }
         }
         
+        // Thêm giá trị cho ngày hôm nay vào mảng nếu chưa có
+        if ($revenues[$currentDay] == 0) {
+            // Nếu hôm nay chưa có doanh thu, gán giá trị 0 hoặc tính toán doanh thu cho ngày hôm nay
+            // Ví dụ: gán $revenues[$currentDay] = 0; hoặc gán doanh thu tính toán
+        }
+    
         return $revenues; // Trả về mảng doanh thu
     }
+    
     
 
 

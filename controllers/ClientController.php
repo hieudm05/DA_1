@@ -634,15 +634,15 @@ class ClientController
                 return;
             }
     
-            $noidung = $_POST['comment'] ?? '';
-            date_default_timezone_set('Asia/Ho_Chi_Minh'); // Thiết lập múi giờ
-            $time = date('Y-m-d H:i:s'); // Lấy giờ hiện tại theo định dạng 'YYYY-MM-DD HH:mm:ss'
+            $noidung = htmlspecialchars($_POST['comment'] ?? '');
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $time = date('Y-m-d H:i:s');
     
             if (isset($_SESSION['user']) && $_SESSION['user']['id']) {
-                $idUser = $_SESSION['user']['id']; 
+                $idUser = $_SESSION['user']['id'];
     
                 if ($this->modelClients->addComment($idpro, $idUser, $noidung, $time)) {
-                    header('Location: ?act=sanphamchitiet&id=' . $idpro); 
+                    header('Location: ?act=sanphamchitiet&id=' . $idpro);
                     exit();
                 } else {
                     echo "Không thể thêm bình luận. Vui lòng thử lại.";
@@ -652,6 +652,7 @@ class ClientController
             }
         }
     }
+    
     
     
 
@@ -721,6 +722,22 @@ class ClientController
             echo "Bạn cần đăng nhập để xem danh sách yêu thích.";
         }
     }
+    public function removeFavourite() {
+        if (isset($_SESSION['user']) && isset($_POST['product_id'])) {
+            $userId = $_SESSION['user']['id'];
+            $productId = $_POST['product_id'];
+            
+            if ($this->modelClients->removeFavourite($userId, $productId)) {
+                header("Location: ?act=listFavourites");
+                exit();
+            } else {
+                echo "Không thể xóa sản phẩm khỏi danh sách yêu thích.";
+            }
+        } else {
+            echo "Bạn cần đăng nhập để xóa sản phẩm yêu thích.";
+        }
+    }
+    
         
 }  
 

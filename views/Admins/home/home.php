@@ -132,8 +132,7 @@
                     ];
 
                     // Mảng doanh thu từ PHP
-                    const revenues = <?php echo json_encode($listRevenue); ?>;
-
+                    const revenues = <?php echo json_encode($revenues); ?>;
                     // Tính giá trị tối đa để xác định khoảng cách cho trục Y
                     const maxRevenue = Math.max(...revenues);
 

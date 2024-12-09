@@ -68,13 +68,7 @@
                 </div>
                 <hr>
                   <!-- Thêm ô nhập Voucher -->
-                  <div class="input-group">
-                        <input type="text" class="form-control" id="voucher-code" placeholder="Nhập mã voucher">
-                        <div class="input-group-append">
-                            <button class="btn btn-danger" type="button"><i class="bi bi-arrow-right"></i></button>
-                        </div>
-                    </div>
-                <hr>
+                  
                 <div class="d-flex justify-content-between">
                     <span class="text-danger">Tạm tính:</span>
                     <span class=""><?= number_format($tongCong, 0, ',', '.') ?> VND</span>

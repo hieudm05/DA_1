@@ -74,6 +74,7 @@ match ($act) {
     //yeuthich
     'listFavourites' => (new ClientController())->listFavourites(),
     'addFavourite' => (new ClientController())->addFavourite(),
+    'removeFavourite' => (new ClientController())->removeFavourite(),
 
 };
 
