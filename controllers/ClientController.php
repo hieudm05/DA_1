@@ -13,6 +13,7 @@ class ClientController
         $listDanhMuc = $this->modelClients->getAllDanhMuc();
         $datas = $this ->modelClients->getAllProductsByCategory();
         $top10 = $this -> modelClients -> getTop10Sp();
+        $newestProducts = $this->modelClients->getNewestProducts(4); // Mặc định lấy 4 sản phẩm mới nhất
         // var_dump($top10);
         // var_dump($listDanhMuc);
         require_once '../views/Clients/home.php';
@@ -686,6 +687,9 @@ class ClientController
         require_once '../views/Clients/productByCasteri/productByCasterri.php';
         
       }
+
+      
+    
       ///yeuthich
       public function addFavourite() {
         if (isset($_SESSION['user']) && isset($_GET['id'])) {

@@ -66,88 +66,36 @@
             <img src="./img/htb_img_2.webp" class="img-fluid" alt="" style="max-width: 48%; height: auto;">
         </div>
 <div class="container mt-3">
-<h5 class="text-danger">Sách khuyến mại</h5>
-<div class="d-flex flex-wrap">
-    <div class="col-6 col-md-4 col-lg-3 mt-2">
-        <div class="card" style="width: 12rem;">
-            <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top imgHieuUng" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
-            <div class="card-body" style="font-size: 0.85rem;">
-                <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-6 col-md-4 col-lg-3 mt-2">
-        <div class="card" style="width: 12rem;">
-            <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
-            <div class="card-body" style="font-size: 0.85rem;">
-                <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-6 col-md-4 col-lg-3 mt-2">
-        <div class="card" style="width: 12rem;">
-            <img src="https://product.hstatic.net/200000845405/product/8934974185086_1_01db5450a212484da9b6cf4139c4a867_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height:180px; object-fit: cover;">
-            <div class="card-body" style="font-size: 0.85rem;">
-                <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-6 col-md-4 col-lg-3 mt-2">
-        <div class="card" style="width: 12rem;">
-            <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
-            <div class="card-body" style="font-size: 0.85rem;">
-                <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-6 col-md-4 col-lg-3 mt-2">
-        <div class="card" style="width: 12rem;">
-            <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
-            <div class="card-body" style="font-size: 0.85rem;">
-                <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-6 col-md-4 col-lg-3 mt-2">
-        <div class="card" style="width: 12rem;">
-            <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
-            <div class="card-body" style="font-size: 0.85rem;">
-                <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-6 col-md-4 col-lg-3 mt-2">
-        <div class="card" style="width: 12rem;">
-            <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
-            <div class="card-body" style="font-size: 0.85rem;">
-                <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-6 col-md-4 col-lg-3 mt-2">
-        <div class="card" style="width: 12rem;">
-            <img src="https://product.hstatic.net/200000845405/product/binhphapgiatruyenthu_e449ad2c8e674d7e8fbf105b6b1af080_medium.jpg" class="card-img-top" alt="Sách Nổi Bật" style="height: 180px; object-fit: cover;">
-            <div class="card-body" style="font-size: 0.85rem;">
-                <h5 class="card-title" style="font-size: 1rem;">Binh pháp gia truyền</h5>
-                <p><span class="card-text text-danger">87,200đ</span> <del>109,000đ</del></p>
-            </div>
-        </div>
+<div class="container mt-3">
+    <h5 class="text-danger">Sách mới nhất</h5>
+    <div class="d-flex flex-wrap justify-content-between">
+        <?php if (!empty($newestProducts)) : ?>
+            <?php foreach ($newestProducts as $product) :  
+                $imgPath = !empty($product['img']) ? './../' . $product['img'] : './../img/default-image.jpg';
+                $linkSp = "?act=sanphamchitiet&id=" . $product["id"]; 
+            ?>
+                <div class="col-6 col-md-3 col-lg-3 mt-2">
+                    <div class="card" style="width: 12rem;">
+                    <a href="<?= $linkSp ?>" class="text-dark text-decoration-none">
+                            <img src="<?= $imgPath ?>" class="card-img-top" alt="<?= htmlspecialchars($product['namesp']); ?>" style="height: 180px; object-fit: cover;">
+                            <div class="card-body" style="font-size: 0.85rem;">
+                                <h5 class="card-title" style="font-size: 1rem;"><?= htmlspecialchars($product['namesp']); ?></h5>
+                                <p>
+                                    <span class="text-danger"><?= number_format($product['price'], 0, ',', '.'); ?>đ</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else : ?>
+            <p>Không có sản phẩm nào để hiển thị.</p>
+        <?php endif; ?>
     </div>
 </div>
+
+
+
 
 </div>
 <div class="container d-flex justify-content-between flex-wrap px-0 mt-3">

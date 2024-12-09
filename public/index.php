@@ -66,6 +66,7 @@ match ($act) {
 
     // Sản phẩm chi tiết
     'sanphamchitiet' => (new ClientController()) -> sanphamchitiet(),
+    'listNewestProducts' => (new ClientController()) -> listNewestProducts(),
     // Comment
     'formComment' => (new ClientController()) -> formComment(),
     'deleteComment' => (new ClientController()) -> deleteComment(),
