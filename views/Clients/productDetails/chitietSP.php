@@ -24,7 +24,7 @@
                         <!-- Tiêu đề và thông tin -->
                         <h1 class="product-title"><?= $sanPhamChiTiet["namesp"] ?></h1>
                         <p class="d-flex align-items-center">
-                            <span class="rating me-2">5.0 ★★★★★</span>
+                            <span class="rating me-2">4.0 ★★★★</span>
                             <a href="#" class="text-decoration-none">200 đánh giá</a>
                         </p>
                         <p><span class="badge bg-danger">#31 trong Top xu hướng</span></p>
