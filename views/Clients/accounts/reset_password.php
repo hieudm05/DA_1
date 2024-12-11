@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
     
     // Đặt giá trị thời gian hết hạn reset_expires (bạn có thể thay đổi thời gian này tùy ý)
-    $expires = date('Y-m-d H:i:s', strtotime('+1 hour')); // Giả sử bạn đặt reset_expires là 1 giờ sau
+    $expires = date('Y-m-d H:i:s', strtotime('+15 minute'));
     
     // Cập nhật mật khẩu và đặt lại các trường reset_code và reset_expires
     $stmt = $conn->prepare("UPDATE accounts SET password = ?, reset_code = NULL, reset_expires = ? WHERE email = ?");
