@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: ?act=login");
         exit;
     } else {
-        echo "Có lỗi xảy ra!";
+        echo "mật khẩu của bạn không đổi được vui lòng thử lại!";
     }
 }
 ?>
