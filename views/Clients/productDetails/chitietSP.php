@@ -71,7 +71,7 @@
                     </div>
 
                         <div class="mt-4">
-                            <p>Đánh giá: <span class="text-warning">★★★★★</span> (200 đánh giá)</p>
+                            <p>Đánh giá: <span class="text-warning">★★★★</span> (200 đánh giá)</p>
                             <div class="comment-section mt-4">
                                 <h4 class="fw-bold mb-3">Bình luận</h4>
                                 <div class="list-group" style="max-height: 300px; overflow-y: auto;">
