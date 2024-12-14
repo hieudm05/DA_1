@@ -71,6 +71,7 @@ match ($act) {
     'sanphamchitiet' => (new ClientController()) -> sanphamchitiet(),
     // Xử lí tăng giảm số lượng mua hàng
     'tangGiamMuaNgay' => (new ClientController()) ->tangGiamMuaNgay(),
+    // 'listNewestProducts' => (new ClientController()) -> listNewestProducts(),
     // Comment
     'formComment' => (new ClientController()) -> formComment(),
     'deleteComment' => (new ClientController()) -> deleteComment(),
@@ -79,6 +80,7 @@ match ($act) {
     //yeuthich
     'listFavourites' => (new ClientController())->listFavourites(),
     'addFavourite' => (new ClientController())->addFavourite(),
+    'removeFavourite' => (new ClientController())->removeFavourite(),
 
 };
 

@@ -234,13 +234,13 @@
                             <span class="menu-title">Quản lí sản phẩm</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="#icons" aria-expanded="false"
                             aria-controls="icons">
                             <i class="menu-icon mdi mdi-layers-outline"></i>
                             <span class="menu-title">Quản lí khuyến mại</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="?act=listComments" aria-expanded="false"
                             aria-controls="auth">

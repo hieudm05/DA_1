@@ -75,6 +75,8 @@
                     <span class="text-success">Miễn phí</span>
                 </div>
                 <hr>
+                  <!-- Thêm ô nhập Voucher -->
+                  
                 <div class="d-flex justify-content-between">
                     <span class="text-danger">Tạm tính:</span>
                     <span class=""><?= number_format($tongCong, 0, ',', '.') ?> VND</span>
