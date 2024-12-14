@@ -54,11 +54,14 @@ match ($act) {
     'viewcart' => (new ClientController()) ->viewCarts(),
     'addcart' => (new ClientController()) ->carts(),
     'deletecart' => (new ClientController()) ->deleteCarts(),
+    'tangGiam' => (new ClientController()) -> tangGiam(),
 
     // Bill
     'thanhtoan' => (new ClientController()) ->bills(),
     'billconfirm' => (new ClientController()) ->billConfirm(),
     'billInfo' => (new ClientController()) -> infoBills(),
+    'bill_item' => (new ClientController()) -> bill_items(),
+    'huyDon' =>(new ClientController()) -> huyDon(),
 
     // Mua ngay
     'postMuaNgay' => (new ClientController()) ->postMuaNgay(),
@@ -66,6 +69,8 @@ match ($act) {
 
     // Sản phẩm chi tiết
     'sanphamchitiet' => (new ClientController()) -> sanphamchitiet(),
+    // Xử lí tăng giảm số lượng mua hàng
+    'tangGiamMuaNgay' => (new ClientController()) ->tangGiamMuaNgay(),
     // Comment
     'formComment' => (new ClientController()) -> formComment(),
     'deleteComment' => (new ClientController()) -> deleteComment(),

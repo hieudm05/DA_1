@@ -34,21 +34,24 @@
                         <label for="address" class="form-label">Email</label>
                         <input type="email" class="form-control" id="address" name="email"  value="<?= $email?>"  placeholder="Nhập địa chỉ email">
                     </div>
-                    <!-- <div class="mb-3">
-                        <label for="delivery-method" class="form-label">Phương thức giao hàng</label>
-                        <select name="pttt" class="form-control" id="delivery-method">
-                            <option value="1">Giao hàng tiêu chuẩn (3-5 ngày)</option>
-                            <option value="2">Giao hàng nhanh (1-2 ngày)</option>
-                        </select>
-                    </div> -->
-                <div class="mb-3">
-                    <label for="payment-method" class="form-label">Phương thức thanh toán</label>
-                    <select name="pttt" class="form-control" id="payment-method">
-                        <option value="0" <?= (isset($_POST['pttt']) && $_POST['pttt'] == '0') ? 'selected' : ''; ?>></option>
-                        <option value="1" <?= (isset($_POST['pttt']) && $_POST['pttt'] == '1') ? 'selected' : ''; ?>>Thanh toán khi nhận hàng</option>
-                        <option value="2" <?= (isset($_POST['pttt']) && $_POST['pttt'] == '2') ? 'selected' : ''; ?>>Thanh toán trực tuyến</option>
-                    </select>
-                </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phương thức thanh toán</label>
+                        <div class="d-flex gap-2">
+                            <!-- Nút Thanh toán khi nhận hàng -->
+                            <button  type="button" class="btn btn-outline-danger" id="btn-cod"  onclick="selectPaymentMethod(1)">
+                                Thanh toán COD
+                            </button>
+
+                            <!-- Nút Thanh toán trực tuyến -->
+                            <button type="button" name="payUrl" class="btn btn-outline-danger" id="btn-online"  onclick="selectPaymentMethod(2)">
+                                Thanh toán Online
+                            </button>
+                        </div>
+
+                        <!-- Input ẩn để lưu giá trị đã chọn -->
+                        <input type="hidden" name="pttt" id="payment-method-hidden" value="<?= isset($_POST['pttt']) ? $_POST['pttt'] : ''; ?>">
+                    </div>
+                
 
                 
             </div>
@@ -67,14 +70,6 @@
                     <span class="text-success">Miễn phí</span>
                 </div>
                 <hr>
-                  <!-- Thêm ô nhập Voucher -->
-                  <div class="input-group">
-                        <input type="text" class="form-control" id="voucher-code" placeholder="Nhập mã voucher">
-                        <div class="input-group-append">
-                            <button class="btn btn-danger" type="button"><i class="bi bi-arrow-right"></i></button>
-                        </div>
-                    </div>
-                <hr>
                 <div class="d-flex justify-content-between">
                     <span class="text-danger">Tạm tính:</span>
                     <span class=""><?= number_format($thanhtien, 0, ',', '.') ?> VND</span>
@@ -84,7 +79,7 @@
                     <h5 class="text-danger">Tổng tiền:</h5>
                     <h5 class="text-danger"><?= number_format($thanhtien, 0, ',', '.') ?> VNĐ</h5>
                 </div>
-                <button class="btn btn-danger">Hoàn thành đơn hàng <i class="bi bi-arrow-right"></i></button>
+                <button name="payUrl" class="btn btn-danger">Hoàn thành đơn hàng <i class="bi bi-arrow-right"></i></button>
             </div>
         </div>
         </form>
@@ -128,3 +123,26 @@
     </div>
 </div>
 </form>
+
+<script>
+    function selectPaymentMethod(value) {
+        // Gán giá trị đã chọn vào input hidden
+        document.getElementById('payment-method-hidden').value = value;
+
+        // Xóa trạng thái active của cả hai nút
+        document.getElementById('btn-cod').classList.remove('btn-danger');
+        document.getElementById('btn-cod').classList.add('btn-outline-danger');
+        document.getElementById('btn-online').classList.remove('btn-danger');
+        document.getElementById('btn-online').classList.add('btn-outline-danger');
+
+        // Gắn trạng thái active vào nút đã chọn
+        if (value == 1) {
+            document.getElementById('btn-cod').classList.remove('btn-outline-danger');
+            document.getElementById('btn-cod').classList.add('btn-danger');
+        } else if (value == 2) {
+            document.getElementById('btn-online').classList.remove('btn-outline-danger');
+            document.getElementById('btn-online').classList.add('btn-danger');
+        }
+    }
+</script>
+

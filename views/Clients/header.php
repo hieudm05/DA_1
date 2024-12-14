@@ -200,13 +200,9 @@ a:hover, button:hover {
                     </a>
 
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <?php  foreach($listDanhMuc as $dm)  :?>
-                        <?php 
-                        $linkDm = "?act=sanpham&id=" . $dm["id"];
-                        ?> 
-                        <li><a class="dropdown-item" href="<?= $linkDm ?>"> <?= $dm['id'] ?></a></li>
+                        <li><a class="dropdown-item" href=""> Sách </a></li>
                        
-                        <?php endforeach; ?>
+                        
                     </ul>
                 </li>
                 <li class="nav-item">

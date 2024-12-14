@@ -39,6 +39,7 @@ match ($act) {
     //đơn hàng 
     'listDonHang' => (new HomeController())->listBills(),
     'updateOrder' => (new HomeController()) -> updateStatusBills(),
+    'xemchitiet' =>(new HomeController()) ->bill_items(),
     // Xác nhận đơn hàng
     'confirmOrder' => (new HomeController()) ->confirmOrder(),
     //binh luan

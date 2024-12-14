@@ -5,11 +5,12 @@
             <h5 class="text-uppercase py-3 ps-3">Danh mục</h5>
             <?php foreach( $listDanhMuc  as $dm)  :?>
                 <?php 
+                // var_dump($dm);
                 $linkDm = "?act=danhmuc&id=" . $dm["id"];
                 ?>
             <ul class="list-unstyled ps-3">
                 <li class="d-flex justify-content-between align-items-center py-2">
-                    <a class="text-dark text-decoration-none" href="<?= $linkDm ?>"><?= $dm['name'] ?></a>
+                    <a class="text-dark text-decoration-none" href="<?= $linkDm ?>"><?= $dm["name"] ?></a>
                 </li>
             </ul>
             <?php endforeach; ?>
@@ -183,22 +184,31 @@ $categories = array_unique(array_column($datas, 'category_name'));
                             <img src="<?= $imgPath ?>" class="imgHieuUng " alt="<?= $product['namesp'] ?>" style="height: 180px; object-fit: cover;">
                             <div class="card-body" style="font-size: 0.85rem;">
                                 <a href="<?=$linkSp?>" class="text-dark text-decoration-none"><h5 class="card-title" style="font-size: 1rem;"><?= $product['namesp'] ?></h5></a>
-                                <h6><span class="card-text text-danger"><?= $product['price'] ?>đ</span></h6>
+                                <h6><span class="card-text text-danger"><?= $product['price'] ?>đ</span> 
+                            </h6>
+                            <?php if($product['quantity'] <= 0)  :?>
+                                    <div class="badge bg-danger text-light position-absolute" style="bottom: 0px; width: 100%; left: 0; z-index: 2;">Hết hàng</div>
+                            <?php endif;?>
+
                             </div>
                             <div class="product-actions">
-                               <form action="?act=addcart" method="post">
+                               <form class="quick_by_form" action="?act=addcart" method="post">
                                 <input type="hidden" name="id" value="<?= $product['id'] ?>" >
                                 <input type="hidden" name="namesp" value="<?= $product['namesp'] ?>" >
                                 <input type="hidden" name="img" value="<?= $product['img'] ?>">
                                  <input type="hidden" name="price" value="<?= $product['price'] ?>"> 
                                  <input type="hidden" name="quantity" value="<?= $product['quantity'] ?>"> 
                                  <input type="hidden" name="mota" value="<?= $product['mota'] ?>"> 
+                                 <?php if($product['quantity'] > 0)  :?>
                                 <button name="addcart" class="btn-cart"><i class="bi bi-cart-plus"></i></button>
+                                <?php endif;?>
+
                                 <!-- Nút giỏ hàng và yêu thích -->
                                </form>
                                <a href="?act=addFavourite&id=<?= $product['id']?>"><button class="btn-wishlist"><i class="bi bi-heart"></i></button></a>
                             </div>
                         </div>
+                        
                     </div>
             <?php endif; endforeach; ?>
         </div>  <!-- End of d-flex -->
@@ -218,14 +228,14 @@ $categories = array_unique(array_column($datas, 'category_name'));
     <img src="./img/quangcao8.png" class="img-fluid" alt="Sách Nổi Bật" style="height: 110px; object-fit: cover; margin-right: 30px;">
     
     <!-- Nhân đôi nội dung để tạo cuộn vô hạn -->
-    <img src="./img/quangcao1.png" class="img-fluid" alt="Sách Nổi Bật" style="height: 110px; object-fit: cover; margin-right: 30px;">
-    <img src="./img/quangcao2.png" class="img-fluid" alt="Sách Nổi Bật" style="height: 110px; object-fit: cover; margin-right: 30px;">
-    <img src="./img/quangcao3.png" class="img-fluid" alt="Sách Nổi Bật" style="height: 110px; object-fit: cover; margin-right: 30px;">
-    <img src="./img/quangcao4.png" class="img-fluid" alt="Sách Nổi Bật" style="height: 110px; object-fit: cover; margin-right: 30px;">
-    <img src="./img/quangcao5.png" class="img-fluid" alt="Sách Nổi Bật" style="height: 110px; object-fit: cover; margin-right: 30px;">
-    <img src="./img/quangcao6.png" class="img-fluid" alt="Sách Nổi Bật" style="height: 110px; object-fit: cover; margin-right: 30px;">
-    <img src="./img/quangcao7.png" class="img-fluid" alt="Sách Nổi Bật" style="height: 110px; object-fit: cover; margin-right: 30px;">
-    <img src="./img/quangcao8.png" class="img-fluid" alt="Sách Nổi Bật" style="height: 110px; object-fit: cover; margin-right: 30px;">
+    <img src="./img/quangcao1.png" class="img-fluid" style="height: 110px; object-fit: cover; margin-right: 30px;">
+    <img src="./img/quangcao2.png" class="img-fluid" style="height: 110px; object-fit: cover; margin-right: 30px;">
+    <img src="./img/quangcao3.png" class="img-fluid" style="height: 110px; object-fit: cover; margin-right: 30px;">
+    <img src="./img/quangcao4.png" class="img-fluid" style="height: 110px; object-fit: cover; margin-right: 30px;">
+    <img src="./img/quangcao5.png" class="img-fluid" style="height: 110px; object-fit: cover; margin-right: 30px;">
+    <img src="./img/quangcao6.png" class="img-fluid" style="height: 110px; object-fit: cover; margin-right: 30px;">
+    <img src="./img/quangcao7.png" class="img-fluid" style="height: 110px; object-fit: cover; margin-right: 30px;">
+    <img src="./img/quangcao8.png" class="img-fluid" style="height: 110px; object-fit: cover; margin-right: 30px;">
   </div>
 </div>
 
@@ -238,6 +248,7 @@ $categories = array_unique(array_column($datas, 'category_name'));
     100% { transform: translateX(-100%); }
   }
 </style>
+
 
 
 

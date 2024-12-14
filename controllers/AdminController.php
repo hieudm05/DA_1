@@ -13,15 +13,22 @@ class HomeController
         $sumTotalBill = $this->modelAdmin->sumTotalOrders();
         $sumProducts = $this->modelAdmin->sumProducts();
         $sumComments = $this->modelAdmin->sumComments();
-        $listRevenue = $this->modelAdmin->getDailyRevenue();
-        // print_r($listRevenue);
+        $revenues = $this->modelAdmin->getDailyRevenue();
+        // print_r($revenues);
         require_once '../../views/Admins/home/home.php';
     }
-    // public function renderDailyRevenueChart() {
-    //     // Lấy dữ liệu từ Model
-    //     $data = $this->modelAdmin->getDailyRevenue();
-    //     require_once '../../views/Admins/home/bieudotuan.php';
-    // }
+    
+    public function confirmOrder() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_GET['id'];
+            $bill_status = $this->modelAdmin->getBillStatus($id);
+            // var_dump($bill_status); die();
+
+            $this->modelAdmin->updateOrderStatus($id ,$bill_status + 1);
+            header('location: router.php');
+            
+        }
+    }
     // Danh Mục
     public function formAddDm() {
         require_once '../../views/Admins/DanhMuc/formAddDM.php';
@@ -215,6 +222,15 @@ public function updateSP() {
         // var_dump($listOrders);
         require_once '../../views/Admins/donHang/listDonHang.php'; 
     }
+    public function bill_items() {
+        $id = $_GET['id'];
+        $listBill = $this->modelAdmin->getBillById($id);
+        // var_dump($listBill);
+        $lydo = $this->modelAdmin->getLyDoHuyHang($id);
+        // var_dump($lydo);
+        require_once '../../views/Admins/SanPham/chitietsp.php';
+    }
+
     
     public function updateStatusBills() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -223,9 +239,6 @@ public function updateSP() {
     
             // Lấy trạng thái hiện tại
             $currentStatus = $this->modelAdmin->getBillStatus($id);
-    
-         
-    
             // Kiểm tra trạng thái hợp lệ
             if ($bill_status == $currentStatus + 1) {
                 if ($this->modelAdmin->updateOrderStatus($id, $bill_status)) {
@@ -240,18 +253,6 @@ public function updateSP() {
             }
         }
     }
-    
-    public function confirmOrder() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $bill_status = $_POST['bill_status'];
-            $id = $_GET['id'];
-
-            $this->modelAdmin->updateOrderStatus($id ,$bill_status + 1);
-            header('location: router.php');
-            
-        }
-    }
-    
 
 
 ///bình luận

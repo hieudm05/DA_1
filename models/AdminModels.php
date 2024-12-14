@@ -308,7 +308,7 @@ class AdminModels
                     JOIN accounts ON bills.idUser = accounts.id 
                     LEFT JOIN bill_items bi ON bills.id = bi.bill_id 
                     LEFT JOIN products p ON bi.product_id = p.id 
-                    WHERE bills.bill_status = 0 
+                    WHERE bills.bill_status IN (0,4)
                     GROUP BY bills.id 
                     ORDER BY bills.id DESC';
         
@@ -320,6 +320,75 @@ class AdminModels
         }
         
     }
+
+    public function getBillById($billId) {
+        $sql = 'SELECT 
+        bills.id AS bill_id,
+        bills.*, 
+        accounts.username AS user_name,
+        GROUP_CONCAT(p.img ORDER BY p.img ASC) AS img,
+        GROUP_CONCAT(p.namesp ORDER BY p.namesp ASC) AS product_names,
+        GROUP_CONCAT(bi.quantity ORDER BY p.namesp ASC) AS product_quantities,
+        GROUP_CONCAT(bi.total ORDER BY p.namesp ASC) AS pro_total,
+        GROUP_CONCAT(bi.price ORDER BY p.namesp ASC) AS product_prices,
+        GROUP_CONCAT(p.img ORDER BY p.namesp ASC) AS product_images
+    FROM 
+        bills
+    JOIN 
+        accounts ON bills.idUser = accounts.id
+    LEFT JOIN 
+        bill_items bi ON bills.id = bi.bill_id
+    LEFT JOIN 
+        products p ON bi.product_id = p.id
+    WHERE 
+        bills.id = :billId
+    GROUP BY 
+        bills.id
+    ORDER BY 
+       CASE 
+            WHEN bills.bill_status = 4 THEN 0 -- Trạng thái 4 giữ nguyên vị trí
+            ELSE 1 -- Các trạng thái khác sắp xếp bình thường
+            END,
+            bills.bill_status ASC, -- Sắp xếp trạng thái tăng dần
+            bills.id DESC';        
+
+                    
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':billId', $billId, PDO::PARAM_INT);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+    }
+
+    // Lấy lí do huỷ hàng
+    public function getLyDoHuyHang($idBill) {
+        try {
+            // Kiểm tra kết nối
+            if (!$this->conn) {
+                throw new Exception('Kết nối cơ sở dữ liệu không hợp lệ.');
+            }
+    
+            // Truy vấn SQL
+            $sql = 'SELECT reasons FROM cancellation_reasons WHERE idBill = :idBill';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['idBill' => $idBill]);
+    
+            // Lấy kết quả
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            if (!$result) {
+                // Không tìm thấy lý do
+                return 'Không tìm thấy lý do hủy đơn hàng ';
+            }
+    
+            return $result['reasons']; // Trả về cột lý do hủy
+        } catch (Exception $e) {
+            // Ghi log lỗi và trả về thông báo thân thiện hơn
+            error_log('Lỗi khi lấy lý do hủy đơn hàng: ' . $e->getMessage());
+            return 'Có lỗi xảy ra khi lấy lý do hủy đơn hàng.';
+        }
+    }
+    
 
     public function getTotalOrders(){
         try {
@@ -376,7 +445,6 @@ class AdminModels
     }
 
     public function getDailyRevenue() {
-        // SQL để lấy doanh thu theo ngày trong tuần
         $sql = "SELECT 
                 DAYOFWEEK(STR_TO_DATE(ngaydathang, '%Y-%m-%d')) AS day_of_week, 
                 SUM(total) AS total_revenue 
@@ -389,7 +457,10 @@ class AdminModels
         $stmt->execute();
         $listRevenue = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
-        // Khởi tạo mảng doanh thu cho các ngày trong tuần
+        // Lấy ngày hôm nay (0 đến 6, từ Chủ Nhật đến Thứ Bảy)
+        $currentDay = date('w'); // day of the week (0 for Sunday, 6 for Saturday)
+        
+        // Khởi tạo mảng doanh thu cho các ngày trong tuần (0 đến 6)
         $revenues = array_fill(0, 7, 0); // Mảng chứa doanh thu cho 7 ngày trong tuần
         
         // Gán doanh thu cho đúng ngày trong tuần
@@ -399,8 +470,15 @@ class AdminModels
             }
         }
         
+        // Thêm giá trị cho ngày hôm nay vào mảng nếu chưa có
+        if ($revenues[$currentDay] == 0) {
+            // Nếu hôm nay chưa có doanh thu, gán giá trị 0 hoặc tính toán doanh thu cho ngày hôm nay
+            // Ví dụ: gán $revenues[$currentDay] = 0; hoặc gán doanh thu tính toán
+        }
+    
         return $revenues; // Trả về mảng doanh thu
     }
+    
     
 
 
@@ -421,6 +499,7 @@ class AdminModels
             return false; 
         }
     }
+
 
     // Lấy trạng thái đơn hàng
     public function getBillStatus($orderId) {

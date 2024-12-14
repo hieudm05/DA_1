@@ -1,5 +1,5 @@
 
-<div class="container py-5">
+<div class="container py-3">
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
@@ -7,7 +7,7 @@
         </ol>
     </nav>
 
-    <div class="container mt-5">
+    <div class="container mt-2">
         <div class="row">
 
             <!-- Cột nội dung chính (bên trái) -->
@@ -15,38 +15,73 @@
                 <div class="row">
                     <!-- Cột hình ảnh -->
                     <div class="col-md-4">
-                        <?php $imgPath = './../' . $sanPhamChiTiet["img"] ?>
-                        <img src="<?= $imgPath ?>" alt="Quẳng Gánh Lo Đi Và Vui Sống" class="img-fluid" style="width: 100%; height: auto; max-width: 350px; max-height: 400px;">
+                        <!-- Khung hình ảnh sản phẩm -->
+                        <div class="product-image-box border rounded shadow-sm p-2" style="max-width: 350px; max-height: 400px; overflow: hidden;">
+                            <?php $imgPath = './../' . $sanPhamChiTiet["img"] ?>
+                            <img 
+                                src="<?= $imgPath ?>" 
+                                alt="<?= htmlspecialchars($sanPhamChiTiet["namesp"]) ?>" 
+                                class="img-fluid" 
+                                style="width: 100%; height: auto;">
+                        </div>
                     </div>
 
                     <!-- Cột nội dung -->
-                    <div class="col-md-8">
-                        <!-- Tiêu đề và thông tin -->
-                        <h1 class="product-title"><?= $sanPhamChiTiet["namesp"] ?></h1>
-                        <p class="d-flex align-items-center">
-                            <span class="rating me-2">5.0 ★★★★★</span>
-                            <a href="#" class="text-decoration-none">200 đánh giá</a>
-                        </p>
-                        <p><span class="badge bg-danger">#31 trong Top xu hướng</span></p>
-
+                    <div class=" col-md-8">
+                       <div class="card p-3">
+                             <!-- Tiêu đề và thông tin -->
+                        <h2 class="product-title pb-2"><?= $sanPhamChiTiet["namesp"] ?></h2>
                         <!-- Thông tin bổ sung -->
-                        <div class="row mb-4">
+                        <div class="row">
                             <div class="col-md-12">
-                                <p><strong>Mô tả: </strong><?= $sanPhamChiTiet["mota"] ?></p>
+                            <p><strong>Mô tả: </strong><?= $sanPhamChiTiet["mota"] ?></p>
+                            <form action="?act=tangGiamMuaNgay&id=<?= $sanPhamChiTiet['id'] ?>" method="post" >
+                            <span class="d-flex"><strong style="width: 100px">Số lượng:</strong>
+                                <input type="text" 
+                                    class="form-control-plaintext border-0 bg-transparent p-0" 
+                                    value="<?= $soLuongConLai ?>" 
+                                    readonly
+                                    name="soluongconlai"></span>
+                                </div>
                             </div>
-                        </div>
 
                         <!-- Giá và số lượng -->
-                        <div class="d-flex align-items-center mb-4">
-                            <p class="text-danger fw-bold fs-3 mb-0 me-3"><?= $sanPhamChiTiet["price"] ?>đ</p>
-                            <p class="text-muted text-decoration-line-through mb-0 me-3">115,000đ</p>
-                            <div class="input-group" style="width: 120px;">
-                                <input type="number" class="form-control text-center" value="1" min="1" id="quantity-input">
+                        <div class="d-flex align-items-center">
+    
+                            <!-- Phần hiển thị tổng tiền (30%) -->
+                            <div class="flex-grow-0 text-center" style="width: 40%;">
+                                <input type="text" 
+                                    class="form-control-plaintext text-danger fw-bold fs-4 mb-0" 
+                                    id="price" 
+                                    name="tongtien" 
+                                    value="<?= number_format($tongtien, 0, ',', '.') ?>" 
+                                    readonly>
                             </div>
-                        </div>
+
+                            <div class="flex-grow-0 d-flex align-items-center justify-content-center" style="width: 25%;">
+                                <!-- Nút giảm -->
+                                <button class="btn btn-outline-danger mx-2" name="tang" type="submit" style="width: 40px; height: 40px;">+</button>
+                                
+                                <!-- Số lượng sản phẩm -->
+                                <input type="number" 
+                                    class="form-control text-center fw-bold" 
+                                    name="soluongMua" 
+                                    value="<?= $soluongMua ?>" 
+                                    style="width: 60px;" 
+                                    readonly>
+                                
+                                <!-- Nút tăng -->
+                                <button class="btn btn-outline-danger mx-2" name="giam" type="submit" style="width: 40px; height: 40px;">-</button>
+                            </div>
+
+                            <div class="flex-grow-0" style="width: 30%;"></div>
+                        </form>
+                    </div>
+
+
 
                         <!-- Nút hành động -->
-                        <div class="d-flex mb-4">
+                        <div class="d-flex mt-4">
                         <form action="?act=addcart" method="post">
                                 <input type="hidden" name="id" value="<?= $sanPhamChiTiet['id'] ?>" >
                                 <input type="hidden" name="namesp" value="<?= $sanPhamChiTiet['namesp'] ?>" >
@@ -54,26 +89,22 @@
                                  <input type="hidden" name="price" value="<?= $sanPhamChiTiet['price'] ?>"> 
                                  <input type="hidden" name="quantity" value="<?= $sanPhamChiTiet['quantity'] ?>"> 
                                  <input type="hidden" name="mota" value="<?= $sanPhamChiTiet['mota'] ?>"> 
-                                <button name="addcart" class="btn btn-danger rounded-pill me-2">Thêm vào giỏ hàng</i></button>
+                                <button name="addcart" class="btn btn-outline-danger  me-4">Thêm vào giỏ hàng</i></button>
                                 <!-- Nút giỏ hàng và yêu thích -->
                                </form>
                         <form action="?act=postMuaNgay&id=<?= $id ?>" method="post">
                                 <input type="hidden" name="id" value="<?= $sanPhamChiTiet['id'] ?>" >
                                  <input type="hidden" name="price" value="<?= $sanPhamChiTiet['price'] ?>"> 
-                                 <input type="hidden" name="soluong" value="1"> 
-                            <button class="btn btn-danger rounded-pill me-2">Mua ngay</button>
+                                 <input type="hidden" name="quantity" value="<?= $sanPhamChiTiet['quantity'] ?>"> 
+                            <button class="btn btn-danger  me-2">Mua ngay</button>
                         </form>
-                        <!-- Nút trái tim thêm vào yêu thích -->
-                        <a href="?act=addFavourite&id=<?= $sanPhamChiTiet['id'] ?>" class="btn btn-danger rounded-pill">
-                            <i class="bi bi-heart-fill"></i>
-                        </a>
 
                     </div>
+                       </div>
 
-                        <div class="mt-4">
-                            <p>Đánh giá: <span class="text-warning">★★★★★</span> (200 đánh giá)</p>
+                        <div class="mt-4 card p-3">
                             <div class="comment-section mt-4">
-                                <h4 class="fw-bold mb-3">Bình luận</h4>
+                                <h4 class="fw-bold mb-2">Bình luận</h4>
                                 <div class="list-group" style="max-height: 300px; overflow-y: auto;">
                                 <?php foreach ($comments as $comment): ?>
                                     <?php if ($comment['status'] == 1): ?>  <!-- Check if the comment is visible -->
@@ -175,3 +206,5 @@
         </div>
     </div>
 </div>
+
+
