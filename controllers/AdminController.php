@@ -20,15 +20,28 @@ class HomeController
     
     public function confirmOrder() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $_GET['id'];
-            $bill_status = $this->modelAdmin->getBillStatus($id);
-            // var_dump($bill_status); die();
-
-            $this->modelAdmin->updateOrderStatus($id ,$bill_status + 1);
+            $id = $_GET['id']; // Lấy id hóa đơn
+            $soluong = $this->modelAdmin->getQuantitiesByBillId($id); // Lấy thông tin sản phẩm và số lượng từ bảng bill_items
+             $bill_status = $this->modelAdmin->getBillStatus($id);
+             foreach ($soluong as $item) {
+                $product_id = $item['product_id'];  // Lấy product_id
+                $quantity_bill = $item['quantity']; // Lấy số lượng sản phẩm từ bill_items
+                
+                // Lấy số lượng hiện tại của sản phẩm trong bảng products
+                $quantity_product = $this->modelAdmin->getQuantityPro($product_id);
+                
+                // Cộng số lượng đã hủy vào bảng products
+                $new_quantity = $quantity_product + $quantity_bill;
+                
+                // Cập nhật lại số lượng sản phẩm trong bảng products
+                $this->modelAdmin->updateQuantityPro($product_id, $new_quantity);
+            }
+            // var_dump($soluong);die();
+            $this->modelAdmin->updateOrderStatus($id, $bill_status + 1);
             header('location: router.php');
-            
         }
     }
+    
     // Danh Mục
     public function formAddDm() {
         require_once '../../views/Admins/DanhMuc/formAddDM.php';
@@ -181,6 +194,7 @@ public function formSuaSP() {
     }
 }
 
+
 public function updateSP() {  
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {  
         $id = $_POST['id'];  
@@ -286,11 +300,5 @@ public function toggleComment() {
         echo "Bình luận không tồn tại.";
     }
 }
-
-
-
-
-
-    
 }
 

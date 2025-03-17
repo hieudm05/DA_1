@@ -132,7 +132,7 @@ $categories = array_unique(array_column($datas, 'category_name'));
                             <img src="<?= $imgPath ?>" class="imgHieuUng " alt="<?= $product['namesp'] ?>" style="height: 180px; object-fit: cover;">
                             <div class="card-body" style="font-size: 0.85rem;">
                                 <a href="<?=$linkSp?>" class="text-dark text-decoration-none"><h5 class="card-title" style="font-size: 1rem;"><?= $product['namesp'] ?></h5></a>
-                                <h6><span class="card-text text-danger"><?= $product['price'] ?>đ</span> 
+                                <h6><span class="card-text text-danger"><?= number_format($product['price'], 0, ',', '.') ?>đ</span></h6> 
                             </h6>
                             <?php if($product['quantity'] <= 0)  :?>
                                     <div class="badge bg-danger text-light position-absolute" style="bottom: 0px; width: 100%; left: 0; z-index: 2;">Hết hàng</div>

@@ -76,7 +76,7 @@
                                     <?= $ngaydathang ?>
                                 </td>
                                 <td class="text-center">
-                                    <?= $quantity ?>
+                                    <?= $total_quantity ?>
                                 </td>
                                 <form action="<?= $confirmOrder ?>" method="POST">
                                     <!-- <div class="mb-3">

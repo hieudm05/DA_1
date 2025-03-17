@@ -936,7 +936,7 @@ class ClientController
                                 confirmButtonText: 'OK'
                                 }).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href = `http://localhost/base_test_DA1/public/?act=bill_item`;
+                                    window.location.href = `http://localhost/base_test_DA1/public/?act=bill_item&id={$idbill}`;
                                 }
                                 });
                                 }, 2000);

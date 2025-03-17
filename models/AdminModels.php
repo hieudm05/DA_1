@@ -303,7 +303,8 @@ class AdminModels
                         GROUP_CONCAT(p.namesp ORDER BY p.namesp ASC) AS product_names, 
                         GROUP_CONCAT(bi.quantity ORDER BY p.namesp ASC) AS product_quantities, 
                         GROUP_CONCAT(bi.price ORDER BY p.namesp ASC) AS product_prices, 
-                        GROUP_CONCAT(p.img ORDER BY p.namesp ASC) AS product_images
+                        GROUP_CONCAT(p.img ORDER BY p.namesp ASC) AS product_images,
+                        SUM(bi.quantity) AS total_quantity  -- Tổng số lượng sản phẩm
                     FROM bills 
                     JOIN accounts ON bills.idUser = accounts.id 
                     LEFT JOIN bill_items bi ON bills.id = bi.bill_id 
@@ -311,15 +312,15 @@ class AdminModels
                     WHERE bills.bill_status IN (0,4)
                     GROUP BY bills.id 
                     ORDER BY bills.id DESC';
-        
+    
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (Exception $e) {
             echo $e->getMessage();
         }
-        
     }
+    
 
     public function getBillById($billId) {
         $sql = 'SELECT 
@@ -499,6 +500,119 @@ class AdminModels
             return false; 
         }
     }
+    // Cập nhật lại số lượng sản phẩm sau khi huỷ 
+
+    // Lấy id product theo id bill 
+    function getProductIdsByBillId($bill_id) {
+        // SQL truy vấn để lấy tất cả product_id từ bảng bill_items theo bill_id
+        $sql = "SELECT product_id
+                FROM bill_items
+                WHERE bill_id = :bill_id";
+    
+        // Chuẩn bị truy vấn
+        $stmt = $this->conn->prepare($sql);
+    
+        // Thực thi truy vấn với tham số bill_id
+        $stmt->execute([':bill_id' => $bill_id]);
+    
+        // Lấy tất cả kết quả dưới dạng mảng
+        $product_ids = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        // Kiểm tra nếu có kết quả và trả về mảng product_id
+        if ($product_ids) {
+            return $product_ids;
+        } else {
+            return []; // Trả về mảng rỗng nếu không có kết quả
+        }
+    }
+
+    // Lấy số lượng products hiện tại 
+    public function getQuantityPro($id) {
+        try {
+            // Câu lệnh SQL để lấy quantity theo product_id
+            $sql = 'SELECT quantity FROM products WHERE id = :id';
+            
+            // Chuẩn bị câu lệnh SQL
+            $stmt = $this->conn->prepare($sql);
+            
+            // Thực thi truy vấn với tham số id
+            $stmt->execute([':id' => $id]);
+            
+            // Lấy kết quả (PDO::FETCH_ASSOC trả về mảng kết hợp)
+            $result = $stmt->fetch();
+            
+            // Kiểm tra xem $result có phải là mảng hay không, nếu có trả về quantity
+            if ($result && isset($result['quantity'])) {
+                return $result['quantity']; // Trả về quantity của sản phẩm
+            } else {
+                return 0;  // Nếu không có sản phẩm, trả về 0
+            }
+            
+        } catch (Exception $e) {
+            // In lỗi nếu có exception
+            echo 'Error: ' . $e->getMessage();
+            return false;  // Trả về false nếu có lỗi
+        }
+    }
+    
+    
+    
+    
+   
+    // Lấy sản phẩm theo id bảng bill_items
+    function getQuantitiesByBillId($bill_id) {
+        $sql = "SELECT product_id, quantity 
+                FROM bill_items 
+                WHERE bill_id = :bill_id";
+        
+        // Chuẩn bị truy vấn
+        $stmt = $this->conn->prepare($sql);
+        
+        // Thực thi truy vấn với bill_id
+        $stmt->execute([':bill_id' => $bill_id]);
+        
+        // Lấy tất cả các product_id và quantity theo bill_id
+        $quantities = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Kiểm tra và trả về kết quả
+        if ($quantities) {
+            return $quantities;  // Trả về mảng chứa product_id và quantity của từng bản ghi
+        } else {
+            return [];  // Nếu không có kết quả, trả về mảng rỗng
+        }
+    }
+
+    public function updateQuantityPro($product_id, $new_quantity) {
+        try {
+            // Câu lệnh SQL để cập nhật số lượng sản phẩm trong bảng products
+            $sql = "UPDATE products SET quantity = :new_quantity WHERE id = :product_id";
+    
+            // Chuẩn bị truy vấn
+            $stmt = $this->conn->prepare($sql);
+    
+            // Thực thi truy vấn với các tham số
+            $stmt->execute([
+                ':new_quantity' => $new_quantity,
+                ':product_id' => $product_id
+            ]);
+    
+            // Kiểm tra số dòng bị ảnh hưởng để biết việc cập nhật có thành công hay không
+            if ($stmt->rowCount() > 0) {
+                echo "Cập nhật thành công số lượng cho product_id = $product_id.\n";
+            } else {
+                echo "Không tìm thấy sản phẩm với product_id = $product_id để cập nhật.\n";
+            }
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
+    
+    
+    
+    
+    
 
 
     // Lấy trạng thái đơn hàng
